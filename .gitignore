@@ -1,0 +1,12 @@
+
+IRProc/IRProc.sdf
+*.user
+*.suo
+*.obj
+*.log
+*.tlog
+*.pdb
+*.ilk
+*.user
+IRProc/IRProc/IRProc.vcxproj.user
+IRProc/IRProc/IRProc.vcxproj.user
