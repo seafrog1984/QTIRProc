@@ -1,0 +1,24 @@
+﻿生成启动时间为 2019/4/23 23:59:08。
+     1>项目“E:\MyCode\QTIR\IRProc\IRProc\IRProc.vcxproj”在节点 2 上(Build 个目标)。
+     1>CustomBuild:
+         Uic'ing IRProc.ui...
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_IRProc.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_IRProc.cpp, GeneratedFiles\Release\moc_IRProc.cpp.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /ID:\Qt\Qt5.6.2\5.6\msvc2013\include /I.\GeneratedFiles\Debug /ID:\Qt\Qt5.6.2\5.6\msvc2013\include\QtCore /ID:\Qt\Qt5.6.2\5.6\msvc2013\include\QtGui /ID:\Qt\Qt5.6.2\5.6\msvc2013\include\QtWidgets /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\Debug\moc_IRProc.cpp IRProc.cpp main.cpp
+         moc_IRProc.cpp
+         IRProc.cpp
+         main.cpp
+         正在生成代码...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyCode\QTIR\IRProc\Win32\Debug\\IRProc.exe" /NOLOGO /LIBPATH:D:\Qt\Qt5.6.2\5.6\msvc2013\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyCode\QTIR\IRProc\Win32\Debug\IRProc.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyCode\QTIR\IRProc\Win32\Debug\IRProc.lib" /MACHINE:X86 /SAFESEH Debug\moc_IRProc.obj
+         Debug\qrc_IRProc.obj
+         Debug\g_variables.obj
+         Debug\IRProc.obj
+         Debug\main.obj
+         Debug\mycustomslider.obj
+         IRProc.vcxproj -> E:\MyCode\QTIR\IRProc\Win32\Debug\IRProc.exe
+     1>已完成生成项目“E:\MyCode\QTIR\IRProc\IRProc\IRProc.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:06.08
