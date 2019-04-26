@@ -53,5 +53,20 @@
         <file alias="Data-Slider">Resources/data-slider.png</file>
         <file alias="Tool-Bg">Resources/bg.png</file>
         <file alias="Txcl-bg">Resources/txcl-bg.png</file>
+        <file alias="ImageProc04-Sel">Resources/imageProc04-sel.png</file>
+        <file alias="ImageProc05-Sel">Resources/imageProc05.png</file>
+        <file alias="ImageProc06-Sel">Resources/imageProc06.png</file>
+        <file alias="ImageProc08-Sel">Resources/ImageProc08-Sel.png</file>
+        <file alias="ImageProc10-Sel">Resources/ImageProc10-Sel.png</file>
+        <file alias="ImageProc12-Sel">Resources/ImageProc12-Sel.png</file>
+        <file alias="ImProcMerge-Bg">Resources/imProcMerge-bg.png</file>
+        <file alias="M01-Sel">Resources/Merg-01-sel.png</file>
+        <file alias="M02">Resources/Merg-02.png</file>
+        <file alias="M03">Resources/Merg-03.png</file>
+        <file alias="M04">Resources/Merg-04.png</file>
+        <file alias="M05">Resources/Merg-05.png</file>
+        <file alias="M06">Resources/Merg-06.png</file>
+        <file alias="M07">Resources/Merg-07.png</file>
+        <file alias="M08">Resources/Merg-08.png</file>
     </qresource>
 </RCC>
