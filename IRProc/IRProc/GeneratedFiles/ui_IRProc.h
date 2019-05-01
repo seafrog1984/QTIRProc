@@ -155,6 +155,7 @@ public:
     QToolButton *toolButton_31;
     QToolButton *toolButton_30;
     QToolButton *toolButton_32;
+    QLabel *label_25;
     QGroupBox *groupBox_11;
     QLineEdit *lineEdit;
     QToolButton *toolButton_33;
@@ -163,6 +164,8 @@ public:
     QToolButton *toolButton_36;
     QLineEdit *lineEdit_2;
     QLineEdit *lineEdit_3;
+    QLabel *label_26;
+    QLabel *label_27;
     QGroupBox *groupBox_12;
     QDateEdit *dateEdit;
     QLabel *label;
@@ -1117,17 +1120,19 @@ public:
         pageData->setObjectName(QStringLiteral("pageData"));
         groupBox_10 = new QGroupBox(pageData);
         groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
-        groupBox_10->setGeometry(QRect(10, 0, 320, 90));
+        groupBox_10->setGeometry(QRect(0, 0, 320, 90));
         groupBox_10->setMinimumSize(QSize(0, 90));
         groupBox_10->setMaximumSize(QSize(16777215, 90));
-        groupBox_10->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
+        groupBox_10->setStyleSheet(QLatin1String("background-color: rgb(15, 21, 42);\n"
+"background-image: url(:/IRProc/Txcl-bg);\n"
+"border:0px;"));
         toolButton_26 = new QToolButton(groupBox_10);
         toolButton_26->setObjectName(QStringLiteral("toolButton_26"));
-        toolButton_26->setGeometry(QRect(20, 30, 32, 50));
+        toolButton_26->setGeometry(QRect(70, 30, 32, 50));
         toolButton_26->setMinimumSize(QSize(32, 50));
         toolButton_26->setMaximumSize(QSize(32, 50));
-        toolButton_26->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_26->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon46;
         icon46.addFile(QStringLiteral(":/IRProc/Data-Analyze"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_26->setIcon(icon46);
@@ -1135,11 +1140,11 @@ public:
         toolButton_26->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_27 = new QToolButton(groupBox_10);
         toolButton_27->setObjectName(QStringLiteral("toolButton_27"));
-        toolButton_27->setGeometry(QRect(60, 30, 32, 50));
+        toolButton_27->setGeometry(QRect(105, 30, 32, 50));
         toolButton_27->setMinimumSize(QSize(32, 50));
         toolButton_27->setMaximumSize(QSize(32, 50));
-        toolButton_27->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_27->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon47;
         icon47.addFile(QStringLiteral(":/IRProc/Data-Scan"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_27->setIcon(icon47);
@@ -1147,11 +1152,11 @@ public:
         toolButton_27->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_28 = new QToolButton(groupBox_10);
         toolButton_28->setObjectName(QStringLiteral("toolButton_28"));
-        toolButton_28->setGeometry(QRect(100, 30, 32, 50));
+        toolButton_28->setGeometry(QRect(140, 30, 32, 50));
         toolButton_28->setMinimumSize(QSize(32, 50));
         toolButton_28->setMaximumSize(QSize(32, 50));
-        toolButton_28->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_28->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon48;
         icon48.addFile(QStringLiteral(":/IRProc/Data-In"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_28->setIcon(icon48);
@@ -1159,11 +1164,11 @@ public:
         toolButton_28->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_29 = new QToolButton(groupBox_10);
         toolButton_29->setObjectName(QStringLiteral("toolButton_29"));
-        toolButton_29->setGeometry(QRect(140, 30, 32, 50));
+        toolButton_29->setGeometry(QRect(175, 30, 32, 50));
         toolButton_29->setMinimumSize(QSize(32, 50));
         toolButton_29->setMaximumSize(QSize(32, 50));
-        toolButton_29->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_29->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon49;
         icon49.addFile(QStringLiteral(":/IRProc/Data-Out"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_29->setIcon(icon49);
@@ -1171,11 +1176,11 @@ public:
         toolButton_29->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_31 = new QToolButton(groupBox_10);
         toolButton_31->setObjectName(QStringLiteral("toolButton_31"));
-        toolButton_31->setGeometry(QRect(220, 30, 32, 50));
+        toolButton_31->setGeometry(QRect(245, 30, 32, 50));
         toolButton_31->setMinimumSize(QSize(32, 50));
         toolButton_31->setMaximumSize(QSize(32, 50));
-        toolButton_31->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_31->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon50;
         icon50.addFile(QStringLiteral(":/IRProc/Data-Del"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_31->setIcon(icon50);
@@ -1183,11 +1188,11 @@ public:
         toolButton_31->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_30 = new QToolButton(groupBox_10);
         toolButton_30->setObjectName(QStringLiteral("toolButton_30"));
-        toolButton_30->setGeometry(QRect(180, 30, 32, 50));
+        toolButton_30->setGeometry(QRect(210, 30, 32, 50));
         toolButton_30->setMinimumSize(QSize(32, 50));
         toolButton_30->setMaximumSize(QSize(32, 50));
-        toolButton_30->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_30->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon51;
         icon51.addFile(QStringLiteral(":/IRProc/Data-Reg"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_30->setIcon(icon51);
@@ -1195,11 +1200,11 @@ public:
         toolButton_30->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_32 = new QToolButton(groupBox_10);
         toolButton_32->setObjectName(QStringLiteral("toolButton_32"));
-        toolButton_32->setGeometry(QRect(260, 30, 32, 50));
+        toolButton_32->setGeometry(QRect(280, 30, 32, 50));
         toolButton_32->setMinimumSize(QSize(32, 50));
         toolButton_32->setMaximumSize(QSize(32, 50));
-        toolButton_32->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
-"border:0px solid;"));
+        toolButton_32->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(18, 59, 101);"));
         QIcon icon52;
         icon52.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::Off);
         icon52.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::On);
@@ -1208,55 +1213,89 @@ public:
         toolButton_32->setCheckable(true);
         toolButton_32->setChecked(false);
         toolButton_32->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        label_25 = new QLabel(groupBox_10);
+        label_25->setObjectName(QStringLiteral("label_25"));
+        label_25->setGeometry(QRect(25, 30, 16, 45));
+        label_25->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(19, 65, 115);"));
         groupBox_11 = new QGroupBox(pageData);
         groupBox_11->setObjectName(QStringLiteral("groupBox_11"));
-        groupBox_11->setGeometry(QRect(340, 0, 190, 90));
+        groupBox_11->setGeometry(QRect(325, 0, 200, 90));
         groupBox_11->setMinimumSize(QSize(0, 90));
         groupBox_11->setMaximumSize(QSize(16777215, 90));
-        groupBox_11->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
+        groupBox_11->setStyleSheet(QLatin1String("background-color: rgb(15, 21, 42);\n"
+"background-image: url(:/IRProc/DataBg2);\n"
+"border:0px;"));
         lineEdit = new QLineEdit(groupBox_11);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(70, 30, 51, 16));
-        lineEdit->setMinimumSize(QSize(0, 16));
+        lineEdit->setGeometry(QRect(120, 30, 30, 15));
+        lineEdit->setMinimumSize(QSize(0, 15));
         lineEdit->setMaximumSize(QSize(16777215, 16));
+        lineEdit->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         toolButton_33 = new QToolButton(groupBox_11);
         toolButton_33->setObjectName(QStringLiteral("toolButton_33"));
-        toolButton_33->setGeometry(QRect(50, 30, 16, 16));
-        toolButton_33->setMinimumSize(QSize(16, 16));
-        toolButton_33->setMaximumSize(QSize(16, 16));
-        toolButton_33->setStyleSheet(QStringLiteral("border:0px"));
+        toolButton_33->setGeometry(QRect(105, 30, 15, 15));
+        toolButton_33->setMinimumSize(QSize(15, 15));
+        toolButton_33->setMaximumSize(QSize(15, 15));
+        toolButton_33->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         toolButton_33->setIcon(icon33);
         toolButton_34 = new QToolButton(groupBox_11);
         toolButton_34->setObjectName(QStringLiteral("toolButton_34"));
-        toolButton_34->setGeometry(QRect(30, 30, 16, 16));
-        toolButton_34->setMinimumSize(QSize(16, 16));
-        toolButton_34->setMaximumSize(QSize(16, 16));
-        toolButton_34->setStyleSheet(QStringLiteral("border:0px"));
+        toolButton_34->setGeometry(QRect(90, 30, 15, 15));
+        toolButton_34->setMinimumSize(QSize(15, 15));
+        toolButton_34->setMaximumSize(QSize(15, 15));
+        toolButton_34->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         QIcon icon53;
         icon53.addFile(QStringLiteral(":/IRProc/Data-DLeft"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_34->setIcon(icon53);
         toolButton_35 = new QToolButton(groupBox_11);
         toolButton_35->setObjectName(QStringLiteral("toolButton_35"));
-        toolButton_35->setGeometry(QRect(130, 30, 16, 16));
-        toolButton_35->setMinimumSize(QSize(16, 16));
-        toolButton_35->setMaximumSize(QSize(16, 16));
-        toolButton_35->setStyleSheet(QStringLiteral("border:0px"));
+        toolButton_35->setGeometry(QRect(150, 30, 15, 15));
+        toolButton_35->setMinimumSize(QSize(15, 15));
+        toolButton_35->setMaximumSize(QSize(15, 15));
+        toolButton_35->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         toolButton_35->setIcon(icon34);
         toolButton_36 = new QToolButton(groupBox_11);
         toolButton_36->setObjectName(QStringLiteral("toolButton_36"));
-        toolButton_36->setGeometry(QRect(150, 30, 16, 16));
-        toolButton_36->setMinimumSize(QSize(16, 16));
-        toolButton_36->setMaximumSize(QSize(16, 16));
-        toolButton_36->setStyleSheet(QStringLiteral("border:0px"));
+        toolButton_36->setGeometry(QRect(165, 30, 15, 15));
+        toolButton_36->setMinimumSize(QSize(15, 15));
+        toolButton_36->setMaximumSize(QSize(15, 15));
+        toolButton_36->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         QIcon icon54;
         icon54.addFile(QStringLiteral(":/IRProc/Data-DRight"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_36->setIcon(icon54);
         lineEdit_2 = new QLineEdit(groupBox_11);
         lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(40, 60, 51, 20));
+        lineEdit_2->setGeometry(QRect(95, 60, 40, 15));
+        lineEdit_2->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
         lineEdit_3 = new QLineEdit(groupBox_11);
         lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-        lineEdit_3->setGeometry(QRect(100, 60, 51, 20));
+        lineEdit_3->setGeometry(QRect(135, 60, 40, 15));
+        lineEdit_3->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(12,40,70);\n"
+"border-image: url(:/IRProc/Pro-Rect1);"));
+        label_26 = new QLabel(groupBox_11);
+        label_26->setObjectName(QStringLiteral("label_26"));
+        label_26->setGeometry(QRect(30, 20, 16, 45));
+        label_26->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(19, 65, 115);"));
+        label_27 = new QLabel(groupBox_11);
+        label_27->setObjectName(QStringLiteral("label_27"));
+        label_27->setGeometry(QRect(50, 25, 16, 41));
+        label_27->setStyleSheet(QLatin1String("background-image: url();\n"
+"background-color: rgb(19, 65, 115);"));
         groupBox_12 = new QGroupBox(pageData);
         groupBox_12->setObjectName(QStringLiteral("groupBox_12"));
         groupBox_12->setGeometry(QRect(540, 0, 380, 90));
@@ -1638,7 +1677,7 @@ public:
 
         retranslateUi(IRProcClass);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
         tabWidget->setCurrentIndex(0);
 
 
@@ -1763,7 +1802,7 @@ public:
         toolButton_10->setText(QApplication::translate("IRProcClass", "Human body", 0));
         toolButton_11->setText(QApplication::translate("IRProcClass", "Meridian", 0));
         toolButton_12->setText(QApplication::translate("IRProcClass", "Define", 0));
-        groupBox_10->setTitle(QApplication::translate("IRProcClass", "\346\223\215\344\275\234", 0));
+        groupBox_10->setTitle(QString());
         toolButton_26->setText(QApplication::translate("IRProcClass", "\345\210\206\346\236\220", 0));
         toolButton_27->setText(QApplication::translate("IRProcClass", "\346\211\253\346\217\217", 0));
         toolButton_28->setText(QApplication::translate("IRProcClass", "\345\257\274\345\205\245", 0));
@@ -1771,11 +1810,18 @@ public:
         toolButton_31->setText(QApplication::translate("IRProcClass", "\345\210\240\351\231\244", 0));
         toolButton_30->setText(QApplication::translate("IRProcClass", "\347\231\273\350\256\260", 0));
         toolButton_32->setText(QApplication::translate("IRProcClass", "\344\277\256\346\224\271", 0));
-        groupBox_11->setTitle(QApplication::translate("IRProcClass", "\346\214\211\351\241\265\347\240\201\346\237\245\346\211\276", 0));
+        label_25->setText(QApplication::translate("IRProcClass", "\346\223\215\n"
+"\344\275\234", 0));
+        groupBox_11->setTitle(QString());
         toolButton_33->setText(QApplication::translate("IRProcClass", "...", 0));
         toolButton_34->setText(QApplication::translate("IRProcClass", "...", 0));
         toolButton_35->setText(QApplication::translate("IRProcClass", "...", 0));
         toolButton_36->setText(QApplication::translate("IRProcClass", "...", 0));
+        label_26->setText(QApplication::translate("IRProcClass", "\346\214\211\n"
+"\351\241\265\n"
+"\347\240\201", 0));
+        label_27->setText(QApplication::translate("IRProcClass", "\346\237\245\n"
+"\346\211\276", 0));
         groupBox_12->setTitle(QApplication::translate("IRProcClass", "\346\214\211\346\227\245\346\234\237\350\214\203\345\233\264\347\255\233\351\200\211", 0));
         label->setText(QApplication::translate("IRProcClass", "\350\265\267\345\247\213\357\274\232", 0));
         label_3->setText(QApplication::translate("IRProcClass", "\347\273\223\346\235\237\357\274\232", 0));

@@ -68,5 +68,9 @@
         <file alias="M06">Resources/Merg-06.png</file>
         <file alias="M07">Resources/Merg-07.png</file>
         <file alias="M08">Resources/Merg-08.png</file>
+        <file alias="DataBg1">Resources/DataM-Bg1.png</file>
+        <file alias="DataBg2">Resources/DataM-Bg2.png</file>
+        <file alias="DataBg3">Resources/DataM-Bg3.png</file>
+        <file alias="DataBg4">Resources/DataM-Bg4.png</file>
     </qresource>
 </RCC>
