@@ -72,5 +72,9 @@
         <file alias="DataBg2">Resources/DataM-Bg2.png</file>
         <file alias="DataBg3">Resources/DataM-Bg3.png</file>
         <file alias="DataBg4">Resources/DataM-Bg4.png</file>
+        <file alias="MBack">Resources/mergeBack.png</file>
+        <file alias="MFront">Resources/mergeFront.png</file>
+        <file alias="MLeft">Resources/mergeLeft.png</file>
+        <file alias="MRight">Resources/mergeRight.png</file>
     </qresource>
 </RCC>
