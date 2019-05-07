@@ -199,7 +199,8 @@ void IRProc::sysSetting()
 
 void IRProc::userAreaFull()
 {
-	QMessageBox::information(this, tr("Information"), QStringLiteral("用户区最大化"));
+	QMessageBox::information(this, tr("Information"), QStringLiteral("<font size='26' color='white'>用户区最大化</font>"));
+
 }
 
 void IRProc::toolBarExpand()

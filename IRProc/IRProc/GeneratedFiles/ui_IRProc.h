@@ -242,8 +242,6 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_2;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -260,7 +258,14 @@ public:
         icon.addFile(QStringLiteral(":/IRProc/ImgProc-Sel"), QSize(), QIcon::Normal, QIcon::Off);
         IRProcClass->setWindowIcon(icon);
         IRProcClass->setStyleSheet(QLatin1String("border-color: rgb(15, 21, 42);\n"
-"background-color: rgb(15, 21, 42);"));
+"background-color: rgb(15, 21, 42);\n"
+"\n"
+"QMessageBox{\n"
+"color:rgb(255,255,255);\n"
+"}\n"
+"QLineEdit{\n"
+"color:rgb(255,255,255);\n"
+"}"));
         IRProcClass->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         imgProcAct = new QAction(IRProcClass);
         imgProcAct->setObjectName(QStringLiteral("imgProcAct"));
@@ -330,16 +335,16 @@ public:
 ""));
         groupBox_7 = new QGroupBox(pageProc);
         groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
-        groupBox_7->setGeometry(QRect(0, 0, 730, 90));
-        groupBox_7->setMinimumSize(QSize(730, 90));
-        groupBox_7->setMaximumSize(QSize(730, 90));
+        groupBox_7->setGeometry(QRect(0, 0, 700, 90));
+        groupBox_7->setMinimumSize(QSize(700, 90));
+        groupBox_7->setMaximumSize(QSize(700, 90));
         groupBox_7->setStyleSheet(QLatin1String("QGroupBox{\n"
 "background-image: url(:/IRProc/Txcl-bg);\n"
 "}\n"
 ""));
         toolButton_2 = new QToolButton(groupBox_7);
         toolButton_2->setObjectName(QStringLiteral("toolButton_2"));
-        toolButton_2->setGeometry(QRect(80, 20, 90, 24));
+        toolButton_2->setGeometry(QRect(70, 20, 90, 24));
         toolButton_2->setMinimumSize(QSize(90, 24));
         toolButton_2->setMaximumSize(QSize(90, 24));
         toolButton_2->setStyleSheet(QStringLiteral(""));
@@ -349,7 +354,7 @@ public:
         toolButton_2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolButton_13 = new QToolButton(groupBox_7);
         toolButton_13->setObjectName(QStringLiteral("toolButton_13"));
-        toolButton_13->setGeometry(QRect(175, 20, 90, 24));
+        toolButton_13->setGeometry(QRect(165, 20, 90, 24));
         toolButton_13->setMinimumSize(QSize(90, 24));
         toolButton_13->setMaximumSize(QSize(90, 24));
         toolButton_13->setStyleSheet(QStringLiteral(""));
@@ -359,7 +364,7 @@ public:
         toolButton_13->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolButton_14 = new QToolButton(groupBox_7);
         toolButton_14->setObjectName(QStringLiteral("toolButton_14"));
-        toolButton_14->setGeometry(QRect(270, 20, 90, 24));
+        toolButton_14->setGeometry(QRect(260, 20, 90, 24));
         toolButton_14->setMinimumSize(QSize(90, 24));
         toolButton_14->setMaximumSize(QSize(90, 24));
         toolButton_14->setStyleSheet(QStringLiteral(""));
@@ -369,7 +374,7 @@ public:
         toolButton_14->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolButton_15 = new QToolButton(groupBox_7);
         toolButton_15->setObjectName(QStringLiteral("toolButton_15"));
-        toolButton_15->setGeometry(QRect(90, 55, 24, 24));
+        toolButton_15->setGeometry(QRect(70, 55, 24, 24));
         toolButton_15->setMinimumSize(QSize(24, 24));
         toolButton_15->setMaximumSize(QSize(24, 24));
         toolButton_15->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -380,7 +385,7 @@ public:
         toolButton_15->setIcon(icon8);
         toolButton_16 = new QToolButton(groupBox_7);
         toolButton_16->setObjectName(QStringLiteral("toolButton_16"));
-        toolButton_16->setGeometry(QRect(130, 55, 24, 24));
+        toolButton_16->setGeometry(QRect(110, 55, 24, 24));
         toolButton_16->setMinimumSize(QSize(24, 24));
         toolButton_16->setMaximumSize(QSize(24, 24));
         toolButton_16->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -391,7 +396,7 @@ public:
         toolButton_16->setIcon(icon9);
         toolButton_17 = new QToolButton(groupBox_7);
         toolButton_17->setObjectName(QStringLiteral("toolButton_17"));
-        toolButton_17->setGeometry(QRect(210, 55, 24, 24));
+        toolButton_17->setGeometry(QRect(190, 55, 24, 24));
         toolButton_17->setMinimumSize(QSize(24, 24));
         toolButton_17->setMaximumSize(QSize(24, 24));
         toolButton_17->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -403,7 +408,7 @@ public:
         toolButton_17->setIcon(icon10);
         toolButton_18 = new QToolButton(groupBox_7);
         toolButton_18->setObjectName(QStringLiteral("toolButton_18"));
-        toolButton_18->setGeometry(QRect(170, 55, 24, 24));
+        toolButton_18->setGeometry(QRect(150, 55, 24, 24));
         toolButton_18->setMinimumSize(QSize(24, 24));
         toolButton_18->setMaximumSize(QSize(24, 24));
         toolButton_18->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -415,7 +420,7 @@ public:
         toolButton_18->setIcon(icon11);
         toolButton_19 = new QToolButton(groupBox_7);
         toolButton_19->setObjectName(QStringLiteral("toolButton_19"));
-        toolButton_19->setGeometry(QRect(290, 55, 24, 24));
+        toolButton_19->setGeometry(QRect(270, 55, 24, 24));
         toolButton_19->setMinimumSize(QSize(24, 24));
         toolButton_19->setMaximumSize(QSize(24, 24));
         toolButton_19->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -426,7 +431,7 @@ public:
         toolButton_19->setIcon(icon12);
         toolButton_20 = new QToolButton(groupBox_7);
         toolButton_20->setObjectName(QStringLiteral("toolButton_20"));
-        toolButton_20->setGeometry(QRect(250, 55, 24, 24));
+        toolButton_20->setGeometry(QRect(230, 55, 24, 24));
         toolButton_20->setMinimumSize(QSize(24, 24));
         toolButton_20->setMaximumSize(QSize(24, 24));
         toolButton_20->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -438,7 +443,7 @@ public:
         toolButton_20->setIcon(icon13);
         toolButton_21 = new QToolButton(groupBox_7);
         toolButton_21->setObjectName(QStringLiteral("toolButton_21"));
-        toolButton_21->setGeometry(QRect(330, 55, 24, 24));
+        toolButton_21->setGeometry(QRect(310, 55, 24, 24));
         toolButton_21->setMinimumSize(QSize(24, 24));
         toolButton_21->setMaximumSize(QSize(24, 24));
         toolButton_21->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -449,7 +454,7 @@ public:
         toolButton_21->setIcon(icon14);
         toolButton_22 = new QToolButton(groupBox_7);
         toolButton_22->setObjectName(QStringLiteral("toolButton_22"));
-        toolButton_22->setGeometry(QRect(370, 20, 30, 50));
+        toolButton_22->setGeometry(QRect(350, 20, 30, 50));
         toolButton_22->setMinimumSize(QSize(30, 50));
         toolButton_22->setMaximumSize(QSize(30, 50));
         toolButton_22->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -461,42 +466,42 @@ public:
         toolButton_22->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         checkBox_8 = new QCheckBox(groupBox_7);
         checkBox_8->setObjectName(QStringLiteral("checkBox_8"));
-        checkBox_8->setGeometry(QRect(420, 20, 85, 16));
+        checkBox_8->setGeometry(QRect(400, 20, 71, 16));
         checkBox_8->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
         checkBox_9 = new QCheckBox(groupBox_7);
         checkBox_9->setObjectName(QStringLiteral("checkBox_9"));
-        checkBox_9->setGeometry(QRect(420, 50, 80, 16));
+        checkBox_9->setGeometry(QRect(400, 50, 80, 16));
         checkBox_9->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
         line_2 = new QFrame(groupBox_7);
         line_2->setObjectName(QStringLiteral("line_2"));
-        line_2->setGeometry(QRect(410, 10, 1, 70));
+        line_2->setGeometry(QRect(390, 10, 1, 70));
         line_2->setMinimumSize(QSize(0, 70));
         line_2->setMaximumSize(QSize(16777215, 70));
         line_2->setFrameShape(QFrame::VLine);
         line_2->setFrameShadow(QFrame::Sunken);
         line_3 = new QFrame(groupBox_7);
         line_3->setObjectName(QStringLiteral("line_3"));
-        line_3->setGeometry(QRect(510, 10, 1, 70));
+        line_3->setGeometry(QRect(480, 10, 1, 70));
         line_3->setMinimumSize(QSize(0, 70));
         line_3->setMaximumSize(QSize(16777215, 70));
         line_3->setFrameShape(QFrame::VLine);
         line_3->setFrameShadow(QFrame::Sunken);
         line_4 = new QFrame(groupBox_7);
         line_4->setObjectName(QStringLiteral("line_4"));
-        line_4->setGeometry(QRect(590, 10, 1, 70));
+        line_4->setGeometry(QRect(560, 10, 1, 70));
         line_4->setMinimumSize(QSize(0, 70));
         line_4->setMaximumSize(QSize(16777215, 70));
         line_4->setFrameShape(QFrame::VLine);
         line_4->setFrameShadow(QFrame::Sunken);
         horizontalSlider_2 = new QSlider(groupBox_7);
         horizontalSlider_2->setObjectName(QStringLiteral("horizontalSlider_2"));
-        horizontalSlider_2->setGeometry(QRect(600, 35, 121, 22));
+        horizontalSlider_2->setGeometry(QRect(570, 35, 121, 22));
         horizontalSlider_2->setStyleSheet(QLatin1String("image: url(:/IRProc/Color-Bar);\n"
 "background-color: rgb(18, 59, 101);"));
         horizontalSlider_2->setOrientation(Qt::Horizontal);
         groupBox_15 = new QGroupBox(groupBox_7);
         groupBox_15->setObjectName(QStringLiteral("groupBox_15"));
-        groupBox_15->setGeometry(QRect(80, 50, 281, 35));
+        groupBox_15->setGeometry(QRect(60, 50, 281, 35));
         groupBox_15->setMinimumSize(QSize(0, 35));
         groupBox_15->setMaximumSize(QSize(16777215, 35));
         groupBox_15->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -507,42 +512,42 @@ public:
 ""));
         line_5 = new QFrame(groupBox_7);
         line_5->setObjectName(QStringLiteral("line_5"));
-        line_5->setGeometry(QRect(120, 50, 1, 35));
+        line_5->setGeometry(QRect(100, 50, 1, 35));
         line_5->setMinimumSize(QSize(0, 35));
         line_5->setMaximumSize(QSize(16777215, 35));
         line_5->setFrameShape(QFrame::VLine);
         line_5->setFrameShadow(QFrame::Sunken);
         line_6 = new QFrame(groupBox_7);
         line_6->setObjectName(QStringLiteral("line_6"));
-        line_6->setGeometry(QRect(160, 50, 1, 35));
+        line_6->setGeometry(QRect(140, 50, 1, 35));
         line_6->setMinimumSize(QSize(0, 35));
         line_6->setMaximumSize(QSize(16777215, 35));
         line_6->setFrameShape(QFrame::VLine);
         line_6->setFrameShadow(QFrame::Sunken);
         line_7 = new QFrame(groupBox_7);
         line_7->setObjectName(QStringLiteral("line_7"));
-        line_7->setGeometry(QRect(200, 50, 1, 35));
+        line_7->setGeometry(QRect(180, 50, 1, 35));
         line_7->setMinimumSize(QSize(0, 35));
         line_7->setMaximumSize(QSize(16777215, 35));
         line_7->setFrameShape(QFrame::VLine);
         line_7->setFrameShadow(QFrame::Sunken);
         line_8 = new QFrame(groupBox_7);
         line_8->setObjectName(QStringLiteral("line_8"));
-        line_8->setGeometry(QRect(240, 50, 1, 35));
+        line_8->setGeometry(QRect(220, 50, 1, 35));
         line_8->setMinimumSize(QSize(0, 35));
         line_8->setMaximumSize(QSize(16777215, 35));
         line_8->setFrameShape(QFrame::VLine);
         line_8->setFrameShadow(QFrame::Sunken);
         line_9 = new QFrame(groupBox_7);
         line_9->setObjectName(QStringLiteral("line_9"));
-        line_9->setGeometry(QRect(280, 50, 1, 35));
+        line_9->setGeometry(QRect(260, 50, 1, 35));
         line_9->setMinimumSize(QSize(0, 35));
         line_9->setMaximumSize(QSize(16777215, 35));
         line_9->setFrameShape(QFrame::VLine);
         line_9->setFrameShadow(QFrame::Sunken);
         line_10 = new QFrame(groupBox_7);
         line_10->setObjectName(QStringLiteral("line_10"));
-        line_10->setGeometry(QRect(320, 50, 1, 35));
+        line_10->setGeometry(QRect(300, 50, 1, 35));
         line_10->setMinimumSize(QSize(0, 35));
         line_10->setMaximumSize(QSize(16777215, 35));
         line_10->setFrameShape(QFrame::VLine);
@@ -554,7 +559,7 @@ public:
         label_22->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         toolButton_40 = new QToolButton(groupBox_7);
         toolButton_40->setObjectName(QStringLiteral("toolButton_40"));
-        toolButton_40->setGeometry(QRect(520, 10, 20, 20));
+        toolButton_40->setGeometry(QRect(495, 10, 20, 20));
         toolButton_40->setMinimumSize(QSize(20, 20));
         toolButton_40->setMaximumSize(QSize(20, 20));
         toolButton_40->setStyleSheet(QStringLiteral(""));
@@ -564,7 +569,7 @@ public:
         toolButton_40->setIconSize(QSize(20, 20));
         toolButton_41 = new QToolButton(groupBox_7);
         toolButton_41->setObjectName(QStringLiteral("toolButton_41"));
-        toolButton_41->setGeometry(QRect(520, 35, 20, 20));
+        toolButton_41->setGeometry(QRect(495, 35, 20, 20));
         toolButton_41->setMinimumSize(QSize(20, 20));
         toolButton_41->setMaximumSize(QSize(20, 20));
         toolButton_41->setStyleSheet(QStringLiteral(""));
@@ -574,7 +579,7 @@ public:
         toolButton_41->setIconSize(QSize(20, 20));
         toolButton_42 = new QToolButton(groupBox_7);
         toolButton_42->setObjectName(QStringLiteral("toolButton_42"));
-        toolButton_42->setGeometry(QRect(520, 60, 20, 20));
+        toolButton_42->setGeometry(QRect(495, 60, 20, 20));
         toolButton_42->setMinimumSize(QSize(20, 20));
         toolButton_42->setMaximumSize(QSize(20, 20));
         toolButton_42->setStyleSheet(QStringLiteral(""));
@@ -584,7 +589,7 @@ public:
         toolButton_42->setIconSize(QSize(20, 20));
         toolButton_43 = new QToolButton(groupBox_7);
         toolButton_43->setObjectName(QStringLiteral("toolButton_43"));
-        toolButton_43->setGeometry(QRect(555, 60, 20, 20));
+        toolButton_43->setGeometry(QRect(530, 60, 20, 20));
         toolButton_43->setMinimumSize(QSize(20, 20));
         toolButton_43->setMaximumSize(QSize(20, 20));
         toolButton_43->setStyleSheet(QStringLiteral(""));
@@ -594,7 +599,7 @@ public:
         toolButton_43->setIconSize(QSize(20, 20));
         toolButton_44 = new QToolButton(groupBox_7);
         toolButton_44->setObjectName(QStringLiteral("toolButton_44"));
-        toolButton_44->setGeometry(QRect(555, 35, 20, 20));
+        toolButton_44->setGeometry(QRect(530, 35, 20, 20));
         toolButton_44->setMinimumSize(QSize(20, 20));
         toolButton_44->setMaximumSize(QSize(20, 20));
         toolButton_44->setStyleSheet(QStringLiteral(""));
@@ -604,7 +609,7 @@ public:
         toolButton_44->setIconSize(QSize(20, 20));
         toolButton_45 = new QToolButton(groupBox_7);
         toolButton_45->setObjectName(QStringLiteral("toolButton_45"));
-        toolButton_45->setGeometry(QRect(555, 10, 20, 20));
+        toolButton_45->setGeometry(QRect(530, 10, 20, 20));
         toolButton_45->setMinimumSize(QSize(20, 20));
         toolButton_45->setMaximumSize(QSize(20, 20));
         toolButton_45->setStyleSheet(QStringLiteral(""));
@@ -645,15 +650,15 @@ public:
         toolButton_45->raise();
         groupBox_8 = new QGroupBox(pageProc);
         groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
-        groupBox_8->setGeometry(QRect(730, 0, 170, 90));
-        groupBox_8->setMinimumSize(QSize(170, 90));
-        groupBox_8->setMaximumSize(QSize(170, 90));
+        groupBox_8->setGeometry(QRect(702, 0, 190, 90));
+        groupBox_8->setMinimumSize(QSize(190, 90));
+        groupBox_8->setMaximumSize(QSize(190, 90));
         groupBox_8->setStyleSheet(QLatin1String("QGroupBox{\n"
 "background-image: url(:/IRProc/Tool-Bg);\n"
 "}"));
         horizontalSlider_3 = new MyCustomSlider(groupBox_8);
         horizontalSlider_3->setObjectName(QStringLiteral("horizontalSlider_3"));
-        horizontalSlider_3->setGeometry(QRect(70, 35, 100, 20));
+        horizontalSlider_3->setGeometry(QRect(75, 35, 100, 20));
         horizontalSlider_3->setStyleSheet(QLatin1String("\n"
 "background-color: rgb(18, 59, 101);"));
         horizontalSlider_3->setOrientation(Qt::Horizontal);
@@ -669,9 +674,9 @@ public:
         label_21->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         groupBox_9 = new QGroupBox(pageProc);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
-        groupBox_9->setGeometry(QRect(900, 0, 450, 90));
-        groupBox_9->setMinimumSize(QSize(450, 90));
-        groupBox_9->setMaximumSize(QSize(450, 90));
+        groupBox_9->setGeometry(QRect(900, 0, 420, 90));
+        groupBox_9->setMinimumSize(QSize(420, 90));
+        groupBox_9->setMaximumSize(QSize(400, 90));
         groupBox_9->setStyleSheet(QLatin1String("QGroupBox{\n"
 "background-image: url(:/IRProc/ImProcMerge-Bg);\n"
 "}"));
@@ -774,7 +779,7 @@ public:
         line_11->setFrameShadow(QFrame::Sunken);
         toolButton_23 = new QToolButton(pageProc);
         toolButton_23->setObjectName(QStringLiteral("toolButton_23"));
-        toolButton_23->setGeometry(QRect(1110, 15, 64, 64));
+        toolButton_23->setGeometry(QRect(1100, 15, 64, 64));
         toolButton_23->setMinimumSize(QSize(64, 64));
         toolButton_23->setMaximumSize(QSize(64, 64));
         toolButton_23->setStyleSheet(QString::fromUtf8("background-color: rgb(21, 86, 141);\n"
@@ -787,7 +792,7 @@ public:
         toolButton_23->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_24 = new QToolButton(pageProc);
         toolButton_24->setObjectName(QStringLiteral("toolButton_24"));
-        toolButton_24->setGeometry(QRect(1180, 15, 64, 64));
+        toolButton_24->setGeometry(QRect(1170, 15, 64, 64));
         toolButton_24->setMinimumSize(QSize(64, 64));
         toolButton_24->setMaximumSize(QSize(64, 64));
         toolButton_24->setStyleSheet(QString::fromUtf8("background-color: rgb(21, 86, 141);\n"
@@ -800,7 +805,7 @@ public:
         toolButton_24->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         toolButton_25 = new QToolButton(pageProc);
         toolButton_25->setObjectName(QStringLiteral("toolButton_25"));
-        toolButton_25->setGeometry(QRect(1250, 15, 64, 64));
+        toolButton_25->setGeometry(QRect(1240, 15, 64, 64));
         toolButton_25->setMinimumSize(QSize(64, 64));
         toolButton_25->setMaximumSize(QSize(64, 64));
         toolButton_25->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
@@ -1689,6 +1694,7 @@ public:
         lineEdit_6 = new QLineEdit(pageDataCal);
         lineEdit_6->setObjectName(QStringLiteral("lineEdit_6"));
         lineEdit_6->setGeometry(QRect(70, 30, 61, 20));
+        lineEdit_6->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         lineEdit_7 = new QLineEdit(pageDataCal);
         lineEdit_7->setObjectName(QStringLiteral("lineEdit_7"));
         lineEdit_7->setGeometry(QRect(70, 60, 61, 20));
@@ -1745,6 +1751,7 @@ public:
         stackedWidget_21->setMinimumSize(QSize(400, 300));
         widget2 = new QWidget();
         widget2->setObjectName(QStringLiteral("widget2"));
+        widget2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         gridLayout = new QGridLayout(widget2);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
