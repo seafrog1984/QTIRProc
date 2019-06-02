@@ -421,7 +421,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Scale-Up</normaloff>:/IRProc/Pro-Scale-Up</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_20">
+            <widget class="QToolButton" name="btn_colorType_change">
              <property name="geometry">
               <rect>
                <x>230</x>
@@ -856,7 +856,7 @@ background-image: url();
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_40">
+            <widget class="QToolButton" name="btn_win_w4">
              <property name="geometry">
               <rect>
                <x>495</x>
@@ -894,7 +894,7 @@ background-image: url();
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_41">
+            <widget class="QToolButton" name="btn_win_w5">
              <property name="geometry">
               <rect>
                <x>495</x>
@@ -919,7 +919,7 @@ background-image: url();
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>05</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -932,7 +932,7 @@ background-image: url();
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_42">
+            <widget class="QToolButton" name="btn_win_w6">
              <property name="geometry">
               <rect>
                <x>495</x>
@@ -957,7 +957,7 @@ background-image: url();
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>06</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -970,7 +970,7 @@ background-image: url();
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_43">
+            <widget class="QToolButton" name="btn_win_w12">
              <property name="geometry">
               <rect>
                <x>530</x>
@@ -995,7 +995,7 @@ background-image: url();
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>12</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1008,7 +1008,7 @@ background-image: url();
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_44">
+            <widget class="QToolButton" name="btn_win_w10">
              <property name="geometry">
               <rect>
                <x>530</x>
@@ -1033,7 +1033,7 @@ background-image: url();
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>10</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1046,7 +1046,7 @@ background-image: url();
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_45">
+            <widget class="QToolButton" name="btn_win_w8">
              <property name="geometry">
               <rect>
                <x>530</x>
@@ -1071,7 +1071,7 @@ background-image: url();
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>08</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1093,7 +1093,7 @@ background-image: url();
             <zorder>toolButton_17</zorder>
             <zorder>toolButton_18</zorder>
             <zorder>toolButton_19</zorder>
-            <zorder>toolButton_20</zorder>
+            <zorder>btn_colorType_change</zorder>
             <zorder>toolButton_21</zorder>
             <zorder>toolButton_22</zorder>
             <zorder>checkBox_8</zorder>
@@ -1109,12 +1109,12 @@ background-image: url();
             <zorder>line_9</zorder>
             <zorder>line_10</zorder>
             <zorder>label_22</zorder>
-            <zorder>toolButton_40</zorder>
-            <zorder>toolButton_41</zorder>
-            <zorder>toolButton_42</zorder>
-            <zorder>toolButton_43</zorder>
-            <zorder>toolButton_44</zorder>
-            <zorder>toolButton_45</zorder>
+            <zorder>btn_win_w4</zorder>
+            <zorder>btn_win_w5</zorder>
+            <zorder>btn_win_w6</zorder>
+            <zorder>btn_win_w12</zorder>
+            <zorder>btn_win_w10</zorder>
+            <zorder>btn_win_w8</zorder>
            </widget>
            <widget class="QGroupBox" name="groupBox_8">
             <property name="geometry">
@@ -3277,7 +3277,7 @@ background-image: url(:/IRProc/Txcl-bg);
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="toolButton_26">
+            <widget class="QToolButton" name="btn_analyze">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -4254,6 +4254,12 @@ background-image: url(:/IRProc/DataBg4);
                <width>50</width>
                <height>50</height>
               </rect>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>

@@ -5,13 +5,45 @@
 #include <QToolBar>
 #include <QPushButton>
 #include <QScrollArea>
+#include <QFileDialog>
+
+#include<opencv2\core\core.hpp>
+#include<opencv2\imgproc\imgproc.hpp>
+#include<opencv2\highgui\highgui.hpp>
+
+#include <imgProcDll.h>
 
 
 #include "IRProc.h"
 
 
-extern int g_picTotalNum;
-extern int flagShowBigImg;
+extern int flagShowBigImg;//显示大图还是小图的标志： 1-大图；0-小图
+
+using namespace cv;
+using namespace std;
+
+
+#define IMAGE_WIDTH  384//原始图像宽
+#define IMAGE_HEIGHT 288//原始图像高
+
+#define IMAGE_PER_ROW 5  //每行显示图像数
+#define IMGE_TOTAL_NUM 10 //显示的图像总数
+
+int g_picNum = 0;//读取的图像总数
+int g_currentBigNum = 0;//当前大图下标
+
+
+unsigned short *g_pData[12];//原始数据
+Mat g_img[12];//opencv原始图像-彩色
+Mat g_img_gray[12];//opencv原始图像-灰度
+QImage g_qImgShow[12];//Qt原始图像-彩色
+QImage g_qImgShow_gray[12];//Qt原始图像-灰度
+
+float g_referTemper = 25;//参考温度
+int g_win_width = 16;//窗宽
+int g_color_type = 2;// 颜色模式 0-灰度；1-传统伪彩色；2-TTM
+int g_filter_type = 2;//滤波模式 0-中值；1-直方图均衡；2-不滤波
+float g_bot = 25;//断层参考值，初始25
 
 
 
@@ -41,6 +73,9 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.userAreaBt, SIGNAL(clicked()), this, SLOT(userAreaFull()));
 	connect(ui.toolBarExpandBt, SIGNAL(clicked()), this, SLOT(toolBarExpand()));
 	connect(ui.sysSettingBt, SIGNAL(clicked()), this, SLOT(sysSettingOp()));
+	connect(ui.btn_analyze, SIGNAL(clicked()), this, SLOT(btnAnalyze()));
+	connect(ui.btn_colorType_change, SIGNAL(clicked()), this, SLOT(colorTypeChange()));
+
 	connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(customize()));
@@ -49,52 +84,22 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.checkBox_6, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_7, SIGNAL(clicked()), this, SLOT(customize()));
 
+	connect(ui.btn_win_w4, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
+	connect(ui.btn_win_w5, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
+	connect(ui.btn_win_w6, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
+	connect(ui.btn_win_w8, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
+	connect(ui.btn_win_w10, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
+	connect(ui.btn_win_w12, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 
-	g_picTotalNum = 8;
-	int count = 0;
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < (g_picTotalNum - 1) / 2 + 1; y++)
-		{
-			QLabel *lb = new QLabel;
-			lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-			//lb->setFixedSize(240, 320);
-			lb->setText(QString::number(x * ((g_picTotalNum - 1) / 2 + 1) + y));
-			lb->setFrameShape(QFrame::Box);
-			ui.gridLayout_2->addWidget(lb, x, y);
-			lb->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255)"));
-			count++;
-			if (count >= g_picTotalNum) break;
-		}
-		if (count >= g_picTotalNum) break;
-	}
+	
+//	changeLabel(g_picNum, IMAGE_PER_ROW);
 
-	count = 0;
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < (g_picTotalNum - 1) / 2 + 1; y++)
-		{
-			QPushButton *bt = new QPushButton;
-			//lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-			bt->setText(QString::number(x *((g_picTotalNum - 1) / 2 + 1) + y));
-			ui.gridLayout_2->addWidget(bt, x, y, Qt::AlignRight | Qt::AlignTop);
-			bt->setMinimumSize(32, 32);
-			bt->setMaximumSize(32, 32);
-			bt->setObjectName("bt" + QString::number(x * ((g_picTotalNum - 1) / 2 + 1) + y));
-			bt->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255)"));
-			connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
-
-			count++;
-			if (count >= g_picTotalNum) break;
-		}
-		if (count >= g_picTotalNum) break;
-	}
 
 	ui.toolBar->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
 		"background-color: rgb(19, 35, 67);"));
 
-
+//	changeLabel(10, IMAGE_PER_ROW);
 
 	statusBar();
 
@@ -222,6 +227,20 @@ void IRProc::customize()
 	QMessageBox::information(this, tr("Information"), text);
 }
 
+void IRProc::changeWinWidth()
+{
+
+	QToolButton  *tb = (QToolButton*)this->sender();
+	QString text = tb->text();
+
+	g_win_width = text.toInt();
+
+	updateImage();
+
+}
+
+
+
 void IRProc::imgChange()
 {
 
@@ -234,27 +253,12 @@ void IRProc::imgChange()
 	{
 		QString num = name.mid(2);
 		int r = num.toInt();
-
-	/*	QList<QLabel*> labelList = ui.widget2->findChildren<QLabel*>();
-
-		QLabel* label = labelList.at(r);
-		label->setMaximumSize(640, 480);
-		label->setMinimumSize(640, 480);
-
-		
-
-		ui.gridLayout_6->addWidget(label,0,0);
-
-		QList<QPushButton*> btList = ui.widget2->findChildren<QPushButton*>();
-
-		QPushButton *button = btList.at(r);
-
-		ui.gridLayout_6->addWidget(button, 0, 0, Qt::AlignRight | Qt::AlignTop);*/
-
+		g_currentBigNum = r;
 		QLabel *lb = new QLabel;
 		lb->setMaximumSize(480, 640);
 		lb->setMinimumSize(480, 640);
 		lb->setText(QString::number(r));
+		lb->setObjectName("Big"+QString::number(r));
 		lb->setFrameShape(QFrame::Box);
 		lb->setStyleSheet("border: 1px solid  #000000");
 		ui.gridLayout_6->addWidget(lb, 0, 0);
@@ -269,6 +273,15 @@ void IRProc::imgChange()
 		connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
 
 		ui.stackedWidget_21->setCurrentWidget(ui.pageBigImg);
+
+		QPixmap pixmap = QPixmap::fromImage(g_qImgShow[r]);
+		int with = lb->width();
+		int height = lb->height();
+		//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
+		QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+
+		lb->setPixmap(fitpixmap);
+
 		flagShowBigImg = 1;
 	}
 	else
@@ -291,4 +304,191 @@ void IRProc::imgChange()
 	}
 
 
+}
+
+void IRProc::btnAnalyze()
+{
+
+	imgProc();
+
+	QString filename;
+	filename = QFileDialog::getOpenFileName(this,tr("选择数据"),	"",	tr("Data (*.dat)"));
+	if (filename.isEmpty())
+	{
+		return;
+	}
+	char*  path;
+	QByteArray t = filename.toLatin1(); // must
+	path = t.data();
+		
+	Mat img;
+	img.create(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC3);
+
+	unsigned short *tmp = (unsigned short*)malloc(IMAGE_HEIGHT*IMAGE_WIDTH * sizeof(short));
+
+	dataRead(tmp, path, IMAGE_HEIGHT* IMAGE_WIDTH);
+	g_pData[g_picNum] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+	memcpy(g_pData[g_picNum], tmp, IMAGE_HEIGHT*IMAGE_WIDTH*sizeof(short));
+
+	if (g_color_type)
+	{
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, g_color_type, g_filter_type, g_bot);
+		QImage image = QImage((const unsigned char*)(g_img[g_picNum].data), g_img[g_picNum].cols, g_img[g_picNum].rows, QImage::Format_RGB888);
+		g_qImgShow[g_picNum] = image.copy();
+	}
+	else
+	{
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, 0, g_filter_type, g_bot);
+		QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_picNum].data), g_img_gray[g_picNum].cols, g_img_gray[g_picNum].rows, QImage::Format_Grayscale8);
+		g_qImgShow_gray[g_picNum] = image_gray.copy();
+	}
+
+	g_picNum = (g_picNum + 1) % IMGE_TOTAL_NUM;
+
+	changeLabel(g_picNum, IMAGE_PER_ROW);
+	showImage(g_picNum);
+}
+
+
+void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
+{
+	for (int i = 0; i < totalNum - 1; i++)
+	{
+		QLabel *p = ui.widget2->findChild<QLabel*>(QString::number(i));
+		if (p != NULL) delete p;
+	}
+
+	int rows = (totalNum-1) / imagePerRow +1;
+	int count = 0;
+	for (int x = 0; x < rows; x++)
+	{
+		for (int y = 0; y < imagePerRow; y++)
+		{
+			QLabel *lb = new QLabel;
+			lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+			//lb->setFixedSize(240, 320);
+			lb->setText(QString::number(x * imagePerRow + y));
+			lb->setObjectName(QString::number(x * imagePerRow + y));
+			lb->setFrameShape(QFrame::Box);
+			ui.gridLayout_2->addWidget(lb, x, y);
+			lb->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255);border:0px;"));
+			lb->setAlignment(Qt::AlignCenter);
+			count++;
+			if (count >= totalNum) break;
+		}
+		if (count >= totalNum) break;
+	}
+
+	count = 0;
+	for (int x = 0; x <rows; x++)
+	{
+		for (int y = 0; y < imagePerRow; y++)
+		{
+			QPushButton *bt = new QPushButton;
+			//lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+			bt->setText(QString::number(x *imagePerRow + y));
+			ui.gridLayout_2->addWidget(bt, x, y, Qt::AlignRight | Qt::AlignTop);
+			bt->setMinimumSize(32, 32);
+			bt->setMaximumSize(32, 32);
+			bt->setObjectName("bt" + QString::number(x * imagePerRow + y));
+			bt->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255)"));
+			connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
+
+			count++;
+			if (count >= totalNum) break;
+		}
+		if (count >= totalNum) break;
+	}
+
+}
+
+
+void IRProc::showImage(int pic_num)
+{
+
+	for (int i = 0; i < g_picNum; i++)
+	{
+		QLabel *p = ui.widget2->findChild<QLabel*>(QString::number(i));
+		int with = p->width();
+		int height = p->height();
+
+		if (g_color_type)
+		{	
+			QPixmap pixmap = QPixmap::fromImage(g_qImgShow[i]);
+			//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
+			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+			p->setPixmap(fitpixmap);
+		}
+		else
+		{
+			QPixmap pixmap = QPixmap::fromImage(g_qImgShow_gray[i]);
+			//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
+			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+			p->setPixmap(fitpixmap);
+		}
+
+	
+	}
+}
+
+void IRProc::updateImage()
+{
+	for (int i = 0; i < g_picNum; i++)
+	{
+		if (g_color_type)
+		{
+			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, g_color_type, g_filter_type, g_bot);
+			QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
+			g_qImgShow[i] = image.copy();
+		}
+		else
+		{
+			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, 0, g_filter_type, g_bot);
+			QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
+			g_qImgShow_gray[i] = image_gray.copy();
+
+		}
+
+	}
+
+	if (flagShowBigImg)
+	{
+		QLabel *p = ui.pageBigImg->findChild<QLabel*>("Big" + QString::number(g_currentBigNum));
+
+		int with = p->width();
+		int height = p->height();
+		if (g_color_type)
+		{
+			QPixmap pixmap = QPixmap::fromImage(g_qImgShow[g_currentBigNum]);
+			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+
+			p->setPixmap(fitpixmap);
+		}
+		else
+		{
+			QPixmap pixmap = QPixmap::fromImage(g_qImgShow_gray[g_currentBigNum]);
+			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+			p->setPixmap(fitpixmap);
+		}
+
+	}
+	else
+	{
+		showImage(g_picNum);
+	}
+
+}
+
+void IRProc::wheelEvent(QWheelEvent*event)
+{
+	g_referTemper += 1.0*event->delta() / 1200;
+	updateImage();
+
+}
+
+void IRProc::colorTypeChange()
+{
+	g_color_type = (g_color_type + 1) % 3;
+	updateImage();
 }

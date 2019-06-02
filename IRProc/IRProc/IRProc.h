@@ -26,6 +26,18 @@ public slots:
 	void customize();//系统设置-定制
 
 	void imgChange();//图像右上角按钮
+	void btnAnalyze();//打开图像，转到分析页面
+	void updateImage();//更新图像
+	void colorTypeChange();
+	void changeWinWidth();
 
+
+
+
+public:
+	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数
+	void showImage(int totalNum);//显示图像
+
+	void wheelEvent(QWheelEvent*event); //这个是鼠标上下滚轮的时候会调用
 
 };
