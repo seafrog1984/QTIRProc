@@ -343,7 +343,7 @@ void IRProc::btnAnalyze()
 		g_qImgShow_gray[g_picNum] = image_gray.copy();
 	}
 
-	g_picNum = (g_picNum + 1) % IMGE_TOTAL_NUM;
+	g_picNum = g_picNum  % IMGE_TOTAL_NUM +1;
 
 	changeLabel(g_picNum, IMAGE_PER_ROW);
 	showImage(g_picNum);
@@ -352,7 +352,7 @@ void IRProc::btnAnalyze()
 
 void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 {
-	for (int i = 0; i < totalNum - 1; i++)
+	for (int i = 0; i < totalNum; i++)
 	{
 		QLabel *p = ui.widget2->findChild<QLabel*>(QString::number(i));
 		if (p != NULL) delete p;
