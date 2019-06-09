@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_IRProc_t {
-    QByteArrayData data[11];
-    char stringdata0[122];
+    QByteArrayData data[13];
+    char stringdata0[140];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,13 +39,15 @@ QT_MOC_LITERAL(6, 58, 9), // "imgChange"
 QT_MOC_LITERAL(7, 68, 10), // "btnAnalyze"
 QT_MOC_LITERAL(8, 79, 11), // "updateImage"
 QT_MOC_LITERAL(9, 91, 15), // "colorTypeChange"
-QT_MOC_LITERAL(10, 107, 14) // "changeWinWidth"
+QT_MOC_LITERAL(10, 107, 14), // "changeWinWidth"
+QT_MOC_LITERAL(11, 122, 7), // "setStep"
+QT_MOC_LITERAL(12, 130, 9) // "setFilter"
 
     },
     "IRProc\0userAreaFull\0\0toolBarExpand\0"
     "sysSettingOp\0customize\0imgChange\0"
     "btnAnalyze\0updateImage\0colorTypeChange\0"
-    "changeWinWidth"
+    "changeWinWidth\0setStep\0setFilter"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,7 +57,7 @@ static const uint qt_meta_data_IRProc[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,15 +65,17 @@ static const uint qt_meta_data_IRProc[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x0a /* Public */,
-       3,    0,   60,    2, 0x0a /* Public */,
-       4,    0,   61,    2, 0x0a /* Public */,
-       5,    0,   62,    2, 0x0a /* Public */,
-       6,    0,   63,    2, 0x0a /* Public */,
-       7,    0,   64,    2, 0x0a /* Public */,
-       8,    0,   65,    2, 0x0a /* Public */,
-       9,    0,   66,    2, 0x0a /* Public */,
-      10,    0,   67,    2, 0x0a /* Public */,
+       1,    0,   69,    2, 0x0a /* Public */,
+       3,    0,   70,    2, 0x0a /* Public */,
+       4,    0,   71,    2, 0x0a /* Public */,
+       5,    0,   72,    2, 0x0a /* Public */,
+       6,    0,   73,    2, 0x0a /* Public */,
+       7,    0,   74,    2, 0x0a /* Public */,
+       8,    0,   75,    2, 0x0a /* Public */,
+       9,    0,   76,    2, 0x0a /* Public */,
+      10,    0,   77,    2, 0x0a /* Public */,
+      11,    0,   78,    2, 0x0a /* Public */,
+      12,    1,   79,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -83,6 +87,8 @@ static const uint qt_meta_data_IRProc[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    2,
 
        0        // eod
 };
@@ -102,10 +108,11 @@ void IRProc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 6: _t->updateImage(); break;
         case 7: _t->colorTypeChange(); break;
         case 8: _t->changeWinWidth(); break;
+        case 9: _t->setStep(); break;
+        case 10: _t->setFilter((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject IRProc::staticMetaObject = {
@@ -133,13 +140,13 @@ int IRProc::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }

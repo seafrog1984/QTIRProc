@@ -45,6 +45,8 @@ int g_color_type = 2;// 颜色模式 0-灰度；1-传统伪彩色；2-TTM
 int g_filter_type = 2;//滤波模式 0-中值；1-直方图均衡；2-不滤波
 float g_bot = 25;//断层参考值，初始25
 
+float g_step = 0.01;
+
 
 
 IRProc::IRProc(QWidget *parent)
@@ -75,6 +77,7 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.sysSettingBt, SIGNAL(clicked()), this, SLOT(sysSettingOp()));
 	connect(ui.btn_analyze, SIGNAL(clicked()), this, SLOT(btnAnalyze()));
 	connect(ui.btn_colorType_change, SIGNAL(clicked()), this, SLOT(colorTypeChange()));
+	connect(ui.btn_set_step, SIGNAL(clicked()), this, SLOT(setStep()));
 
 	connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(customize()));
@@ -91,9 +94,12 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_win_w10, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 	connect(ui.btn_win_w12, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 
+	connect(ui.cbox_smooth, SIGNAL(currentIndexChanged(int)), this, SLOT(setFilter(int)));
 	
 //	changeLabel(g_picNum, IMAGE_PER_ROW);
-
+	ui.cbox_smooth->addItem(QStringLiteral("中值"), 0);
+	ui.cbox_smooth->addItem(QStringLiteral("直方图"), 1);
+	ui.cbox_smooth->addItem(QStringLiteral("原始"), 2);
 
 
 	ui.toolBar->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
@@ -312,7 +318,7 @@ void IRProc::btnAnalyze()
 	imgProc();
 
 	QString filename;
-	filename = QFileDialog::getOpenFileName(this,tr("选择数据"),	"",	tr("Data (*.dat)"));
+	filename = QFileDialog::getOpenFileName(this, tr("Select Data"), "", tr("Data (*.dat)"));
 	if (filename.isEmpty())
 	{
 		return;
@@ -482,7 +488,7 @@ void IRProc::updateImage()
 
 void IRProc::wheelEvent(QWheelEvent*event)
 {
-	g_referTemper += 1.0*event->delta() / 1200;
+	g_referTemper += 1.0*event->delta() / 120 *g_step;
 	updateImage();
 
 }
@@ -490,5 +496,17 @@ void IRProc::wheelEvent(QWheelEvent*event)
 void IRProc::colorTypeChange()
 {
 	g_color_type = (g_color_type + 1) % 3;
+	updateImage();
+}
+
+void IRProc::setStep()
+{
+	g_step = ui.lineEdit_step->text().toFloat();
+
+}
+
+void IRProc::setFilter(int)
+{
+	g_filter_type=ui.cbox_smooth->currentIndex();
 	updateImage();
 }

@@ -30,7 +30,8 @@ public slots:
 	void updateImage();//更新图像
 	void colorTypeChange();
 	void changeWinWidth();
-
+	void setStep();//设置断层步长
+	void setFilter(int);//设置滤波方式
 
 
 

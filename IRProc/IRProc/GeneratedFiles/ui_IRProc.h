@@ -211,6 +211,11 @@ public:
     QCheckBox *checkBox_6;
     QCheckBox *checkBox_7;
     QLabel *label_40;
+    QGroupBox *groupBox_16;
+    QToolButton *btn_set_step;
+    QLabel *label_48;
+    QLineEdit *lineEdit_step;
+    QComboBox *cbox_smooth;
     QStackedWidget *stackedWidget_2;
     QWidget *showpageData;
     QHBoxLayout *horizontalLayout_3;
@@ -1612,6 +1617,33 @@ public:
         label_40 = new QLabel(groupBox_2);
         label_40->setObjectName(QStringLiteral("label_40"));
         label_40->setGeometry(QRect(25, 30, 20, 41));
+        groupBox_16 = new QGroupBox(pageSetting);
+        groupBox_16->setObjectName(QStringLiteral("groupBox_16"));
+        groupBox_16->setGeometry(QRect(770, 0, 251, 90));
+        groupBox_16->setMinimumSize(QSize(0, 90));
+        groupBox_16->setMaximumSize(QSize(16777215, 90));
+        groupBox_16->setStyleSheet(QStringLiteral(""));
+        btn_set_step = new QToolButton(groupBox_16);
+        btn_set_step->setObjectName(QStringLiteral("btn_set_step"));
+        btn_set_step->setGeometry(QRect(90, 50, 60, 32));
+        btn_set_step->setMinimumSize(QSize(60, 32));
+        btn_set_step->setMaximumSize(QSize(32, 32));
+        btn_set_step->setStyleSheet(QLatin1String("border-width:2px;\n"
+"border-color:red"));
+        label_48 = new QLabel(groupBox_16);
+        label_48->setObjectName(QStringLiteral("label_48"));
+        label_48->setGeometry(QRect(30, 30, 20, 41));
+        lineEdit_step = new QLineEdit(groupBox_16);
+        lineEdit_step->setObjectName(QStringLiteral("lineEdit_step"));
+        lineEdit_step->setGeometry(QRect(90, 20, 61, 20));
+        lineEdit_step->setStyleSheet(QLatin1String("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
+        cbox_smooth = new QComboBox(groupBox_16);
+        cbox_smooth->setObjectName(QStringLiteral("cbox_smooth"));
+        cbox_smooth->setGeometry(QRect(170, 20, 69, 22));
+        cbox_smooth->setStyleSheet(QLatin1String("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
+        cbox_smooth->setEditable(false);
         stackedWidget->addWidget(pageSetting);
 
         verticalLayout->addWidget(stackedWidget);
@@ -1813,7 +1845,7 @@ public:
 
         retranslateUi(IRProcClass);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
         tabWidget->setCurrentIndex(0);
 
 
@@ -2030,6 +2062,11 @@ public:
         label_40->setText(QApplication::translate("IRProcClass", "\345\256\232\n"
 "\n"
 "\345\210\266", 0));
+        groupBox_16->setTitle(QString());
+        btn_set_step->setText(QApplication::translate("IRProcClass", "\346\226\255\345\261\202\346\255\245\351\225\277", 0));
+        label_48->setText(QApplication::translate("IRProcClass", "\345\217\202\n"
+"\n"
+"\346\225\260", 0));
 #ifndef QT_NO_TOOLTIP
         stackedWidget_2->setToolTip(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
 #endif // QT_NO_TOOLTIP
