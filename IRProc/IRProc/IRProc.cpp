@@ -36,6 +36,7 @@ int g_currentBigNum = 0;//当前大图下标
 unsigned short *g_pData[12];//原始数据
 Mat g_img[12];//opencv原始图像-彩色
 Mat g_img_gray[12];//opencv原始图像-灰度
+Mat g_temper[12];//温度矩阵
 QImage g_qImgShow[12];//Qt原始图像-彩色
 QImage g_qImgShow_gray[12];//Qt原始图像-灰度
 
@@ -43,7 +44,7 @@ float g_referTemper = 25;//参考温度
 int g_win_width = 16;//窗宽
 int g_color_type = 2;// 颜色模式 0-灰度；1-传统伪彩色；2-TTM
 int g_filter_type = 2;//滤波模式 0-中值；1-直方图均衡；2-不滤波
-float g_bot = 25;//断层参考值，初始25
+float g_bot = 22;//断层参考值，初始22
 
 float g_step = 0.01;
 
@@ -336,15 +337,18 @@ void IRProc::btnAnalyze()
 	g_pData[g_picNum] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
 	memcpy(g_pData[g_picNum], tmp, IMAGE_HEIGHT*IMAGE_WIDTH*sizeof(short));
 
+	g_temper[g_picNum].create(IMAGE_HEIGHT, IMAGE_WIDTH, CV_32FC1);
+	data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+
 	if (g_color_type)
 	{
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, g_color_type, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, g_color_type, g_filter_type, g_bot);
 		QImage image = QImage((const unsigned char*)(g_img[g_picNum].data), g_img[g_picNum].cols, g_img[g_picNum].rows, QImage::Format_RGB888);
 		g_qImgShow[g_picNum] = image.copy();
 	}
 	else
 	{
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, 0, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
 		QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_picNum].data), g_img_gray[g_picNum].cols, g_img_gray[g_picNum].rows, QImage::Format_Grayscale8);
 		g_qImgShow_gray[g_picNum] = image_gray.copy();
 	}
@@ -444,13 +448,13 @@ void IRProc::updateImage()
 	{
 		if (g_color_type)
 		{
-			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, g_color_type, g_filter_type, g_bot);
+			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, g_color_type, g_filter_type, g_bot);
 			QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 			g_qImgShow[i] = image.copy();
 		}
 		else
 		{
-			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_referTemper, g_win_width, 0, g_filter_type, g_bot);
+			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, 0, g_filter_type, g_bot);
 			QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
 			g_qImgShow_gray[i] = image_gray.copy();
 
@@ -488,7 +492,7 @@ void IRProc::updateImage()
 
 void IRProc::wheelEvent(QWheelEvent*event)
 {
-	g_referTemper += 1.0*event->delta() / 120 *g_step;
+	g_bot += 1.0*event->delta() / 120 *g_step;
 	updateImage();
 
 }
