@@ -17,7 +17,7 @@
 #include "IRProc.h"
 
 
-extern int flagShowBigImg;//显示大图还是小图的标志： 1-大图；0-小图
+extern int g_flagShowBigImg = 0;//显示大图还是小图的标志： 1-大图；0-小图
 
 using namespace cv;
 using namespace std;
@@ -31,7 +31,9 @@ using namespace std;
 
 int g_picNum = 0;//读取的图像总数
 int g_currentBigNum = 0;//当前大图下标
+int g_cur_img = 0;//当前操作的图像下标
 
+float g_ratio[12];//图像放大倍数
 
 unsigned short *g_pData[12];//原始数据
 Mat g_img[12];//opencv原始图像-彩色
@@ -51,7 +53,7 @@ float g_step = 0.01;
 
 
 IRProc::IRProc(QWidget *parent)
-	: QMainWindow(parent)
+: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	//QScrollArea *s = new QScrollArea(this);
@@ -96,8 +98,8 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_win_w12, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 
 	connect(ui.cbox_smooth, SIGNAL(currentIndexChanged(int)), this, SLOT(setFilter(int)));
-	
-//	changeLabel(g_picNum, IMAGE_PER_ROW);
+
+	//	changeLabel(g_picNum, IMAGE_PER_ROW);
 	ui.cbox_smooth->addItem(QStringLiteral("中值"), 0);
 	ui.cbox_smooth->addItem(QStringLiteral("直方图"), 1);
 	ui.cbox_smooth->addItem(QStringLiteral("原始"), 2);
@@ -106,7 +108,7 @@ IRProc::IRProc(QWidget *parent)
 	ui.toolBar->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
 		"background-color: rgb(19, 35, 67);"));
 
-//	changeLabel(10, IMAGE_PER_ROW);
+	//	changeLabel(10, IMAGE_PER_ROW);
 
 	statusBar();
 
@@ -251,27 +253,27 @@ void IRProc::changeWinWidth()
 void IRProc::imgChange()
 {
 
-	QPushButton *optBtn = qobject_cast<QPushButton *>(sender());		
+	QPushButton *optBtn = qobject_cast<QPushButton *>(sender());
 	QString name = sender()->objectName();//发送信号者的对象名
 
 
 
-	if (flagShowBigImg == 0)
+	if (g_flagShowBigImg == 0)
 	{
 		QString num = name.mid(2);
 		int r = num.toInt();
-		g_currentBigNum = r;
+		g_cur_img = g_currentBigNum = r;
 		QLabel *lb = new QLabel;
 		lb->setMaximumSize(480, 640);
 		lb->setMinimumSize(480, 640);
 		lb->setText(QString::number(r));
-		lb->setObjectName("Big"+QString::number(r));
+		lb->setObjectName(QString::number(r + 20));
 		lb->setFrameShape(QFrame::Box);
 		lb->setStyleSheet("border: 1px solid  #000000");
 		ui.gridLayout_6->addWidget(lb, 0, 0);
 
 		QPushButton *bt = new QPushButton;
-		
+
 		bt->setText(QString::number(r));
 		ui.gridLayout_6->addWidget(bt, 0, 0, Qt::AlignRight | Qt::AlignTop);
 		bt->setMinimumSize(32, 32);
@@ -289,14 +291,14 @@ void IRProc::imgChange()
 
 		lb->setPixmap(fitpixmap);
 
-		flagShowBigImg = 1;
+		g_flagShowBigImg = 1;
 	}
 	else
 	{
 		int num = ui.gridLayout_6->count();
 		if (num)
 		{
-			for (int i = num-1; i >=0; i--)
+			for (int i = num - 1; i >= 0; i--)
 			{
 				QWidget *p = ui.gridLayout_6->itemAt(i)->widget();
 				ui.gridLayout_6->removeWidget(p);
@@ -307,7 +309,7 @@ void IRProc::imgChange()
 		}
 
 		ui.stackedWidget_21->setCurrentWidget(ui.widget2);
-		flagShowBigImg = 0;
+		g_flagShowBigImg = 0;
 	}
 
 
@@ -327,7 +329,7 @@ void IRProc::btnAnalyze()
 	char*  path;
 	QByteArray t = filename.toLatin1(); // must
 	path = t.data();
-		
+
 	Mat img;
 	img.create(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC3);
 
@@ -339,24 +341,27 @@ void IRProc::btnAnalyze()
 
 	g_temper[g_picNum].create(IMAGE_HEIGHT, IMAGE_WIDTH, CV_32FC1);
 	data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+	data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
 
+	data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
 	if (g_color_type)
 	{
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, g_color_type, g_filter_type, g_bot);
 		QImage image = QImage((const unsigned char*)(g_img[g_picNum].data), g_img[g_picNum].cols, g_img[g_picNum].rows, QImage::Format_RGB888);
 		g_qImgShow[g_picNum] = image.copy();
 	}
 	else
 	{
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
 		QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_picNum].data), g_img_gray[g_picNum].cols, g_img_gray[g_picNum].rows, QImage::Format_Grayscale8);
 		g_qImgShow_gray[g_picNum] = image_gray.copy();
 	}
 
-	g_picNum = g_picNum  % IMGE_TOTAL_NUM +1;
+	g_ratio[g_picNum] = 1;
+	g_picNum = g_picNum  % IMGE_TOTAL_NUM + 1;
 
 	changeLabel(g_picNum, IMAGE_PER_ROW);
+
 	showImage(g_picNum);
+	//updateImage();
 }
 
 
@@ -368,7 +373,7 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 		if (p != NULL) delete p;
 	}
 
-	int rows = (totalNum-1) / imagePerRow +1;
+	int rows = (totalNum - 1) / imagePerRow + 1;
 	int count = 0;
 	for (int x = 0; x < rows; x++)
 	{
@@ -383,6 +388,7 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 			ui.gridLayout_2->addWidget(lb, x, y);
 			lb->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255);border:0px;"));
 			lb->setAlignment(Qt::AlignCenter);
+			lb->setMaximumSize(480, 640);
 			count++;
 			if (count >= totalNum) break;
 		}
@@ -390,7 +396,7 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 	}
 
 	count = 0;
-	for (int x = 0; x <rows; x++)
+	for (int x = 0; x < rows; x++)
 	{
 		for (int y = 0; y < imagePerRow; y++)
 		{
@@ -416,19 +422,41 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 
 void IRProc::showImage(int pic_num)
 {
-
-	for (int i = 0; i < g_picNum; i++)
+	if (g_flagShowBigImg)
 	{
-		QLabel *p = ui.widget2->findChild<QLabel*>(QString::number(i));
+		QLabel *p = ui.pageBigImg->findChild<QLabel*>(QString::number(g_cur_img + 20));
+
 		int with = p->width();
 		int height = p->height();
-
+		int i = g_cur_img;
 		if (g_color_type)
-		{	
+		{
 			QPixmap pixmap = QPixmap::fromImage(g_qImgShow[i]);
 			//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
 			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
 			p->setPixmap(fitpixmap);
+
+			int w = p->pixmap()->width();
+			int h = p->pixmap()->height();
+			Mat timg;
+
+			cv::resize(g_img[i], timg, Size(w * g_ratio[i], h * g_ratio[i]), 0, 0);
+
+			int m_mx = w * g_ratio[i] / 2 - w / 2;
+			int m_my = h * g_ratio[i] / 2 - h / 2;
+			Rect rect1(m_mx, m_my, w, h);
+			//	Rect rect2(224, 224, 128, 128);
+			Mat roi1;
+			timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+			QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_RGB888);
+			//QImage image = QImage((const unsigned char*)(img.data), img.cols, img.rows, QImage::Format_Grayscale8);
+
+			p->setPixmap(QPixmap::fromImage(image));
+
+			timg.release();
+			roi1.release();
+
 		}
 		else
 		{
@@ -436,10 +464,100 @@ void IRProc::showImage(int pic_num)
 			//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
 			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
 			p->setPixmap(fitpixmap);
-		}
 
-	
+			int w = p->pixmap()->width();
+			int h = p->pixmap()->height();
+			Mat timg;
+
+			cv::resize(g_img_gray[i], timg, Size(w * g_ratio[i], h * g_ratio[i]), 0, 0);
+
+			int m_mx = w * g_ratio[i] / 2 - w / 2;
+			int m_my = h * g_ratio[i] / 2 - h / 2;
+			Rect rect1(m_mx, m_my, w, h);
+			//	Rect rect2(224, 224, 128, 128);
+			Mat roi1;
+			timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+			//	QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_RGB888);
+			QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_Grayscale8);
+
+			p->setPixmap(QPixmap::fromImage(image));
+
+			timg.release();
+			roi1.release();
+		}
 	}
+	else
+	{
+		changeLabel(g_picNum, IMAGE_PER_ROW);
+		for (int i = 0; i < g_picNum; i++)
+		{
+			QLabel *p = ui.widget2->findChild<QLabel*>(QString::number(i));
+			int with = p->width();
+			int height = p->height();
+
+			if (g_color_type)
+			{
+				QPixmap pixmap = QPixmap::fromImage(g_qImgShow[i]);
+				//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
+				QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+				p->setPixmap(fitpixmap);
+
+				int w = p->pixmap()->width();
+				int h = p->pixmap()->height();
+				Mat timg;
+
+				cv::resize(g_img[i], timg, Size(w * g_ratio[i], h * g_ratio[i]), 0, 0);
+
+				int m_mx = w * g_ratio[i] / 2 - w / 2;
+				int m_my = h * g_ratio[i] / 2 - h / 2;
+				Rect rect1(m_mx, m_my, w, h);
+				//	Rect rect2(224, 224, 128, 128);
+				Mat roi1;
+				timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+				QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_RGB888);
+				//QImage image = QImage((const unsigned char*)(img.data), img.cols, img.rows, QImage::Format_Grayscale8);
+
+				p->setPixmap(QPixmap::fromImage(image));
+
+				timg.release();
+				roi1.release();
+
+			}
+			else
+			{
+				QPixmap pixmap = QPixmap::fromImage(g_qImgShow_gray[i]);
+				//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
+				QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+				p->setPixmap(fitpixmap);
+
+				int w = p->pixmap()->width();
+				int h = p->pixmap()->height();
+				Mat timg;
+
+				cv::resize(g_img_gray[i], timg, Size(w * g_ratio[i], h * g_ratio[i]), 0, 0);
+
+				int m_mx = w * g_ratio[i] / 2 - w / 2;
+				int m_my = h * g_ratio[i] / 2 - h / 2;
+				Rect rect1(m_mx, m_my, w, h);
+				//	Rect rect2(224, 224, 128, 128);
+				Mat roi1;
+				timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+				//	QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_RGB888);
+				QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_Grayscale8);
+
+				p->setPixmap(QPixmap::fromImage(image));
+
+				timg.release();
+				roi1.release();
+			}
+
+
+		}
+	}
+
 }
 
 void IRProc::updateImage()
@@ -448,13 +566,13 @@ void IRProc::updateImage()
 	{
 		if (g_color_type)
 		{
-			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, g_color_type, g_filter_type, g_bot);
+			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
 			QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 			g_qImgShow[i] = image.copy();
 		}
 		else
 		{
-			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH,  g_win_width, 0, g_filter_type, g_bot);
+			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
 			QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
 			g_qImgShow_gray[i] = image_gray.copy();
 
@@ -462,37 +580,15 @@ void IRProc::updateImage()
 
 	}
 
-	if (flagShowBigImg)
-	{
-		QLabel *p = ui.pageBigImg->findChild<QLabel*>("Big" + QString::number(g_currentBigNum));
 
-		int with = p->width();
-		int height = p->height();
-		if (g_color_type)
-		{
-			QPixmap pixmap = QPixmap::fromImage(g_qImgShow[g_currentBigNum]);
-			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
+	showImage(g_picNum);
 
-			p->setPixmap(fitpixmap);
-		}
-		else
-		{
-			QPixmap pixmap = QPixmap::fromImage(g_qImgShow_gray[g_currentBigNum]);
-			QPixmap fitpixmap = pixmap.scaled(with, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);  // 按比例缩放
-			p->setPixmap(fitpixmap);
-		}
-
-	}
-	else
-	{
-		showImage(g_picNum);
-	}
 
 }
 
 void IRProc::wheelEvent(QWheelEvent*event)
 {
-	g_bot += 1.0*event->delta() / 120 *g_step;
+	g_bot += 1.0*event->delta() / 120 * g_step;
 	updateImage();
 
 }
@@ -511,6 +607,59 @@ void IRProc::setStep()
 
 void IRProc::setFilter(int)
 {
-	g_filter_type=ui.cbox_smooth->currentIndex();
+	g_filter_type = ui.cbox_smooth->currentIndex();
 	updateImage();
+}
+
+void IRProc::mousePressEvent(QMouseEvent *event)
+{//单击
+	// 如果是鼠标左键按下
+	if (event->button() == Qt::LeftButton){
+		//	QMessageBox::information(NULL, "Title", "left click"); 
+		//setMouseState(MouseState::L_C, 0);
+		int mouse_x = QCursor::pos().x();//鼠标点击处横坐标
+		int mouse_y = QCursor::pos().y();//鼠标点击处纵坐标
+		QWidget *action = QApplication::widgetAt(mouse_x, mouse_y);//获取鼠标点击处的控件
+
+		//QMessageBox::information(NULL, "Title", action->objectName());
+
+		QString lname = action->objectName();
+		if (g_flagShowBigImg)
+			g_cur_img = lname.toInt() - 20;
+		else
+			g_cur_img = lname.toInt();
+
+		g_ratio[g_cur_img] += 0.1;
+		if (g_ratio[g_cur_img] > 3) g_ratio[g_cur_img] = 3;
+
+
+		showImage(g_picNum);
+
+
+
+	}
+	// 如果是鼠标右键按下
+	else if (event->button() == Qt::RightButton){
+		//	QMessageBox::information(NULL, "Title", "r click"); 
+		//setMouseState(MouseState::R_C, 0);
+		int mouse_x = QCursor::pos().x();//鼠标点击处横坐标
+		int mouse_y = QCursor::pos().y();//鼠标点击处纵坐标
+		QWidget *action = QApplication::widgetAt(mouse_x, mouse_y);//获取鼠标点击处的控件
+
+		//QMessageBox::information(NULL, "Title", action->objectName());
+
+		QString lname = action->objectName();
+
+		if (g_flagShowBigImg)
+			g_cur_img = lname.toInt() - 20;
+		else
+			g_cur_img = lname.toInt();
+
+		g_ratio[g_cur_img] -= 0.1;
+		if (g_ratio[g_cur_img] < 1) g_ratio[g_cur_img] = 1;
+
+
+		showImage(g_picNum);
+
+	}
 }

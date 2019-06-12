@@ -41,4 +41,6 @@ public:
 
 	void wheelEvent(QWheelEvent*event); //这个是鼠标上下滚轮的时候会调用
 
+	void mousePressEvent(QMouseEvent *event);//鼠标点击事件，实现放大缩小
+
 };
