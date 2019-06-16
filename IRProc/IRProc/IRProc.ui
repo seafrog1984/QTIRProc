@@ -62,8 +62,8 @@ color:rgb(255,255,255);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1346</width>
-         <height>717</height>
+         <width>1340</width>
+         <height>700</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -96,7 +96,7 @@ background-color: rgb(15, 21, 42);
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="pageProc">
            <property name="styleSheet">
@@ -249,7 +249,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextBesideIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_15">
+            <widget class="QToolButton" name="btn_add_point">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -283,7 +283,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Plus</normaloff>:/IRProc/Pro-Plus</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_16">
+            <widget class="QToolButton" name="btn_add_rect">
              <property name="geometry">
               <rect>
                <x>110</x>
@@ -317,7 +317,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Rect1</normaloff>:/IRProc/Pro-Rect1</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_17">
+            <widget class="QToolButton" name="btn_add_ellipse">
              <property name="geometry">
               <rect>
                <x>190</x>
@@ -352,7 +352,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Ellipse</normaloff>:/IRProc/Pro-Ellipse</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_18">
+            <widget class="QToolButton" name="btn_add_rect2">
              <property name="geometry">
               <rect>
                <x>150</x>
@@ -387,7 +387,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Rect2</normaloff>:/IRProc/Pro-Rect2</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_19">
+            <widget class="QToolButton" name="btn_bigger">
              <property name="geometry">
               <rect>
                <x>270</x>
@@ -456,7 +456,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Color-Change</normaloff>:/IRProc/Pro-Color-Change</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_21">
+            <widget class="QToolButton" name="btn_smaller">
              <property name="geometry">
               <rect>
                <x>310</x>
@@ -1088,13 +1088,13 @@ background-image: url();
             <zorder>toolButton_2</zorder>
             <zorder>toolButton_13</zorder>
             <zorder>toolButton_14</zorder>
-            <zorder>toolButton_15</zorder>
-            <zorder>toolButton_16</zorder>
-            <zorder>toolButton_17</zorder>
-            <zorder>toolButton_18</zorder>
-            <zorder>toolButton_19</zorder>
+            <zorder>btn_add_point</zorder>
+            <zorder>btn_add_rect</zorder>
+            <zorder>btn_add_ellipse</zorder>
+            <zorder>btn_add_rect2</zorder>
+            <zorder>btn_bigger</zorder>
             <zorder>btn_colorType_change</zorder>
-            <zorder>toolButton_21</zorder>
+            <zorder>btn_smaller</zorder>
             <zorder>toolButton_22</zorder>
             <zorder>checkBox_8</zorder>
             <zorder>checkBox_9</zorder>
@@ -5233,7 +5233,7 @@ color: rgb(0, 0, 0);</string>
      <x>0</x>
      <y>0</y>
      <width>1442</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

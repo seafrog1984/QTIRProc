@@ -58,13 +58,13 @@ public:
     QToolButton *toolButton_2;
     QToolButton *toolButton_13;
     QToolButton *toolButton_14;
-    QToolButton *toolButton_15;
-    QToolButton *toolButton_16;
-    QToolButton *toolButton_17;
-    QToolButton *toolButton_18;
-    QToolButton *toolButton_19;
+    QToolButton *btn_add_point;
+    QToolButton *btn_add_rect;
+    QToolButton *btn_add_ellipse;
+    QToolButton *btn_add_rect2;
+    QToolButton *btn_bigger;
     QToolButton *btn_colorType_change;
-    QToolButton *toolButton_21;
+    QToolButton *btn_smaller;
     QToolButton *toolButton_22;
     QCheckBox *checkBox_8;
     QCheckBox *checkBox_9;
@@ -309,7 +309,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 1346, 717));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 1340, 700));
         scrollAreaWidgetContents_3->setMinimumSize(QSize(1340, 700));
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout->setSpacing(6);
@@ -377,63 +377,63 @@ public:
         icon7.addFile(QStringLiteral(":/IRProc/Pro-Extand-All"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_14->setIcon(icon7);
         toolButton_14->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        toolButton_15 = new QToolButton(groupBox_7);
-        toolButton_15->setObjectName(QStringLiteral("toolButton_15"));
-        toolButton_15->setGeometry(QRect(70, 55, 24, 24));
-        toolButton_15->setMinimumSize(QSize(24, 24));
-        toolButton_15->setMaximumSize(QSize(24, 24));
-        toolButton_15->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_add_point = new QToolButton(groupBox_7);
+        btn_add_point->setObjectName(QStringLiteral("btn_add_point"));
+        btn_add_point->setGeometry(QRect(70, 55, 24, 24));
+        btn_add_point->setMinimumSize(QSize(24, 24));
+        btn_add_point->setMaximumSize(QSize(24, 24));
+        btn_add_point->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 ""));
         QIcon icon8;
         icon8.addFile(QStringLiteral(":/IRProc/Pro-Plus"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_15->setIcon(icon8);
-        toolButton_16 = new QToolButton(groupBox_7);
-        toolButton_16->setObjectName(QStringLiteral("toolButton_16"));
-        toolButton_16->setGeometry(QRect(110, 55, 24, 24));
-        toolButton_16->setMinimumSize(QSize(24, 24));
-        toolButton_16->setMaximumSize(QSize(24, 24));
-        toolButton_16->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_add_point->setIcon(icon8);
+        btn_add_rect = new QToolButton(groupBox_7);
+        btn_add_rect->setObjectName(QStringLiteral("btn_add_rect"));
+        btn_add_rect->setGeometry(QRect(110, 55, 24, 24));
+        btn_add_rect->setMinimumSize(QSize(24, 24));
+        btn_add_rect->setMaximumSize(QSize(24, 24));
+        btn_add_rect->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 ""));
         QIcon icon9;
         icon9.addFile(QStringLiteral(":/IRProc/Pro-Rect1"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_16->setIcon(icon9);
-        toolButton_17 = new QToolButton(groupBox_7);
-        toolButton_17->setObjectName(QStringLiteral("toolButton_17"));
-        toolButton_17->setGeometry(QRect(190, 55, 24, 24));
-        toolButton_17->setMinimumSize(QSize(24, 24));
-        toolButton_17->setMaximumSize(QSize(24, 24));
-        toolButton_17->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_add_rect->setIcon(icon9);
+        btn_add_ellipse = new QToolButton(groupBox_7);
+        btn_add_ellipse->setObjectName(QStringLiteral("btn_add_ellipse"));
+        btn_add_ellipse->setGeometry(QRect(190, 55, 24, 24));
+        btn_add_ellipse->setMinimumSize(QSize(24, 24));
+        btn_add_ellipse->setMaximumSize(QSize(24, 24));
+        btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 "\n"
 ""));
         QIcon icon10;
         icon10.addFile(QStringLiteral(":/IRProc/Pro-Ellipse"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_17->setIcon(icon10);
-        toolButton_18 = new QToolButton(groupBox_7);
-        toolButton_18->setObjectName(QStringLiteral("toolButton_18"));
-        toolButton_18->setGeometry(QRect(150, 55, 24, 24));
-        toolButton_18->setMinimumSize(QSize(24, 24));
-        toolButton_18->setMaximumSize(QSize(24, 24));
-        toolButton_18->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_add_ellipse->setIcon(icon10);
+        btn_add_rect2 = new QToolButton(groupBox_7);
+        btn_add_rect2->setObjectName(QStringLiteral("btn_add_rect2"));
+        btn_add_rect2->setGeometry(QRect(150, 55, 24, 24));
+        btn_add_rect2->setMinimumSize(QSize(24, 24));
+        btn_add_rect2->setMaximumSize(QSize(24, 24));
+        btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 "\n"
 ""));
         QIcon icon11;
         icon11.addFile(QStringLiteral(":/IRProc/Pro-Rect2"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_18->setIcon(icon11);
-        toolButton_19 = new QToolButton(groupBox_7);
-        toolButton_19->setObjectName(QStringLiteral("toolButton_19"));
-        toolButton_19->setGeometry(QRect(270, 55, 24, 24));
-        toolButton_19->setMinimumSize(QSize(24, 24));
-        toolButton_19->setMaximumSize(QSize(24, 24));
-        toolButton_19->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_add_rect2->setIcon(icon11);
+        btn_bigger = new QToolButton(groupBox_7);
+        btn_bigger->setObjectName(QStringLiteral("btn_bigger"));
+        btn_bigger->setGeometry(QRect(270, 55, 24, 24));
+        btn_bigger->setMinimumSize(QSize(24, 24));
+        btn_bigger->setMaximumSize(QSize(24, 24));
+        btn_bigger->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 ""));
         QIcon icon12;
         icon12.addFile(QStringLiteral(":/IRProc/Pro-Scale-Up"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_19->setIcon(icon12);
+        btn_bigger->setIcon(icon12);
         btn_colorType_change = new QToolButton(groupBox_7);
         btn_colorType_change->setObjectName(QStringLiteral("btn_colorType_change"));
         btn_colorType_change->setGeometry(QRect(230, 55, 24, 24));
@@ -446,17 +446,17 @@ public:
         QIcon icon13;
         icon13.addFile(QStringLiteral(":/IRProc/Pro-Color-Change"), QSize(), QIcon::Normal, QIcon::Off);
         btn_colorType_change->setIcon(icon13);
-        toolButton_21 = new QToolButton(groupBox_7);
-        toolButton_21->setObjectName(QStringLiteral("toolButton_21"));
-        toolButton_21->setGeometry(QRect(310, 55, 24, 24));
-        toolButton_21->setMinimumSize(QSize(24, 24));
-        toolButton_21->setMaximumSize(QSize(24, 24));
-        toolButton_21->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
+        btn_smaller = new QToolButton(groupBox_7);
+        btn_smaller->setObjectName(QStringLiteral("btn_smaller"));
+        btn_smaller->setGeometry(QRect(310, 55, 24, 24));
+        btn_smaller->setMinimumSize(QSize(24, 24));
+        btn_smaller->setMaximumSize(QSize(24, 24));
+        btn_smaller->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);\n"
 "\n"
 ""));
         QIcon icon14;
         icon14.addFile(QStringLiteral(":/IRProc/Pro-Scale-Down"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_21->setIcon(icon14);
+        btn_smaller->setIcon(icon14);
         toolButton_22 = new QToolButton(groupBox_7);
         toolButton_22->setObjectName(QStringLiteral("toolButton_22"));
         toolButton_22->setGeometry(QRect(350, 20, 30, 50));
@@ -626,13 +626,13 @@ public:
         toolButton_2->raise();
         toolButton_13->raise();
         toolButton_14->raise();
-        toolButton_15->raise();
-        toolButton_16->raise();
-        toolButton_17->raise();
-        toolButton_18->raise();
-        toolButton_19->raise();
+        btn_add_point->raise();
+        btn_add_rect->raise();
+        btn_add_ellipse->raise();
+        btn_add_rect2->raise();
+        btn_bigger->raise();
         btn_colorType_change->raise();
-        toolButton_21->raise();
+        btn_smaller->raise();
         toolButton_22->raise();
         checkBox_8->raise();
         checkBox_9->raise();
@@ -1824,7 +1824,7 @@ public:
         IRProcClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(IRProcClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1442, 23));
+        menuBar->setGeometry(QRect(0, 0, 1442, 26));
         IRProcClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(IRProcClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -1845,7 +1845,7 @@ public:
 
         retranslateUi(IRProcClass);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
         tabWidget->setCurrentIndex(0);
 
 
@@ -1887,13 +1887,13 @@ public:
         toolButton_2->setText(QApplication::translate("IRProcClass", "\345\205\263\351\227\255\345\205\250\351\203\250", 0));
         toolButton_13->setText(QApplication::translate("IRProcClass", "\345\205\263\351\227\255\345\205\266\345\256\203", 0));
         toolButton_14->setText(QApplication::translate("IRProcClass", "\345\205\205\346\273\241\347\252\227\345\217\243", 0));
-        toolButton_15->setText(QApplication::translate("IRProcClass", "...", 0));
-        toolButton_16->setText(QApplication::translate("IRProcClass", "...", 0));
-        toolButton_17->setText(QApplication::translate("IRProcClass", "...", 0));
-        toolButton_18->setText(QApplication::translate("IRProcClass", "...", 0));
-        toolButton_19->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_add_point->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_add_rect->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_add_ellipse->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_add_rect2->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_bigger->setText(QApplication::translate("IRProcClass", "...", 0));
         btn_colorType_change->setText(QApplication::translate("IRProcClass", "...", 0));
-        toolButton_21->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_smaller->setText(QApplication::translate("IRProcClass", "...", 0));
         toolButton_22->setText(QApplication::translate("IRProcClass", "\351\200\211\346\213\251", 0));
         checkBox_8->setText(QApplication::translate("IRProcClass", "\345\220\214\346\255\245\346\226\255\345\261\202", 0));
         checkBox_9->setText(QApplication::translate("IRProcClass", "\351\232\220\350\227\217\346\265\213\351\207\217", 0));
