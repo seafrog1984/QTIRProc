@@ -52,6 +52,8 @@ public slots:
 	void setFilter(int);//设置滤波方式
 	void addPoint();//画点
 	void addRect();//画矩形
+	void addCircle();//画圆形
+	void addEllipse();//画椭圆
 
 public:
 	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数

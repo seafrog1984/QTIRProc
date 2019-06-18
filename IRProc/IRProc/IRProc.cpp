@@ -32,7 +32,7 @@ int g_picNum = 0;//读取的图像总数
 int g_currentBigNum = 0;//当前大图下标
 int g_cur_img = 0;//当前操作的图像下标
 
-float g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
+double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
 
 unsigned short *g_pData[IMGE_TOTAL_NUM];//原始数据
 Mat g_src[IMGE_TOTAL_NUM]; // opencv图像原始- 彩色
@@ -91,6 +91,8 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_set_step, SIGNAL(clicked()), this, SLOT(setStep()));
 	connect(ui.btn_add_point, SIGNAL(clicked()), this, SLOT(addPoint()));
 	connect(ui.btn_add_rect, SIGNAL(clicked()), this, SLOT(addRect()));
+	connect(ui.btn_add_rect2, SIGNAL(clicked()), this, SLOT(addCircle()));
+	connect(ui.btn_add_ellipse, SIGNAL(clicked()), this, SLOT(addEllipse()));
 
 	connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(customize()));
@@ -814,6 +816,8 @@ void IRProc::addPoint()
 		g_mouse_mode = 1;
 		ui.btn_add_point->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
 		ui.btn_add_rect->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
 
 	}
 	else
@@ -831,6 +835,8 @@ void IRProc::addRect()
 		g_mouse_mode = 2;
 		ui.btn_add_rect->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
 		ui.btn_add_point->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
 	}
 	else
 	{
@@ -839,6 +845,46 @@ void IRProc::addRect()
 	}
 
 }
+
+void IRProc::addCircle()
+{
+	if (g_mouse_mode != 3)
+	{
+		g_mouse_mode = 3;
+		ui.btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
+		ui.btn_add_point->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_rect->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+	}
+	else
+	{
+		g_mouse_mode = 0;
+		ui.btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+	}
+
+}
+
+void IRProc::addEllipse()
+{
+	if (g_mouse_mode != 4)
+	{
+		g_mouse_mode = 4;
+		ui.btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
+		ui.btn_add_point->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_rect->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+		ui.btn_add_rect2->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+	}
+	else
+	{
+		g_mouse_mode = 0;
+		ui.btn_add_ellipse->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 141);"));
+	}
+
+}
+
+
+
+
 
 void IRProc::calPar(Mat &T, Shape &s)
 {
