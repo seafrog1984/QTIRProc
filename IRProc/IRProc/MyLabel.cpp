@@ -71,6 +71,8 @@ int MyLabel::getCurImgIndex()
 void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
 {
 	m_flag_press = 0;
+	offset.setX(0);
+	offset.setY(0);
 	this->getCurImgIndex();
 	if (g_mouse_mode == 2 || g_mouse_mode == 3 || g_mouse_mode == 4)
 	{
@@ -93,6 +95,14 @@ void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
 		allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = rby;
 		allshape[g_cur_img][g_shape_no[g_cur_img]].comment = "None";
 		allshape[g_cur_img][g_shape_no[g_cur_img]].del_flag = false;
+
+		if (g_mouse_mode == 3)
+		{
+			int dia = (rbx - ltx) < (rby - lty) ? (rbx - ltx):(rby - lty);
+			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = ltx+dia;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = lty+dia;
+
+		}
 
 		this->calPar(g_shape_no[g_cur_img]);
 		g_shape_no[g_cur_img]++;
@@ -152,6 +162,7 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  g_shape_no[g_cur_img]++;	
 				  draw_shape(g_shape_no[g_cur_img]);
 			  }
+
 		update();
 	}
 	}
@@ -325,7 +336,7 @@ void MyLabel::draw_shape(int shape_no)
 			break;
 		case 3:
 			{
-				  int radius = sqrt(pow(allshape[g_cur_img][i].lt_x - allshape[g_cur_img][i].rb_x, 2) + pow(allshape[g_cur_img][i].lt_y - allshape[g_cur_img][i].rb_y, 2)) / 2;
+				  int radius = (allshape[g_cur_img][i].rb_x - allshape[g_cur_img][i].lt_x)/2;
 				  circle(g_img[g_cur_img], Point((allshape[g_cur_img][i].lt_x + allshape[g_cur_img][i].rb_x) / 2, (allshape[g_cur_img][i].lt_y + allshape[g_cur_img][i].rb_y) / 2), radius, Scalar(255, 255, 255), 1, 8, 0);
 				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[g_cur_img][i].t_max, allshape[g_cur_img][i].t_min, allshape[g_cur_img][i].t_aver, allshape[g_cur_img][i].t_msd);
 				  text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
@@ -333,7 +344,7 @@ void MyLabel::draw_shape(int shape_no)
 			break;
 		case 4:
 			{
-				  ellipse(g_img[g_cur_img], Point((allshape[g_cur_img][i].lt_x + allshape[g_cur_img][i].rb_x) / 2, (allshape[g_cur_img][i].lt_y + allshape[g_cur_img][i].rb_y) / 2), Size(abs(allshape[g_cur_img][i].lt_x - allshape[g_cur_img][i].rb_x), abs(allshape[g_cur_img][i].lt_y - allshape[g_cur_img][i].rb_y)), 0, 0, 360, Scalar(255, 255, 255), 1, 8, 0);
+				ellipse(g_img[g_cur_img], Point((allshape[g_cur_img][i].lt_x + allshape[g_cur_img][i].rb_x) / 2, (allshape[g_cur_img][i].lt_y + allshape[g_cur_img][i].rb_y) / 2), Size(abs(allshape[g_cur_img][i].lt_x - allshape[g_cur_img][i].rb_x)/2, abs(allshape[g_cur_img][i].lt_y - allshape[g_cur_img][i].rb_y)/2), 0, 0, 360, Scalar(255, 255, 255), 1, 8, 0);
 				sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[g_cur_img][i].t_max, allshape[g_cur_img][i].t_min, allshape[g_cur_img][i].t_aver, allshape[g_cur_img][i].t_msd);
 				text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
