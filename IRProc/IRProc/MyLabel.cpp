@@ -162,9 +162,46 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  g_shape_no[g_cur_img]++;	
 				  draw_shape(g_shape_no[g_cur_img]);
 			  }
+			  if (event->button() == Qt::RightButton)
+			  {
+				  int rx, ry;
+
+				  this->calRealCor(p1, rx, ry);
+				  for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+				  {
+					  if (rx >= allshape[g_cur_img][i].lt_x&&rx <= allshape[g_cur_img][i].rb_x&&ry >= allshape[g_cur_img][i].lt_y&&ry <= allshape[g_cur_img][i].rb_y)
+						  allshape[g_cur_img][i].del_flag = true;
+					  break;
+				  }
+
+				  draw_shape(g_shape_no[g_cur_img]);
+
+			  }
 
 		update();
 	}
+	default:
+		if (event->button() == Qt::RightButton)
+		{
+			m_flag_press = 0;
+			int rx, ry;
+
+			this->calRealCor(p1, rx, ry);
+			for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+			{
+				if (rx >= allshape[g_cur_img][i].lt_x&&rx <= allshape[g_cur_img][i].rb_x&&ry >= allshape[g_cur_img][i].lt_y&&ry <= allshape[g_cur_img][i].rb_y)
+				{
+					allshape[g_cur_img][i].del_flag = true;
+					break;
+				}
+			}
+
+			draw_shape(g_shape_no[g_cur_img]);
+
+		}
+
+		update();
+
 	}
 
 }
@@ -318,6 +355,7 @@ void MyLabel::draw_shape(int shape_no)
 		int x = allshape[g_cur_img][i].rb_x;
 		int y = allshape[g_cur_img][i].rb_y;
 
+		if (!allshape[g_cur_img][i].del_flag)
 		switch (allshape[g_cur_img][i].shape_type)
 		{
 		case 1:
