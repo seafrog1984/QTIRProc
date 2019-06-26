@@ -38,6 +38,27 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="incl">
+      <UniqueIdentifier>{5a7c6bec-bf5f-407e-8434-fbac67565d4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{ce3e5cee-88a9-4f85-8fb7-660255380122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\log">
+      <UniqueIdentifier>{6e18469f-6cfc-431d-9b66-5dca6fe87847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\md5">
+      <UniqueIdentifier>{10366ec4-207a-4ee8-8257-0587313ebf21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\socket">
+      <UniqueIdentifier>{0fa039da-2f60-4730-8a37-658cc3fe6778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\pc">
+      <UniqueIdentifier>{acf93201-b3e4-4368-b4b6-ab589bd1481b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\string">
+      <UniqueIdentifier>{c192a3fd-cfb2-4510-a3b5-42af72de65fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,6 +94,33 @@
     <ClCompile Include="MyLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LogDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LogDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\log\Logger.cpp">
+      <Filter>utils\log</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\md5\md5.cpp">
+      <Filter>utils\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\string\string_utils.cpp">
+      <Filter>utils\string</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\pc\pc_info.cpp">
+      <Filter>utils\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\socket\Socket.cpp">
+      <Filter>utils\socket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="IRProc.h">
@@ -87,6 +135,12 @@
     <CustomBuild Include="MyLabel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="LogDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LogDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_IRProc.h">
@@ -97,6 +151,30 @@
     </ClInclude>
     <ClInclude Include="CvxText.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LogDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\client.h">
+      <Filter>incl</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\protocol.h">
+      <Filter>incl</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\log\Logger.h">
+      <Filter>utils\log</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\md5\md5.h">
+      <Filter>utils\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\string\string_utils.h">
+      <Filter>utils\string</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\pc\pc_info.h">
+      <Filter>utils\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\socket\Socket.h">
+      <Filter>utils\socket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
