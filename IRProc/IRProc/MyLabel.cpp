@@ -28,6 +28,7 @@ extern int g_flag_showTemper;//显示温度标志： 0-不显示；1-显示
 extern int g_flagShowBigImg;
 extern int g_cur_img;
 extern double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
+extern Mat g_src[IMGE_TOTAL_NUM];
 extern Mat g_img[IMGE_TOTAL_NUM];//opencv图像-彩色
 extern Mat g_img_gray[IMGE_TOTAL_NUM];//opencv图像-灰度
 extern Mat g_temper[IMGE_TOTAL_NUM];//温度矩阵
@@ -35,6 +36,7 @@ extern int g_color_type;
 extern Shape allshape[IMGE_TOTAL_NUM][COMMENT_PER_IMAGE];
 extern int g_shape_no[IMGE_TOTAL_NUM];//图像上标注的数量
 extern QPoint g_offset[IMGE_TOTAL_NUM];//显示图像的偏移量
+
 
 MyLabel::MyLabel( QWidget* parent)
 :QLabel(parent)
@@ -46,6 +48,7 @@ MyLabel::MyLabel( QWidget* parent)
 	offset = QPoint(0, 0);
 	Alloffset = QPoint(0, 0);
 	m_shapeType = 1;
+	m_action = 0;
 	m_flag_press=0;
 	this->setAlignment(Qt::AlignCenter);
 
@@ -70,58 +73,63 @@ int MyLabel::getCurImgIndex()
 
 void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
 {
-	m_flag_press = 0;
-	offset.setX(0);
-	offset.setY(0);
-	this->getCurImgIndex();
-	if (g_mouse_mode == 2 || g_mouse_mode == 3 || g_mouse_mode == 4)
+	if (m_flag_press == 1)
 	{
-		int ltx, lty, rbx, rby,t;
-
-		this->calRealCor(p1, ltx, lty);
-		this->calRealCor(p2, rbx, rby);
-		if (ltx > rbx)
+		m_flag_press = 0;
+		offset.setX(0);
+		offset.setY(0);
+		this->getCurImgIndex();
+		if (g_mouse_mode == 2 || g_mouse_mode == 3 || g_mouse_mode == 4)
 		{
-			t = ltx; ltx = rbx; rbx = t;
+			int ltx, lty, rbx, rby, t;
+
+			this->calRealCor(p1, ltx, lty);
+			this->calRealCor(p2, rbx, rby);
+			if (ltx > rbx)
+			{
+				t = ltx; ltx = rbx; rbx = t;
+			}
+			if (lty > rby)
+			{
+				t = lty; lty = rby; rby = t;
+			}
+			allshape[g_cur_img][g_shape_no[g_cur_img]].shape_type = g_mouse_mode;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].lt_x = ltx;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].lt_y = lty;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = rbx;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = rby;
+			allshape[g_cur_img][g_shape_no[g_cur_img]].comment = "None";
+			allshape[g_cur_img][g_shape_no[g_cur_img]].del_flag = false;
+
+			if (g_mouse_mode == 3)
+			{
+				int dia = (rbx - ltx) < (rby - lty) ? (rbx - ltx) : (rby - lty);
+				allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = ltx + dia;
+				allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = lty + dia;
+
+			}
+
+			this->calPar(g_shape_no[g_cur_img]);
+			g_shape_no[g_cur_img]++;
+			draw_shape(g_shape_no[g_cur_img]);
+
 		}
-		if (lty > rby)
-		{
-			t = lty; lty = rby; rby = t;
-		}
-		allshape[g_cur_img][g_shape_no[g_cur_img]].shape_type = g_mouse_mode;
-		allshape[g_cur_img][g_shape_no[g_cur_img]].lt_x = ltx;
-		allshape[g_cur_img][g_shape_no[g_cur_img]].lt_y = lty;
-		allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = rbx;
-		allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = rby;
-		allshape[g_cur_img][g_shape_no[g_cur_img]].comment = "None";
-		allshape[g_cur_img][g_shape_no[g_cur_img]].del_flag = false;
-
-		if (g_mouse_mode == 3)
-		{
-			int dia = (rbx - ltx) < (rby - lty) ? (rbx - ltx):(rby - lty);
-			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = ltx+dia;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = lty+dia;
-
-		}
-
-		this->calPar(g_shape_no[g_cur_img]);
-		g_shape_no[g_cur_img]++;
-		draw_shape(g_shape_no[g_cur_img]);
-
+		update();
 	}
-	update();
+	
 }
 
 void MyLabel::mousePressEvent(QMouseEvent *event)
 {
-	p1 = event->pos();
 	m_flag_press = 1;
+	p1 = event->pos();
 	this->getCurImgIndex();
 	switch (g_mouse_mode)
 	{
 
 	case 0:
 	{// 如果是鼠标左键按下
+			  m_flag_press = 0;
 
 			  if (event->button() == Qt::LeftButton)
 			  {
@@ -162,27 +170,31 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  g_shape_no[g_cur_img]++;	
 				  draw_shape(g_shape_no[g_cur_img]);
 			  }
-			  if (event->button() == Qt::RightButton)
+			  else
 			  {
+				  m_action = 5;
+				  m_flag_press = 0;
 				  int rx, ry;
 
 				  this->calRealCor(p1, rx, ry);
 				  for (int i = 0; i < g_shape_no[g_cur_img]; i++)
 				  {
 					  if (rx >= allshape[g_cur_img][i].lt_x&&rx <= allshape[g_cur_img][i].rb_x&&ry >= allshape[g_cur_img][i].lt_y&&ry <= allshape[g_cur_img][i].rb_y)
+					  {
 						  allshape[g_cur_img][i].del_flag = true;
-					  break;
+						  break;
+					  }
 				  }
-
 				  draw_shape(g_shape_no[g_cur_img]);
 
 			  }
-
 		update();
 	}
+		break;
 	default:
 		if (event->button() == Qt::RightButton)
 		{
+			m_action = 5;
 			m_flag_press = 0;
 			int rx, ry;
 
@@ -195,7 +207,6 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 					break;
 				}
 			}
-
 			draw_shape(g_shape_no[g_cur_img]);
 
 		}
@@ -203,7 +214,7 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 		update();
 
 	}
-
+//	m_action = g_mouse_mode;
 }
 
 void MyLabel::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -230,6 +241,7 @@ void MyLabel::keyPressEvent(QKeyEvent *ev)
 
 void MyLabel::paintEvent(QPaintEvent *ev)
 {
+	getCurImgIndex();
 	QLabel::paintEvent(ev);
 	QPainter painter(this);
 	Mat timg;
@@ -312,27 +324,33 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 		painter.drawTiledPixmap(Paint.x(), Paint.y(), Paint.width(), Paint.height(), QPixmap::fromImage(image), sx, sy);
 	}
 
-	if (g_mouse_mode == 2 && m_flag_press)
+	if (m_action != 5)
+	{
+		if (g_mouse_mode == 2 && m_flag_press)
 		painter.drawRect(QRect(p1.x(), p1.y(), p2.x() - p1.x(), p2.y() - p1.y()));
 
-	if (g_mouse_mode == 3 && m_flag_press)
-	{
-		int radius = (p2.x() - p1.x()) < (p2.y() - p1.y()) ? (p2.x() - p1.x()) : (p2.y() - p1.y());
-		painter.drawEllipse(QRect(p1.x(), p1.y(), radius, radius));
+		if (g_mouse_mode == 3 && m_flag_press)
+		{
+			int radius = abs(p2.x() - p1.x()) < abs(p2.y() - p1.y()) ? abs(p2.x() - p1.x()) : abs(p2.y() - p1.y());
+			painter.drawEllipse(QRect(p1.x()<p2.x() ? p1.x() : p2.x(), p1.y()<p2.y() ? p1.y() : p2.y(), radius, radius));
+		}
+
+
+		if (g_mouse_mode == 4 && m_flag_press)
+			painter.drawEllipse(QRect(p1.x(), p1.y(), p2.x() - p1.x(), p2.y() - p1.y()));
+
+		//if (g_mouse_mode == 0)
+		//{
+
+		//}
 	}
-
-
-	if (g_mouse_mode == 4 && m_flag_press)
-		painter.drawEllipse(QRect(p1.x(), p1.y(), p2.x() - p1.x(), p2.y() - p1.y()));
-
-	if (g_mouse_mode == 0)
+	else
 	{
-		QString strText = QString::number(g_ratio[g_cur_img],10,2);
-		painter.drawText(Paint.x()+10, Paint.y()+10, strText);
+		m_action = g_mouse_mode;
 	}
-
-
-
+	
+	QString strText = QString::number(g_ratio[g_cur_img], 10, 2);
+	painter.drawText(Paint.x() + 10, Paint.y() + 10, strText);
 
 }
 
@@ -349,6 +367,7 @@ void MyLabel::draw_shape(int shape_no)
 	CvxText text("C:\\Windows\\Fonts\\simhei.ttf"); //指定字体
 	cv::Scalar size{ 12, 0, 0.1, 0 }; // (字体大小, 无效的, 字符间距, 无效的 }
 	text.setFont(nullptr, &size, nullptr, 0);
+	g_src[g_cur_img].copyTo(g_img[g_cur_img]);
 
 	for (int i = 0; i < shape_no; i++)
 	{

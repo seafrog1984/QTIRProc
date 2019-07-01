@@ -59,6 +59,10 @@ int g_shape_no[IMGE_TOTAL_NUM] = { 0 };//图像上标注的数量
 int g_mouse_mode;//鼠标事件模式： 0-放大缩小，按住移动， 默认；1-加点；2-矩形；3-圆角矩形；4-椭圆，
 int g_flag_showTemper;//显示温度标志： 0-不显示；1-显示
 
+QString g_merge_path;
+QString g_gender;
+
+
 
 IRProc::IRProc(QWidget *parent)
 : QMainWindow(parent)
@@ -128,6 +132,10 @@ IRProc::IRProc(QWidget *parent)
 	g_flag_showTemper = 1;
 	this->setMouseTracking(true);
 	ui.widget2->setMouseTracking(true);
+
+	QDir dir;
+	g_merge_path = dir.currentPath() + "//Refer_image//";
+	g_gender = "Male";
 
 	statusBar();
 
@@ -531,9 +539,9 @@ void IRProc::showImage(int pic_num)
 		{
 			MyLabel *p = ui.widget2->findChild<MyLabel*>(QString::number(i));
 
-			p->getCurImgIndex();
-			p->draw_shape(g_shape_no[g_cur_img]);
-			p->setOffset(g_offset[g_cur_img]);
+			//p->getCurImgIndex();
+			p->draw_shape(g_shape_no[i]);
+			p->setOffset(g_offset[i]);
 
 			int with = p->width();
 			int height = p->height();
@@ -609,6 +617,8 @@ void IRProc::updateImage()
 		if (g_color_type)
 		{
 			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
+			g_img[i].copyTo(g_src[i]);
+
 			//draw_shape(g_img[i], allshape[i], g_shape_no[i]);
 			QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 			g_qImgShow[i] = image.copy();
@@ -616,6 +626,7 @@ void IRProc::updateImage()
 		else
 		{
 			data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
+			g_img_gray[i].copyTo(g_src_gray[i]);
 			//draw_shape(g_img_gray[i], allshape[i], g_shape_no[i]);
 			QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
 			g_qImgShow_gray[i] = image_gray.copy();

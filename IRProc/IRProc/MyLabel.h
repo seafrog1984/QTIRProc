@@ -45,6 +45,7 @@ public:
 	QPoint Alloffset;           //总偏移
 	int m_flag_press;
 	int m_shapeType;
+	int m_action;//动作标识：0-缩放移动；1-点；2-矩形；3-圆；4-椭圆； 5-删除
 	QPoint p1, p2;
 	QVector <QLine> lines;
 	//private slots :
