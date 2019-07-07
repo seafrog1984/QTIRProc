@@ -62,8 +62,8 @@ color:rgb(255,255,255);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1340</width>
-         <height>700</height>
+         <width>1346</width>
+         <height>717</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -96,7 +96,7 @@ background-color: rgb(15, 21, 42);
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="pageProc">
            <property name="styleSheet">
@@ -1301,7 +1301,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>1</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1339,7 +1339,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>2</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1377,7 +1377,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>3</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1415,7 +1415,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>4</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1453,7 +1453,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>8</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1491,7 +1491,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>6</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1529,7 +1529,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>5</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1567,7 +1567,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>7</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -1779,7 +1779,7 @@ border:0px;
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="toolButton">
+            <widget class="QToolButton" name="btn_mer_left">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -1817,7 +1817,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_3">
+            <widget class="QToolButton" name="btn_mer_right">
              <property name="geometry">
               <rect>
                <x>115</x>
@@ -1855,7 +1855,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_4">
+            <widget class="QToolButton" name="btn_mer_up">
              <property name="geometry">
               <rect>
                <x>165</x>
@@ -1893,7 +1893,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_5">
+            <widget class="QToolButton" name="btn_mer_down">
              <property name="geometry">
               <rect>
                <x>210</x>
@@ -1931,7 +1931,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_7">
+            <widget class="QToolButton" name="btn_mer_wid">
              <property name="geometry">
               <rect>
                <x>250</x>
@@ -1969,7 +1969,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_9">
+            <widget class="QToolButton" name="btn_mer_nar">
              <property name="geometry">
               <rect>
                <x>300</x>
@@ -2007,7 +2007,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_8">
+            <widget class="QToolButton" name="btn_mer_higher">
              <property name="geometry">
               <rect>
                <x>340</x>
@@ -2045,7 +2045,7 @@ border:0px;
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_6">
+            <widget class="QToolButton" name="btn_mer_lower">
              <property name="geometry">
               <rect>
                <x>380</x>
@@ -2413,7 +2413,7 @@ background-color: rgb(19, 65, 115);</string>
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_54">
+            <widget class="QToolButton" name="btn_male">
              <property name="geometry">
               <rect>
                <x>65</x>
@@ -2429,7 +2429,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
              <property name="text">
-              <string>男</string>
+              <string>Male</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2442,7 +2442,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_55">
+            <widget class="QToolButton" name="btn_female">
              <property name="geometry">
               <rect>
                <x>105</x>
@@ -2458,7 +2458,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
              <property name="text">
-              <string>女</string>
+              <string>Female</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2471,7 +2471,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_56">
+            <widget class="QToolButton" name="btn_pose_front">
              <property name="geometry">
               <rect>
                <x>160</x>
@@ -2496,7 +2496,7 @@ background-color: rgb(19, 65, 115);</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>前</string>
+              <string>Front</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2509,7 +2509,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_57">
+            <widget class="QToolButton" name="btn_pose_back">
              <property name="geometry">
               <rect>
                <x>200</x>
@@ -2534,7 +2534,7 @@ background-color: rgb(19, 65, 115);</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>后</string>
+              <string>Back</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2547,7 +2547,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_58">
+            <widget class="QToolButton" name="btn_pose_left">
              <property name="geometry">
               <rect>
                <x>160</x>
@@ -2572,7 +2572,7 @@ background-color: rgb(19, 65, 115);</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>左</string>
+              <string>Left</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2585,7 +2585,7 @@ background-color: rgb(19, 65, 115);</string>
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_59">
+            <widget class="QToolButton" name="btn_pose_right">
              <property name="geometry">
               <rect>
                <x>200</x>
@@ -2610,7 +2610,7 @@ background-color: rgb(19, 65, 115);</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>右</string>
+              <string>Right</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2653,7 +2653,7 @@ background-image: url(:/IRProc/DataBg2);
             <property name="title">
              <string/>
             </property>
-            <widget class="MyCustomSlider" name="horizontalSlider">
+            <widget class="MyCustomSlider" name="slider_mer_ratio">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -2756,7 +2756,7 @@ background-image: url(:/IRProc/DataBg3);
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="toolButton_10">
+            <widget class="QToolButton" name="btn_mer_hb">
              <property name="geometry">
               <rect>
                <x>200</x>
@@ -2797,7 +2797,7 @@ background-image: url(:/IRProc/DataBg3);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_11">
+            <widget class="QToolButton" name="btn_mer_acu">
              <property name="geometry">
               <rect>
                <x>280</x>
@@ -2838,7 +2838,7 @@ background-image: url(:/IRProc/DataBg3);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_12">
+            <widget class="QToolButton" name="btn_mer_def">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -2921,7 +2921,7 @@ background-image: url(:/IRProc/DataBg3);
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_60">
+            <widget class="QToolButton" name="btn_mer_type5">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -2946,7 +2946,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>5</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2959,7 +2959,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_61">
+            <widget class="QToolButton" name="btn_mer_type8">
              <property name="geometry">
               <rect>
                <x>170</x>
@@ -2984,7 +2984,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>8</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -2997,7 +2997,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_62">
+            <widget class="QToolButton" name="btn_mer_type1">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -3022,7 +3022,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>1</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -3035,7 +3035,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_63">
+            <widget class="QToolButton" name="btn_mer_type2">
              <property name="geometry">
               <rect>
                <x>110</x>
@@ -3060,7 +3060,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>2</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -3073,7 +3073,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_64">
+            <widget class="QToolButton" name="btn_mer_type3">
              <property name="geometry">
               <rect>
                <x>140</x>
@@ -3098,7 +3098,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>3</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -3111,7 +3111,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_65">
+            <widget class="QToolButton" name="btn_mer_type7">
              <property name="geometry">
               <rect>
                <x>140</x>
@@ -3136,7 +3136,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>7</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -3149,7 +3149,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_66">
+            <widget class="QToolButton" name="btn_mer_type4">
              <property name="geometry">
               <rect>
                <x>170</x>
@@ -3174,7 +3174,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>4</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -3187,7 +3187,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_67">
+            <widget class="QToolButton" name="btn_mer_type6">
              <property name="geometry">
               <rect>
                <x>110</x>
@@ -3212,7 +3212,7 @@ background-image: url(:/IRProc/DataBg3);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>04</string>
+              <string>6</string>
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
@@ -5233,7 +5233,7 @@ color: rgb(0, 0, 0);</string>
      <x>0</x>
      <y>0</y>
      <width>1442</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

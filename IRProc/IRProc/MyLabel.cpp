@@ -28,6 +28,7 @@ extern int g_flag_showTemper;//显示温度标志： 0-不显示；1-显示
 extern int g_flagShowBigImg;
 extern int g_cur_img;
 extern double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
+extern Mat g_mer;//融合图像
 extern Mat g_src[IMGE_TOTAL_NUM];
 extern Mat g_img[IMGE_TOTAL_NUM];//opencv图像-彩色
 extern Mat g_img_gray[IMGE_TOTAL_NUM];//opencv图像-灰度
@@ -36,6 +37,7 @@ extern int g_color_type;
 extern Shape allshape[IMGE_TOTAL_NUM][COMMENT_PER_IMAGE];
 extern int g_shape_no[IMGE_TOTAL_NUM];//图像上标注的数量
 extern QPoint g_offset[IMGE_TOTAL_NUM];//显示图像的偏移量
+extern double g_mer_ratio;
 
 
 MyLabel::MyLabel( QWidget* parent)
@@ -129,8 +131,6 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 
 	case 0:
 	{// 如果是鼠标左键按下
-			  m_flag_press = 0;
-
 			  if (event->button() == Qt::LeftButton)
 			  {
 				  g_ratio[g_cur_img] += (0.1+3e-6);
@@ -139,6 +139,7 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 			  // 如果是鼠标右键按下
 			  else if (event->button() == Qt::RightButton)
 			  {
+				  m_flag_press = 0;
 				  g_ratio[g_cur_img] -= (0.1-3e-6);
 				  if (g_ratio[g_cur_img] < 1) g_ratio[g_cur_img] = 1;
 			  }
@@ -305,10 +306,7 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	int h = (NowH - sy) > Paint.height() ? Paint.height() : (NowH - sy);
 	if (h > (Paint.height() - y))
 		h = Paint.height() - y;
-	if (g_ratio[g_cur_img] >= 2.3)
-	{
-		int a = 1;
-	}
+
 	if (g_color_type)
 	{
 		cv::resize(g_img[g_cur_img], timg, Size(NowW, NowH), 0, 0);
@@ -368,6 +366,8 @@ void MyLabel::draw_shape(int shape_no)
 	cv::Scalar size{ 12, 0, 0.1, 0 }; // (字体大小, 无效的, 字符间距, 无效的 }
 	text.setFont(nullptr, &size, nullptr, 0);
 	g_src[g_cur_img].copyTo(g_img[g_cur_img]);
+
+	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	for (int i = 0; i < shape_no; i++)
 	{

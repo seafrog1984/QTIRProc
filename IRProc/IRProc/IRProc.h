@@ -54,6 +54,20 @@ public slots:
 	void addRect();//画矩形
 	void addCircle();//画圆形
 	void addEllipse();//画椭圆
+	void btnMerDef();//自定义融合图
+	void sliderMerRatio();//融合度调整
+	void btnMerWid();//融合图变宽
+	void btnMerNar();//融合图变窄
+	void btnMerHigher();//融合图变高
+	void btnMerLower();//融合图变矮
+	void btnMerLeft();//融合图左移
+	void btnMerRight();//融合图右移
+	void btnMerUp();//融合图上移
+	void btnMerDown();//融合图下移
+
+	void changeMerGender();
+	void changeMerPose();
+	void changeMerType();
 
 public:
 	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数
@@ -68,6 +82,8 @@ public:
 	void calPar(Mat &T, Shape &s);//统计最大最小等
 
 //	void draw_shape(Mat& img, Shape allshape[], int shape_no);//显示标签
+
+	int m_mx, m_my;
 
 
 

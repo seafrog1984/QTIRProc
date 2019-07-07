@@ -35,6 +35,9 @@ int g_cur_img = 0;//当前操作的图像下标
 double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
 
 unsigned short *g_pData[IMGE_TOTAL_NUM];//原始数据
+
+Mat g_mer_src;//原始融合图像
+Mat g_mer=Mat::zeros(IMAGE_WIDTH, IMAGE_HEIGHT, CV_8UC3);;//融合图像
 Mat g_src[IMGE_TOTAL_NUM]; // opencv图像原始- 彩色
 Mat g_src_gray[IMGE_TOTAL_NUM];//opencv图像原始- 灰度
 Mat g_img[IMGE_TOTAL_NUM];//opencv图像-彩色
@@ -60,7 +63,12 @@ int g_mouse_mode;//鼠标事件模式： 0-放大缩小，按住移动， 默认；1-加点；2-矩形；3
 int g_flag_showTemper;//显示温度标志： 0-不显示；1-显示
 
 QString g_merge_path;
-QString g_gender;
+QString g_mer_gender="Male";//融合图性别
+QString g_mer_pose = "Front";// 融合图姿势
+QString g_mer_type="ACU";//融合图类别
+double g_mer_ratio = 0;//融合度
+double g_mer_hratio = 1, g_mer_vratio = 1;//融合图水平垂直放大倍数
+
 
 
 
@@ -98,6 +106,16 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_add_rect2, SIGNAL(clicked()), this, SLOT(addCircle()));
 	connect(ui.btn_add_ellipse, SIGNAL(clicked()), this, SLOT(addEllipse()));
 
+	connect(ui.btn_mer_def, SIGNAL(clicked()), this, SLOT(btnMerDef()));
+	connect(ui.btn_mer_wid, SIGNAL(clicked()), this, SLOT(btnMerWid()));
+	connect(ui.btn_mer_nar, SIGNAL(clicked()), this, SLOT(btnMerNar()));
+	connect(ui.btn_mer_higher, SIGNAL(clicked()), this, SLOT(btnMerHigher()));
+	connect(ui.btn_mer_lower, SIGNAL(clicked()), this, SLOT(btnMerLower()));
+	connect(ui.btn_mer_left, SIGNAL(clicked()), this, SLOT(btnMerLeft()));
+	connect(ui.btn_mer_right, SIGNAL(clicked()), this, SLOT(btnMerRight()));
+	connect(ui.btn_mer_up, SIGNAL(clicked()), this, SLOT(btnMerUp()));
+	connect(ui.btn_mer_down, SIGNAL(clicked()), this, SLOT(btnMerDown()));
+
 	connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_2, SIGNAL(clicked()), this, SLOT(customize()));
 	connect(ui.checkBox_3, SIGNAL(clicked()), this, SLOT(customize()));
@@ -113,10 +131,33 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_win_w10, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 	connect(ui.btn_win_w12, SIGNAL(clicked()), this, SLOT(changeWinWidth()));
 
+	connect(ui.btn_male, SIGNAL(clicked()), this, SLOT(changeMerGender()));
+	connect(ui.btn_female, SIGNAL(clicked()), this, SLOT(changeMerGender()));
+
+	connect(ui.btn_pose_front, SIGNAL(clicked()), this, SLOT(changeMerPose()));
+	connect(ui.btn_pose_back, SIGNAL(clicked()), this, SLOT(changeMerPose()));
+	connect(ui.btn_pose_left, SIGNAL(clicked()), this, SLOT(changeMerPose()));
+	connect(ui.btn_pose_right, SIGNAL(clicked()), this, SLOT(changeMerPose()));
+
+	connect(ui.btn_mer_type1, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type2, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type3, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type4, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type5, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type6, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type7, SIGNAL(clicked()), this, SLOT(changeMerType()));
+	connect(ui.btn_mer_type8, SIGNAL(clicked()), this, SLOT(changeMerType()));
+
 	connect(ui.cbox_smooth, SIGNAL(currentIndexChanged(int)), this, SLOT(setFilter(int)));
 
 
+	ui.slider_mer_ratio->setMinimum(0);
+	ui.slider_mer_ratio->setMaximum(100);
+	ui.slider_mer_ratio->setSingleStep(1);
+	ui.slider_mer_ratio->setValue(20);
+	connect(ui.slider_mer_ratio, SIGNAL(valueChanged(int)), this, SLOT(sliderMerRatio()));
 
+	
 	//	changeLabel(g_picNum, IMAGE_PER_ROW);
 	ui.cbox_smooth->addItem(QStringLiteral("中值"), 0);
 	ui.cbox_smooth->addItem(QStringLiteral("直方图"), 1);
@@ -134,13 +175,268 @@ IRProc::IRProc(QWidget *parent)
 	ui.widget2->setMouseTracking(true);
 
 	QDir dir;
-	g_merge_path = dir.currentPath() + "//Refer_image//";
-	g_gender = "Male";
+	g_merge_path = dir.currentPath() + "/Refer_image/";
+
+	//for (int i = 0; i < IMGE_TOTAL_NUM; i++)
+	//	g_mer[i] = Mat::zeros(IMAGE_WIDTH,IMAGE_HEIGHT , CV_8UC3);
+
+	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
 
 	statusBar();
 
 }
 
+void IRProc::changeMerGender()
+{
+
+	QToolButton  *tb = (QToolButton*)this->sender();
+	QString text = tb->text();
+
+	g_mer_gender = text;
+
+}
+void IRProc::changeMerPose()
+{
+
+	QToolButton  *tb = (QToolButton*)this->sender();
+	QString text = tb->text();
+	
+	g_mer_pose = text;
+
+}
+void IRProc::changeMerType()
+{
+
+	QToolButton  *tb = (QToolButton*)this->sender();
+	QString text = tb->text();
+
+	int type = text.toInt();
+
+	if (type == 1)
+	{
+		g_mer_type = "HB";
+	}
+	if (type == 2)
+	{
+		g_mer_type = "ACU";
+	}
+
+	QString merFilePath = g_merge_path + g_mer_gender + "/" + g_mer_type + "/" + g_mer_pose + ".jpg";
+
+	if (merFilePath.isEmpty())
+	{
+		QMessageBox::information(this, tr("Information"), merFilePath+"does not exist!");
+		return;
+	}
+	merFilePath = QDir::toNativeSeparators(merFilePath);
+	char*  path;
+	QByteArray t = merFilePath.toLatin1(); // must
+	path = t.data();
+
+
+	Mat timg = imread(path);
+	if (timg.empty())
+	{
+		QMessageBox::information(this, tr("Information"), merFilePath + "does not exist!");
+		return;
+	}
+
+	cvtColor(timg, timg, CV_BGR2RGB);
+	cv::resize(timg, g_mer_src, Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src.copyTo(g_mer);
+
+	g_mer_ratio = 0.2;
+	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+
+	updateImage();
+
+
+}
+
+void IRProc::btnMerWid()
+{
+	Mat acu_n;
+	g_mer_hratio = g_mer_hratio + 0.2;
+	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+	//	Rect rect2(224, 224, 128, 128);
+
+	Mat roi1;
+	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+	roi1.copyTo(g_mer);
+	updateImage();
+
+}
+void IRProc::btnMerNar()
+{
+	Mat acu_n;
+
+	if (g_mer_hratio - 1.2 > 0.0000001)
+		g_mer_hratio = g_mer_hratio - 0.2;
+	else
+		g_mer_hratio = 1;
+
+	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+	//	Rect rect2(224, 224, 128, 128);
+
+	Mat roi1;
+	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+	roi1.copyTo(g_mer);
+	updateImage();
+}
+void IRProc::btnMerHigher()
+{
+	Mat acu_n;
+	g_mer_vratio = g_mer_vratio + 0.2;
+	cv::resize(g_mer_src, acu_n, Size( IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT/2;
+	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH/2;
+	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+	//	Rect rect2(224, 224, 128, 128);
+
+	Mat roi1;
+	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+	roi1.copyTo(g_mer);
+	updateImage();
+
+}
+void IRProc::btnMerLower()
+{
+	Mat acu_n;
+	
+	if (g_mer_vratio - 1.2 > 0.0000001)
+		g_mer_vratio = g_mer_vratio - 0.2;
+	else
+		g_mer_vratio = 1;
+
+	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+	//	Rect rect2(224, 224, 128, 128);
+
+	Mat roi1;
+	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+	roi1.copyTo(g_mer);
+	updateImage();
+
+}
+void IRProc::btnMerLeft()
+{
+	if (g_mer_hratio > 1)
+	{
+		Mat acu_n;
+
+		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+		m_mx = m_mx + 20;
+		if (m_mx >= (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT)) m_mx = (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT) - 1;
+
+		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+
+		Mat roi1;
+		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+		roi1.copyTo(g_mer);
+		updateImage();
+	}
+
+
+
+}
+void IRProc::btnMerRight()
+{
+	if (g_mer_hratio > 1)
+	{
+		Mat acu_n;
+
+		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+		m_mx = m_mx - 20;
+		if (m_mx <0) m_mx = 0;
+
+		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+
+		Mat roi1;
+		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+		roi1.copyTo(g_mer);
+		updateImage();
+	}
+	
+
+}
+void IRProc::btnMerUp()
+{
+	if (g_mer_vratio > 1)
+	{
+		Mat acu_n;
+
+		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+		m_my = m_my + 20;
+		if (m_my >= (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH)) m_my = (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH) - 1;
+	
+		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+
+		Mat roi1;
+		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+		roi1.copyTo(g_mer);
+		updateImage();
+
+	}
+
+	
+
+
+}
+void IRProc::btnMerDown()
+{
+	if (g_mer_vratio > 1)
+	{
+		Mat acu_n;
+
+		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+
+		m_my = m_my - 20;
+		if (m_my <0) m_my = 0;
+
+
+		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
+
+		Mat roi1;
+		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+
+		roi1.copyTo(g_mer);
+		updateImage();
+	}
+	
+}
+
+
+
+void IRProc::sliderMerRatio()
+{
+	int pos = ui.slider_mer_ratio->value();
+	g_mer_ratio = pos*1.0 / 100;
+	updateImage();
+
+}
 
 void IRProc::imgProc()
 {
@@ -237,6 +533,33 @@ void IRProc::sysSetting()
 	icon4.addFile(QStringLiteral(":/IRProc/Sys-Sel"), QSize(), QIcon::Selected, QIcon::Off);
 	ui.sysSettingAct->setIcon(icon4);
 }
+
+void IRProc::btnMerDef()
+{
+	QString filename;
+	filename = QFileDialog::getOpenFileName(this, tr("Select IMG"), "", tr("Data (*.jpg)"));
+	if (filename.isEmpty())
+	{
+		return;
+	}
+	char*  path;
+	QByteArray t = filename.toLatin1(); // must
+	path = t.data();
+
+	Mat timg = imread(path);
+
+	cvtColor(timg, timg, CV_BGR2RGB);
+	cv::resize(timg, g_mer_src, Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src.copyTo(g_mer);
+
+	g_mer_ratio = 0.2;
+//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+
+	updateImage();
+
+}
+
+
 
 void IRProc::userAreaFull()
 {
@@ -618,7 +941,7 @@ void IRProc::updateImage()
 		{
 			data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
 			g_img[i].copyTo(g_src[i]);
-
+			g_img[i] = g_img[i] * (1 - g_mer_ratio) + g_mer* g_mer_ratio;
 			//draw_shape(g_img[i], allshape[i], g_shape_no[i]);
 			QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 			g_qImgShow[i] = image.copy();
