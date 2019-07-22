@@ -33,10 +33,6 @@
   <property name="styleSheet">
    <string notr="true">border-color: rgb(15, 21, 42);
 background-color: rgb(15, 21, 42);
-
-QMessageBox{
-color:rgb(255,255,255);
-}
 QLineEdit{
 color:rgb(255,255,255);
 }</string>
@@ -96,7 +92,7 @@ background-color: rgb(15, 21, 42);
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="pageProc">
            <property name="styleSheet">
@@ -144,7 +140,7 @@ background-image: url(:/IRProc/Txcl-bg);
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="toolButton_2">
+            <widget class="QToolButton" name="btn_close_all">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -179,7 +175,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextBesideIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_13">
+            <widget class="QToolButton" name="btn_close_other">
              <property name="geometry">
               <rect>
                <x>165</x>
@@ -215,6 +211,9 @@ background-image: url(:/IRProc/Txcl-bg);
              </property>
             </widget>
             <widget class="QToolButton" name="toolButton_14">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
                <x>260</x>
@@ -490,7 +489,7 @@ background-image: url(:/IRProc/Txcl-bg);
                <normaloff>:/IRProc/Pro-Scale-Down</normaloff>:/IRProc/Pro-Scale-Down</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_22">
+            <widget class="QToolButton" name="btn_sel">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -543,7 +542,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <string>同步断层</string>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_9">
+            <widget class="QCheckBox" name="show_temper">
              <property name="geometry">
               <rect>
                <x>400</x>
@@ -634,7 +633,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::Vertical</enum>
              </property>
             </widget>
-            <widget class="QSlider" name="horizontalSlider_2">
+            <widget class="MyCustomSlider" name="slider_bot">
              <property name="geometry">
               <rect>
                <x>570</x>
@@ -1084,9 +1083,26 @@ background-image: url();
               </size>
              </property>
             </widget>
+            <widget class="QComboBox" name="cbox_smooth">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>20</y>
+               <width>81</width>
+               <height>22</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="editable">
+              <bool>false</bool>
+             </property>
+            </widget>
             <zorder>groupBox_15</zorder>
-            <zorder>toolButton_2</zorder>
-            <zorder>toolButton_13</zorder>
+            <zorder>btn_close_all</zorder>
+            <zorder>btn_close_other</zorder>
             <zorder>toolButton_14</zorder>
             <zorder>btn_add_point</zorder>
             <zorder>btn_add_rect</zorder>
@@ -1095,13 +1111,13 @@ background-image: url();
             <zorder>btn_bigger</zorder>
             <zorder>btn_colorType_change</zorder>
             <zorder>btn_smaller</zorder>
-            <zorder>toolButton_22</zorder>
+            <zorder>btn_sel</zorder>
             <zorder>checkBox_8</zorder>
-            <zorder>checkBox_9</zorder>
+            <zorder>show_temper</zorder>
             <zorder>line_2</zorder>
             <zorder>line_3</zorder>
             <zorder>line_4</zorder>
-            <zorder>horizontalSlider_2</zorder>
+            <zorder>slider_bot</zorder>
             <zorder>line_5</zorder>
             <zorder>line_6</zorder>
             <zorder>line_7</zorder>
@@ -1115,6 +1131,7 @@ background-image: url();
             <zorder>btn_win_w12</zorder>
             <zorder>btn_win_w10</zorder>
             <zorder>btn_win_w8</zorder>
+            <zorder>cbox_smooth</zorder>
            </widget>
            <widget class="QGroupBox" name="groupBox_8">
             <property name="geometry">
@@ -1145,7 +1162,7 @@ background-image: url(:/IRProc/Tool-Bg);
             <property name="title">
              <string/>
             </property>
-            <widget class="MyCustomSlider" name="horizontalSlider_3">
+            <widget class="MyCustomSlider" name="slider_mer_ratio2">
              <property name="geometry">
               <rect>
                <x>75</x>
@@ -1269,14 +1286,14 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="text">
               <string>融
 合
-度
+图
 </string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_46">
+            <widget class="QToolButton" name="btn_1">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -1314,7 +1331,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_47">
+            <widget class="QToolButton" name="btn_2">
              <property name="geometry">
               <rect>
                <x>100</x>
@@ -1352,7 +1369,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_48">
+            <widget class="QToolButton" name="btn_3">
              <property name="geometry">
               <rect>
                <x>130</x>
@@ -1390,7 +1407,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_49">
+            <widget class="QToolButton" name="btn_4">
              <property name="geometry">
               <rect>
                <x>160</x>
@@ -1428,7 +1445,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_50">
+            <widget class="QToolButton" name="btn_8">
              <property name="geometry">
               <rect>
                <x>160</x>
@@ -1466,7 +1483,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_51">
+            <widget class="QToolButton" name="btn_6">
              <property name="geometry">
               <rect>
                <x>100</x>
@@ -1504,7 +1521,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_52">
+            <widget class="QToolButton" name="btn_5">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -1542,7 +1559,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               </size>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_53">
+            <widget class="QToolButton" name="btn_7">
              <property name="geometry">
               <rect>
                <x>130</x>
@@ -1606,7 +1623,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              </property>
             </widget>
            </widget>
-           <widget class="QToolButton" name="toolButton_23">
+           <widget class="QToolButton" name="btn_cross">
             <property name="geometry">
              <rect>
               <x>1100</x>
@@ -1649,7 +1666,7 @@ font: 7pt &quot;宋体&quot;;
              <enum>Qt::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
-           <widget class="QToolButton" name="toolButton_24">
+           <widget class="QToolButton" name="btn_hist">
             <property name="geometry">
              <rect>
               <x>1170</x>
@@ -1692,7 +1709,7 @@ font: 7pt &quot;宋体&quot;;
              <enum>Qt::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
-           <widget class="QToolButton" name="toolButton_25">
+           <widget class="QToolButton" name="btn_save_measure">
             <property name="geometry">
              <rect>
               <x>1240</x>
@@ -1750,6 +1767,7 @@ QLabel{
 background-color: rgb(19, 65, 115);
 border:0px;
 }
+
 </string>
            </property>
            <widget class="QGroupBox" name="groupBox_3">
@@ -3298,6 +3316,12 @@ background-image: url(:/IRProc/Txcl-bg);
                <height>50</height>
               </size>
              </property>
+             <property name="statusTip">
+              <string>分析图像</string>
+             </property>
+             <property name="whatsThis">
+              <string>分析图像</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -3307,47 +3331,6 @@ background-image: url(:/IRProc/Txcl-bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/Data-Analyze</normaloff>:/IRProc/Data-Analyze</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-            <widget class="QToolButton" name="toolButton_27">
-             <property name="geometry">
-              <rect>
-               <x>105</x>
-               <y>30</y>
-               <width>32</width>
-               <height>50</height>
-              </rect>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>32</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>扫描</string>
-             </property>
-             <property name="icon">
-              <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/Data-Scan</normaloff>:/IRProc/Data-Scan</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3441,7 +3424,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_31">
+            <widget class="QToolButton" name="btn_del">
              <property name="geometry">
               <rect>
                <x>245</x>
@@ -3482,48 +3465,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_30">
-             <property name="geometry">
-              <rect>
-               <x>210</x>
-               <y>30</y>
-               <width>32</width>
-               <height>50</height>
-              </rect>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>32</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>登记</string>
-             </property>
-             <property name="icon">
-              <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/Data-Reg</normaloff>:/IRProc/Data-Reg</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
-             </property>
-            </widget>
-            <widget class="QToolButton" name="toolButton_32">
+            <widget class="QToolButton" name="btn_change">
              <property name="geometry">
               <rect>
                <x>280</x>
@@ -3619,7 +3561,7 @@ background-image: url(:/IRProc/DataBg2);
             <property name="title">
              <string/>
             </property>
-            <widget class="QLineEdit" name="lineEdit">
+            <widget class="QLineEdit" name="lineEdit_cur_page">
              <property name="geometry">
               <rect>
                <x>120</x>
@@ -3644,7 +3586,7 @@ background-image: url(:/IRProc/DataBg2);
               <string notr="true"/>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_33">
+            <widget class="QToolButton" name="btn_pre">
              <property name="geometry">
               <rect>
                <x>105</x>
@@ -3676,7 +3618,7 @@ background-image: url(:/IRProc/DataBg2);
                <normaloff>:/IRProc/M-Left</normaloff>:/IRProc/M-Left</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_34">
+            <widget class="QToolButton" name="btn_start">
              <property name="geometry">
               <rect>
                <x>90</x>
@@ -3708,7 +3650,7 @@ background-image: url(:/IRProc/DataBg2);
                <normaloff>:/IRProc/Data-DLeft</normaloff>:/IRProc/Data-DLeft</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_35">
+            <widget class="QToolButton" name="btn_next">
              <property name="geometry">
               <rect>
                <x>150</x>
@@ -3740,7 +3682,7 @@ background-image: url(:/IRProc/DataBg2);
                <normaloff>:/IRProc/M-Right</normaloff>:/IRProc/M-Right</iconset>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_36">
+            <widget class="QToolButton" name="btn_end">
              <property name="geometry">
               <rect>
                <x>165</x>
@@ -3772,23 +3714,10 @@ background-image: url(:/IRProc/DataBg2);
                <normaloff>:/IRProc/Data-DRight</normaloff>:/IRProc/Data-DRight</iconset>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_2">
+            <widget class="QLineEdit" name="lineEdit_page_size">
              <property name="geometry">
               <rect>
-               <x>95</x>
-               <y>60</y>
-               <width>40</width>
-               <height>15</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-            <widget class="QLineEdit" name="lineEdit_3">
-             <property name="geometry">
-              <rect>
-               <x>135</x>
+               <x>120</x>
                <y>60</y>
                <width>40</width>
                <height>15</height>
@@ -3864,7 +3793,7 @@ background-image: url(:/IRProc/DataBg3);
             <property name="title">
              <string/>
             </property>
-            <widget class="QDateEdit" name="dateEdit">
+            <widget class="QDateEdit" name="dateEdit_start">
              <property name="geometry">
               <rect>
                <x>130</x>
@@ -3911,7 +3840,7 @@ border-image: url(:/IRProc/Pro-Rect1);</string>
               <string>结束：</string>
              </property>
             </widget>
-            <widget class="QDateEdit" name="dateEdit_2">
+            <widget class="QDateEdit" name="dateEdit_end">
              <property name="geometry">
               <rect>
                <x>130</x>
@@ -3926,7 +3855,7 @@ background-color: rgb(12,40,70);
 border-image: url(:/IRProc/Pro-Rect1);</string>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_37">
+            <widget class="QToolButton" name="btn_date_sel">
              <property name="geometry">
               <rect>
                <x>245</x>
@@ -4111,10 +4040,10 @@ background-image: url(:/IRProc/DataBg2);
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>编号：</string>
+              <string>卡号：</string>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_4">
+            <widget class="QLineEdit" name="lineEdit_name">
              <property name="geometry">
               <rect>
                <x>115</x>
@@ -4127,7 +4056,7 @@ background-image: url(:/IRProc/DataBg2);
               <string notr="true"/>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_5">
+            <widget class="QLineEdit" name="lineEdit_scanID">
              <property name="geometry">
               <rect>
                <x>115</x>
@@ -4140,7 +4069,7 @@ background-image: url(:/IRProc/DataBg2);
               <string notr="true"/>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_38">
+            <widget class="QToolButton" name="btn_name_sel">
              <property name="geometry">
               <rect>
                <x>190</x>
@@ -4246,7 +4175,7 @@ background-image: url(:/IRProc/DataBg4);
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="toolButton_39">
+            <widget class="QToolButton" name="btn_show_all">
              <property name="geometry">
               <rect>
                <x>70</x>
@@ -4332,7 +4261,8 @@ border:0px;
 QCheckBox{
 background-color: rgb(18, 59, 101);
 border:0px;
-}</string>
+}
+</string>
            </property>
            <widget class="QGroupBox" name="groupBox">
             <property name="geometry">
@@ -4383,6 +4313,12 @@ border:0px;
               </size>
              </property>
              <property name="toolTip">
+              <string/>
+             </property>
+             <property name="statusTip">
+              <string>用户区最大化</string>
+             </property>
+             <property name="whatsThis">
               <string>用户区最大化</string>
              </property>
              <property name="styleSheet">
@@ -4445,6 +4381,15 @@ border:0px;
                <height>32</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="statusTip">
+              <string>展开所有工具栏</string>
+             </property>
+             <property name="whatsThis">
+              <string>展开所有工具栏</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -4481,7 +4426,7 @@ border:0px;
               <string>展开所有工具栏</string>
              </property>
             </widget>
-            <widget class="QToolButton" name="sysSettingBt">
+            <widget class="QToolButton" name="btn_set_auth">
              <property name="geometry">
               <rect>
                <x>250</x>
@@ -4780,7 +4725,7 @@ border:0px;
              <rect>
               <x>770</x>
               <y>0</y>
-              <width>251</width>
+              <width>200</width>
               <height>90</height>
              </rect>
             </property>
@@ -4802,35 +4747,6 @@ border:0px;
             <property name="title">
              <string/>
             </property>
-            <widget class="QToolButton" name="btn_set_step">
-             <property name="geometry">
-              <rect>
-               <x>90</x>
-               <y>50</y>
-               <width>60</width>
-               <height>32</height>
-              </rect>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-width:2px;
-border-color:red</string>
-             </property>
-             <property name="text">
-              <string>断层步长</string>
-             </property>
-            </widget>
             <widget class="QLabel" name="label_48">
              <property name="geometry">
               <rect>
@@ -4846,35 +4762,61 @@ border-color:red</string>
 数</string>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_step">
+            <widget class="QLabel" name="label_41">
              <property name="geometry">
               <rect>
                <x>90</x>
-               <y>20</y>
-               <width>61</width>
+               <y>60</y>
+               <width>60</width>
                <height>20</height>
               </rect>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>系统参数</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="cbox_smooth">
+            <widget class="QToolButton" name="btn_sys_par">
              <property name="geometry">
               <rect>
-               <x>170</x>
+               <x>100</x>
                <y>20</y>
-               <width>69</width>
-               <height>22</height>
+               <width>32</width>
+               <height>32</height>
               </rect>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+             <property name="minimumSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
              </property>
-             <property name="editable">
-              <bool>false</bool>
+             <property name="maximumSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>系统参数</string>
+             </property>
+             <property name="icon">
+              <iconset resource="IRProc.qrc">
+               <normaloff>:/IRProc/SysPara</normaloff>:/IRProc/SysPara</iconset>
              </property>
             </widget>
            </widget>
@@ -4918,7 +4860,7 @@ color: rgb(0, 0, 0);</string>
                <number>5</number>
               </property>
               <property name="columnCount">
-               <number>11</number>
+               <number>12</number>
               </property>
               <attribute name="horizontalHeaderVisible">
                <bool>false</bool>
@@ -4952,6 +4894,20 @@ color: rgb(0, 0, 0);</string>
               <column>
                <property name="text">
                 <string>序号</string>
+               </property>
+               <property name="foreground">
+                <brush brushstyle="NoBrush">
+                 <color alpha="255">
+                  <red>0</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>卡号</string>
                </property>
               </column>
               <column>
@@ -5017,11 +4973,38 @@ color: rgb(0, 0, 0);</string>
           </widget>
           <widget class="QWidget" name="showpageImg">
            <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_21">
+              <property name="minimumSize">
+               <size>
+                <width>400</width>
+                <height>300</height>
+               </size>
+              </property>
+              <widget class="QWidget" name="widget2">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_2"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="pageBigImg">
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_6"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QTabWidget" name="tabWidget">
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>170</width>
                 <height>0</height>
                </size>
               </property>
@@ -5033,7 +5016,10 @@ color: rgb(0, 0, 0);</string>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(18, 59, 101);
-</string>
+QLabel{
+color: rgb(255, 255, 255);
+
+}</string>
               </property>
               <property name="currentIndex">
                <number>0</number>
@@ -5058,7 +5044,7 @@ color: rgb(0, 0, 0);</string>
                  <string>max-TR</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit_6">
+               <widget class="QLineEdit" name="max_TR">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -5071,7 +5057,7 @@ color: rgb(0, 0, 0);</string>
                  <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit_7">
+               <widget class="QLineEdit" name="av_TR">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -5079,6 +5065,9 @@ color: rgb(0, 0, 0);</string>
                   <width>61</width>
                   <height>20</height>
                  </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
                <widget class="QLabel" name="label_8">
@@ -5097,7 +5086,7 @@ color: rgb(0, 0, 0);</string>
                  <string>av-TR</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit_8">
+               <widget class="QLineEdit" name="min_TR">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -5105,6 +5094,9 @@ color: rgb(0, 0, 0);</string>
                   <width>61</width>
                   <height>20</height>
                  </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -5123,10 +5115,10 @@ color: rgb(0, 0, 0);</string>
                  <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
-                 <string>max-TR</string>
+                 <string>min-TR</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit_9">
+               <widget class="QLineEdit" name="max_max">
                 <property name="geometry">
                  <rect>
                   <x>70</x>
@@ -5134,6 +5126,9 @@ color: rgb(0, 0, 0);</string>
                   <width>61</width>
                   <height>20</height>
                  </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -5162,7 +5157,7 @@ color: rgb(0, 0, 0);</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_5">
                 <item row="1" column="0">
-                 <widget class="QListWidget" name="listWidget">
+                 <widget class="QListWidget" name="listWidget_date">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -5175,43 +5170,23 @@ color: rgb(0, 0, 0);</string>
                     <height>50</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);</string>
+                  </property>
                   <property name="verticalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOn</enum>
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="0">
+                 <widget class="QComboBox" name="comboBox_user">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="2" column="0" rowspan="2" colspan="2">
                  <layout class="QGridLayout" name="gridLayout_3"/>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QComboBox" name="comboBox"/>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QStackedWidget" name="stackedWidget_21">
-              <property name="minimumSize">
-               <size>
-                <width>400</width>
-                <height>300</height>
-               </size>
-              </property>
-              <widget class="QWidget" name="widget2">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="gridLayout_2"/>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="pageBigImg">
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="gridLayout_6"/>
                 </item>
                </layout>
               </widget>
@@ -5355,6 +5330,7 @@ color: rgb(0, 0, 0);</string>
  </customwidgets>
  <resources>
   <include location="IRProc.qrc"/>
+  <include location="../../../QTIRScan/IRScan/IRScan/IRScan.qrc"/>
  </resources>
  <connections/>
 </ui>

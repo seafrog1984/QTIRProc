@@ -23,21 +23,33 @@ using namespace cv;
 
 
 
-extern int g_mouse_mode;//Êó±êÊÂ¼þÄ£Ê½£º 0-·Å´óËõÐ¡£¬°´×¡ÒÆ¶¯£¬ Ä¬ÈÏ£»1-¼Óµã£»2-¾ØÐÎ£»3-Ô²½Ç¾ØÐÎ£»4-ÍÖÔ²£¬
+extern int g_mouse_mode;//Êó±êÊÂ¼þÄ£Ê½£º 0-·Å´óËõÐ¡£¬°´×¡ÒÆ¶¯£»1-¼Óµã£»2-¾ØÐÎ£»3-Ô²½Ç¾ØÐÎ£»4-ÍÖÔ²£»5-É¾³ý£»6-Ñ¡ÔñÄ£Ê½£¬ Ä¬ÈÏ
 extern int g_flag_showTemper;//ÏÔÊ¾ÎÂ¶È±êÖ¾£º 0-²»ÏÔÊ¾£»1-ÏÔÊ¾
 extern int g_flagShowBigImg;
 extern int g_cur_img;
+extern int g_picNum;
 extern double g_ratio[IMGE_TOTAL_NUM];//Í¼Ïñ·Å´ó±¶Êý
 extern Mat g_mer;//ÈÚºÏÍ¼Ïñ
 extern Mat g_src[IMGE_TOTAL_NUM];
 extern Mat g_img[IMGE_TOTAL_NUM];//opencvÍ¼Ïñ-²ÊÉ«
 extern Mat g_img_gray[IMGE_TOTAL_NUM];//opencvÍ¼Ïñ-»Ò¶È
 extern Mat g_temper[IMGE_TOTAL_NUM];//ÎÂ¶È¾ØÕó
+extern double g_TR[IMGE_TOTAL_NUM];//Í¼ÏñµÄÎÂ¶È¾ù·½²î
+extern QImage g_qImgShow[IMGE_TOTAL_NUM];//QtÔ­Ê¼Í¼Ïñ-²ÊÉ«
 extern int g_color_type;
 extern Shape allshape[IMGE_TOTAL_NUM][COMMENT_PER_IMAGE];
 extern int g_shape_no[IMGE_TOTAL_NUM];//Í¼ÏñÉÏ±ê×¢µÄÊýÁ¿
 extern QPoint g_offset[IMGE_TOTAL_NUM];//ÏÔÊ¾Í¼ÏñµÄÆ«ÒÆÁ¿
 extern double g_mer_ratio;
+
+extern int g_flag_showTemper;//ÏÔÊ¾ÎÂ¶È±êÖ¾£º 0-²»ÏÔÊ¾£»1-ÏÔÊ¾
+
+extern QString g_name;
+extern QString g_age;
+extern QString g_gender;
+extern QString g_ID ;
+extern QString g_scanID;
+extern QString g_cardID;
 
 
 MyLabel::MyLabel( QWidget* parent)
@@ -47,6 +59,10 @@ MyLabel::MyLabel( QWidget* parent)
 	//connect(this, SIGNAL(sig_GetOneFrame(QImage)), this, SLOT(slotGetOneFrame(QImage)));
 	p1 = QPoint(0, 0);
 	p2 = QPoint(0, 0);//QPoint¹¹Ôìº¯Êý
+	getCurImgIndex();
+	m_temper = m_temper = g_temper[cur_img].at<float>(0, 0);
+	g_mouse_mode = 6;
+
 	offset = QPoint(0, 0);
 	Alloffset = QPoint(0, 0);
 	m_shapeType = 1;
@@ -54,23 +70,30 @@ MyLabel::MyLabel( QWidget* parent)
 	m_flag_press=0;
 	this->setAlignment(Qt::AlignCenter);
 
+	m_name=g_name;
+	m_age=g_age;
+	m_gender=g_gender;
+	m_ID= g_ID ;
+	m_scanID= g_scanID;
+	m_cardID=g_cardID;
+
 }
 
 void MyLabel::setOffset(QPoint offset)
 {
 	this->getCurImgIndex();
-	Alloffset = g_offset[g_cur_img];
+	Alloffset = g_offset[cur_img];
 }
 
 int MyLabel::getCurImgIndex()
 {
 	QString lname = this->objectName();
 	if (g_flagShowBigImg)
-		g_cur_img = lname.toInt() - 20;
+		cur_img = lname.toInt() - 20;
 	else
-		g_cur_img = lname.toInt();
+		cur_img = lname.toInt();
 
-	return g_cur_img;
+	return cur_img;
 }
 
 void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
@@ -80,7 +103,7 @@ void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
 		m_flag_press = 0;
 		offset.setX(0);
 		offset.setY(0);
-		this->getCurImgIndex();
+		int cur_img=getCurImgIndex();
 		if (g_mouse_mode == 2 || g_mouse_mode == 3 || g_mouse_mode == 4)
 		{
 			int ltx, lty, rbx, rby, t;
@@ -95,25 +118,25 @@ void MyLabel::mouseReleaseEvent(QMouseEvent *ev)
 			{
 				t = lty; lty = rby; rby = t;
 			}
-			allshape[g_cur_img][g_shape_no[g_cur_img]].shape_type = g_mouse_mode;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].lt_x = ltx;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].lt_y = lty;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = rbx;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = rby;
-			allshape[g_cur_img][g_shape_no[g_cur_img]].comment = "None";
-			allshape[g_cur_img][g_shape_no[g_cur_img]].del_flag = false;
+			allshape[cur_img][g_shape_no[cur_img]].shape_type = g_mouse_mode;
+			allshape[cur_img][g_shape_no[cur_img]].lt_x = ltx;
+			allshape[cur_img][g_shape_no[cur_img]].lt_y = lty;
+			allshape[cur_img][g_shape_no[cur_img]].rb_x = rbx;
+			allshape[cur_img][g_shape_no[cur_img]].rb_y = rby;
+			allshape[cur_img][g_shape_no[cur_img]].comment = "None";
+			allshape[cur_img][g_shape_no[cur_img]].del_flag = false;
 
 			if (g_mouse_mode == 3)
 			{
 				int dia = (rbx - ltx) < (rby - lty) ? (rbx - ltx) : (rby - lty);
-				allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = ltx + dia;
-				allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = lty + dia;
+				allshape[cur_img][g_shape_no[cur_img]].rb_x = ltx + dia;
+				allshape[cur_img][g_shape_no[cur_img]].rb_y = lty + dia;
 
 			}
 
-			this->calPar(g_shape_no[g_cur_img]);
-			g_shape_no[g_cur_img]++;
-			draw_shape(g_shape_no[g_cur_img]);
+			calPar(g_shape_no[cur_img]);
+			g_shape_no[cur_img]++;
+			draw_shape(g_shape_no[cur_img]);
 
 		}
 		update();
@@ -125,23 +148,38 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 {
 	m_flag_press = 1;
 	p1 = event->pos();
-	this->getCurImgIndex();
+	g_cur_img=getCurImgIndex();
+
+	for (int i = 0; i < g_picNum; i++)
+	{
+		QLabel *p = parent()->findChild<QLabel*>(QString::number(i));
+		if (p!=NULL)
+			p->setStyleSheet("border-width: 0px");
+	}
+	setStyleSheet("border-width: 2px;border-style: solid;border-color: rgb(255, 0, 0);");
+
+//	QMessageBox::information(NULL, "Title", QString::number(cur_img));
+
 	switch (g_mouse_mode)
 	{
+	case 6:
+	{
 
+	}
+	break;
 	case 0:
 	{// Èç¹ûÊÇÊó±ê×ó¼ü°´ÏÂ
 			  if (event->button() == Qt::LeftButton)
 			  {
-				  g_ratio[g_cur_img] += (0.1+3e-6);
-				  if (g_ratio[g_cur_img] > 3) g_ratio[g_cur_img] = 3;
+				  g_ratio[cur_img] += (0.1+3e-6);
+				  if (g_ratio[cur_img] > 3) g_ratio[cur_img] = 3;
 			  }
 			  // Èç¹ûÊÇÊó±êÓÒ¼ü°´ÏÂ
 			  else if (event->button() == Qt::RightButton)
 			  {
 				  m_flag_press = 0;
-				  g_ratio[g_cur_img] -= (0.1-3e-6);
-				  if (g_ratio[g_cur_img] < 1) g_ratio[g_cur_img] = 1;
+				  g_ratio[cur_img] -= (0.1-3e-6);
+				  if (g_ratio[cur_img] < 1) g_ratio[cur_img] = 1;
 			  }
 			  update();
 			  break;
@@ -154,22 +192,22 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 
 				  this->calRealCor(p1, rx, ry);
 
-				  float temper = g_temper[g_cur_img].at<float>(ry, rx);
+				  float temper = g_temper[cur_img].at<float>(ry, rx);
 
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].shape_type = g_mouse_mode;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].lt_x = rx;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].lt_y = ry;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].rb_x = rx;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].rb_y = ry;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].t_max = temper;;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].t_min = temper;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].t_aver = temper;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].t_msd = 0;
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].comment = "None";
-				  allshape[g_cur_img][g_shape_no[g_cur_img]].del_flag = false;
+				  allshape[cur_img][g_shape_no[cur_img]].shape_type = g_mouse_mode;
+				  allshape[cur_img][g_shape_no[cur_img]].lt_x = rx;
+				  allshape[cur_img][g_shape_no[cur_img]].lt_y = ry;
+				  allshape[cur_img][g_shape_no[cur_img]].rb_x = rx;
+				  allshape[cur_img][g_shape_no[cur_img]].rb_y = ry;
+				  allshape[cur_img][g_shape_no[cur_img]].t_max = temper;;
+				  allshape[cur_img][g_shape_no[cur_img]].t_min = temper;
+				  allshape[cur_img][g_shape_no[cur_img]].t_aver = temper;
+				  allshape[cur_img][g_shape_no[cur_img]].t_msd = 0;
+				  allshape[cur_img][g_shape_no[cur_img]].comment = "None";
+				  allshape[cur_img][g_shape_no[cur_img]].del_flag = false;
 
-				  g_shape_no[g_cur_img]++;	
-				  draw_shape(g_shape_no[g_cur_img]);
+				  g_shape_no[cur_img]++;	
+				  draw_shape(g_shape_no[cur_img]);
 			  }
 			  else
 			  {
@@ -178,15 +216,15 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  int rx, ry;
 
 				  this->calRealCor(p1, rx, ry);
-				  for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+				  for (int i = 0; i < g_shape_no[cur_img]; i++)
 				  {
-					  if (rx >= allshape[g_cur_img][i].lt_x&&rx <= allshape[g_cur_img][i].rb_x&&ry >= allshape[g_cur_img][i].lt_y&&ry <= allshape[g_cur_img][i].rb_y)
+					  if (rx >= allshape[cur_img][i].lt_x&&rx <= allshape[cur_img][i].rb_x&&ry >= allshape[cur_img][i].lt_y&&ry <= allshape[cur_img][i].rb_y)
 					  {
-						  allshape[g_cur_img][i].del_flag = true;
+						  allshape[cur_img][i].del_flag = true;
 						  break;
 					  }
 				  }
-				  draw_shape(g_shape_no[g_cur_img]);
+				  draw_shape(g_shape_no[cur_img]);
 
 			  }
 		update();
@@ -200,15 +238,15 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 			int rx, ry;
 
 			this->calRealCor(p1, rx, ry);
-			for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+			for (int i = 0; i < g_shape_no[cur_img]; i++)
 			{
-				if (rx >= allshape[g_cur_img][i].lt_x&&rx <= allshape[g_cur_img][i].rb_x&&ry >= allshape[g_cur_img][i].lt_y&&ry <= allshape[g_cur_img][i].rb_y)
+				if (rx >= allshape[cur_img][i].lt_x&&rx <= allshape[cur_img][i].rb_x&&ry >= allshape[cur_img][i].lt_y&&ry <= allshape[cur_img][i].rb_y)
 				{
-					allshape[g_cur_img][i].del_flag = true;
+					allshape[cur_img][i].del_flag = true;
 					break;
 				}
 			}
-			draw_shape(g_shape_no[g_cur_img]);
+			draw_shape(g_shape_no[cur_img]);
 
 		}
 
@@ -232,6 +270,13 @@ void MyLabel::mouseMoveEvent(QMouseEvent *ev)
 			offset.setY(p2.y() - p1.y());
 			p1 = p2;
 	}
+	else if (g_flag_showTemper&&g_mouse_mode == 6)
+	{
+		int rx, ry;
+
+		this->calRealCor(p2, rx, ry);
+		m_temper = g_temper[cur_img].at<float>(ry, rx);
+	}
 	update();
 }
 
@@ -242,9 +287,16 @@ void MyLabel::keyPressEvent(QKeyEvent *ev)
 
 void MyLabel::paintEvent(QPaintEvent *ev)
 {
-	getCurImgIndex();
+	int cur_img=getCurImgIndex();
 	QLabel::paintEvent(ev);
 	QPainter painter(this);
+
+	QPixmap pixmap = QPixmap::fromImage(g_qImgShow[cur_img]);
+	//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // ±¥ÂúÌî³ä
+	QPixmap fitpixmap = pixmap.scaled(width(), height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);  // °´±ÈÀýËõ·Å
+	setPixmap(fitpixmap);
+
+
 	Mat timg;
 
 	if (this->pixmap() == NULL) return;
@@ -262,8 +314,8 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	Alloffset.setY(offsety);
 
 
-	int NowW = imgw*g_ratio[g_cur_img];
-	int NowH = imgh*g_ratio[g_cur_img];
+	int NowW = imgw*g_ratio[cur_img];
+	int NowH = imgh*g_ratio[cur_img];
 
 	if (abs(Alloffset.x()) >= abs(Paint.width() / 2 - NowW / 2))    //ÏÞÖÆXÆ«ÒÆÖµ
 	{
@@ -281,7 +333,7 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 
 	}
 
-	g_offset[g_cur_img]=Alloffset  ;
+	g_offset[cur_img]=Alloffset  ;
 
 	int x = Paint.width() / 2 + Alloffset.x() - NowW / 2;
 	if (x < 0)
@@ -309,17 +361,29 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 
 	if (g_color_type)
 	{
-		cv::resize(g_img[g_cur_img], timg, Size(NowW, NowH), 0, 0);
-		QImage image = QImage((const unsigned char*)(timg.data), timg.cols, timg.rows, QImage::Format_RGB888);
+		cv::resize(g_img[cur_img], timg, Size(NowW, NowH), 0, 0);
+
+		Rect rect1(sx, sy, imgw, imgh);
+		Mat roi1;
+		timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+		QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_RGB888);
 		//painter.drawRect(Paint.x() - 1, Paint.y() - 1, Paint.width() + 1, Paint.height() + 1); //»­¿ò
-		painter.drawTiledPixmap(Paint.x(), Paint.y(), imgw, imgh, QPixmap::fromImage(image), sx, sy);
+		//painter.drawTiledPixmap(Paint.x(), Paint.y(), imgw, imgh, QPixmap::fromImage(image), sx, sy);
+		setPixmap(QPixmap::fromImage(image));
 	}
 	else
 	{
-		cv::resize(g_img_gray[g_cur_img], timg, Size(NowW, NowH), 0, 0);
-		QImage image = QImage((const unsigned char*)(timg.data), timg.cols, timg.rows, QImage::Format_Grayscale8);
+		cv::resize(g_img_gray[cur_img], timg, Size(NowW, NowH), 0, 0);
+		Rect rect1(sx, sy, imgw, imgh);
+		Mat roi1;
+		timg(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
+		QImage image = QImage((const unsigned char*)(roi1.data), roi1.cols, roi1.rows, QImage::Format_Grayscale8);
 		//painter.drawRect(Paint.x() - 1, Paint.y() - 1, Paint.width() + 1, Paint.height() + 1); //»­¿ò
-		painter.drawTiledPixmap(Paint.x(), Paint.y(), Paint.width(), Paint.height(), QPixmap::fromImage(image), sx, sy);
+		//painter.drawTiledPixmap(Paint.x(), Paint.y(), imgw, imgh, QPixmap::fromImage(image), sx, sy);
+		setPixmap(QPixmap::fromImage(image));
+		//QImage image = QImage((const unsigned char*)(timg.data), timg.cols, timg.rows, QImage::Format_Grayscale8);
+		////painter.drawRect(Paint.x() - 1, Paint.y() - 1, Paint.width() + 1, Paint.height() + 1); //»­¿ò
+		//painter.drawTiledPixmap(Paint.x(), Paint.y(), Paint.width(), Paint.height(), QPixmap::fromImage(image), sx, sy);
 	}
 
 	if (m_action != 5)
@@ -337,18 +401,25 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 		if (g_mouse_mode == 4 && m_flag_press)
 			painter.drawEllipse(QRect(p1.x(), p1.y(), p2.x() - p1.x(), p2.y() - p1.y()));
 
-		//if (g_mouse_mode == 0)
-		//{
-
-		//}
 	}
 	else
 	{
 		m_action = g_mouse_mode;
 	}
 	
-	QString strText = QString::number(g_ratio[g_cur_img], 10, 2);
+	QString strText = QString::number(g_ratio[cur_img], 10, 2);
 	painter.drawText(Paint.x() + 10, Paint.y() + 10, strText);
+	painter.drawText(Paint.x() + 10, Paint.y() + 20, m_ID);
+	painter.drawText(Paint.x() + 10, Paint.y() + 30, m_name);
+	painter.drawText(Paint.x() + 10, Paint.y() + 40, m_gender);
+	painter.drawText(Paint.x() + 10, Paint.y() + 50, m_age);
+	painter.drawText(Paint.x() + 10, Paint.y() + 60, m_scanID);
+
+	if (g_flag_showTemper&&g_mouse_mode==6)
+	{
+		QString strTemper = QString::number(m_temper);
+		painter.drawText(p2.x(), p2.y(), strTemper);
+	}
 
 }
 
@@ -360,50 +431,50 @@ void MyLabel::setShapeType(int shapeType)
 
 void MyLabel::draw_shape(int shape_no)
 {
-	this->getCurImgIndex();
+	getCurImgIndex();
 	char label[1000];
 	CvxText text("C:\\Windows\\Fonts\\simhei.ttf"); //Ö¸¶¨×ÖÌå
 	cv::Scalar size{ 12, 0, 0.1, 0 }; // (×ÖÌå´óÐ¡, ÎÞÐ§µÄ, ×Ö·û¼ä¾à, ÎÞÐ§µÄ }
 	text.setFont(nullptr, &size, nullptr, 0);
-	g_src[g_cur_img].copyTo(g_img[g_cur_img]);
+	g_src[cur_img].copyTo(g_img[cur_img]);
 
-	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+	g_img[cur_img] = g_img[cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	for (int i = 0; i < shape_no; i++)
 	{
-		int x = allshape[g_cur_img][i].rb_x;
-		int y = allshape[g_cur_img][i].rb_y;
+		int x = allshape[cur_img][i].rb_x;
+		int y = allshape[cur_img][i].rb_y;
 
-		if (!allshape[g_cur_img][i].del_flag)
-		switch (allshape[g_cur_img][i].shape_type)
+		if (!allshape[cur_img][i].del_flag)
+		switch (allshape[cur_img][i].shape_type)
 		{
 		case 1:
 			{
-				  rectangle(g_img[g_cur_img], Point(x - 1, y - 1), Point(x + 1, y + 1), CV_RGB(255, 255, 255), CV_FILLED, 8, 0);
-				  sprintf(label, "[%02d]- %.2lf", i+1, allshape[g_cur_img][i].t_max);
-				  text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
+				  rectangle(g_img[cur_img], Point(x - 1, y - 1), Point(x + 1, y + 1), CV_RGB(255, 255, 255), CV_FILLED, 8, 0);
+				  sprintf(label, "[%02d]- %.2lf", i+1, allshape[cur_img][i].t_max);
+				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 2:
 			{
-				  rectangle(g_img[g_cur_img], Point(allshape[g_cur_img][i].lt_x, allshape[g_cur_img][i].lt_y), Point(allshape[g_cur_img][i].rb_x, allshape[g_cur_img][i].rb_y), Scalar(255, 255, 255), 1, 8, 0);
-				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[g_cur_img][i].t_max, allshape[g_cur_img][i].t_min, allshape[g_cur_img][i].t_aver, allshape[g_cur_img][i].t_msd);
-				  text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
+				  rectangle(g_img[cur_img], Point(allshape[cur_img][i].lt_x, allshape[cur_img][i].lt_y), Point(allshape[cur_img][i].rb_x, allshape[cur_img][i].rb_y), Scalar(255, 255, 255), 1, 8, 0);
+				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 3:
 			{
-				  int radius = (allshape[g_cur_img][i].rb_x - allshape[g_cur_img][i].lt_x)/2;
-				  circle(g_img[g_cur_img], Point((allshape[g_cur_img][i].lt_x + allshape[g_cur_img][i].rb_x) / 2, (allshape[g_cur_img][i].lt_y + allshape[g_cur_img][i].rb_y) / 2), radius, Scalar(255, 255, 255), 1, 8, 0);
-				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[g_cur_img][i].t_max, allshape[g_cur_img][i].t_min, allshape[g_cur_img][i].t_aver, allshape[g_cur_img][i].t_msd);
-				  text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
+				  int radius = (allshape[cur_img][i].rb_x - allshape[cur_img][i].lt_x)/2;
+				  circle(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), radius, Scalar(255, 255, 255), 1, 8, 0);
+				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 4:
 			{
-				ellipse(g_img[g_cur_img], Point((allshape[g_cur_img][i].lt_x + allshape[g_cur_img][i].rb_x) / 2, (allshape[g_cur_img][i].lt_y + allshape[g_cur_img][i].rb_y) / 2), Size(abs(allshape[g_cur_img][i].lt_x - allshape[g_cur_img][i].rb_x)/2, abs(allshape[g_cur_img][i].lt_y - allshape[g_cur_img][i].rb_y)/2), 0, 0, 360, Scalar(255, 255, 255), 1, 8, 0);
-				sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[g_cur_img][i].t_max, allshape[g_cur_img][i].t_min, allshape[g_cur_img][i].t_aver, allshape[g_cur_img][i].t_msd);
-				text.putText(g_img[g_cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
+				ellipse(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), Size(abs(allshape[cur_img][i].lt_x - allshape[cur_img][i].rb_x)/2, abs(allshape[cur_img][i].lt_y - allshape[cur_img][i].rb_y)/2), 0, 0, 360, Scalar(255, 255, 255), 1, 8, 0);
+				sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		}
@@ -427,8 +498,8 @@ void MyLabel::calRealCor(QPoint pt, int &rx, int &ry)//¼ÆËãÊó±êÎ»ÖÃÔÚÔ­Ê¼Í¼ÏñÖÐµ
 	if (x >= w) x = w - 1;
 	if (y < 0) y = 0;
 	if (y >= h) y = h - 1;
-	int NowW = w*g_ratio[g_cur_img];
-	int NowH = h*g_ratio[g_cur_img];
+	int NowW = w*g_ratio[cur_img];
+	int NowH = h*g_ratio[cur_img];
 	int  sx = NowW / 2 - w / 2 - Alloffset.x();
 	if (sx<0)
 		sx = 0;
@@ -446,14 +517,14 @@ void MyLabel::calPar(int cur_shape_no)
 	this->getCurImgIndex();
 
 	float topvalue = -999999, bottomvalue = 9999, aver = 0, sum = 0, sd = 0;
-	int num = (allshape[g_cur_img][cur_shape_no].rb_x - allshape[g_cur_img][cur_shape_no].lt_x)*(allshape[g_cur_img][cur_shape_no].rb_y - allshape[g_cur_img][cur_shape_no].lt_y);
+	int num = (allshape[cur_img][cur_shape_no].rb_x - allshape[cur_img][cur_shape_no].lt_x)*(allshape[cur_img][cur_shape_no].rb_y - allshape[cur_img][cur_shape_no].lt_y);
 
-	if (allshape[g_cur_img][cur_shape_no].shape_type != 1)
+	if (allshape[cur_img][cur_shape_no].shape_type != 1)
 	{
-		for (int i = allshape[g_cur_img][cur_shape_no].lt_y; i < allshape[g_cur_img][cur_shape_no].rb_y; i++)
+		for (int i = allshape[cur_img][cur_shape_no].lt_y; i < allshape[cur_img][cur_shape_no].rb_y; i++)
 		{
-			float *p_tData = g_temper[g_cur_img].ptr<float>(i);
-			for (int j = allshape[g_cur_img][cur_shape_no].lt_x; j < allshape[g_cur_img][cur_shape_no].rb_x; j++)
+			float *p_tData = g_temper[cur_img].ptr<float>(i);
+			for (int j = allshape[cur_img][cur_shape_no].lt_x; j < allshape[cur_img][cur_shape_no].rb_x; j++)
 			{
 				float value = *(p_tData + j);
 				//dst.at<uchar>(j, HEIGHT - 1 - i) = g_tmpdst.at<uchar>(i, j);
@@ -463,20 +534,22 @@ void MyLabel::calPar(int cur_shape_no)
 			}
 		}
 		aver = sum / num;
-		for (int i = allshape[g_cur_img][cur_shape_no].lt_y; i < allshape[g_cur_img][cur_shape_no].rb_y; i++)
+		for (int i = allshape[cur_img][cur_shape_no].lt_y; i < allshape[cur_img][cur_shape_no].rb_y; i++)
 		{
-			float *p_tData = g_temper[g_cur_img].ptr<float>(i);
-			for (int j = allshape[g_cur_img][cur_shape_no].lt_x; j < allshape[g_cur_img][cur_shape_no].rb_x; j++)
+			float *p_tData = g_temper[cur_img].ptr<float>(i);
+			for (int j = allshape[cur_img][cur_shape_no].lt_x; j < allshape[cur_img][cur_shape_no].rb_x; j++)
 			{
 				float value = *(p_tData + j);
 				//dst.at<uchar>(j, HEIGHT - 1 - i) = g_tmpdst.at<uchar>(i, j);
 				sd += (value - aver)*(value - aver);
 			}
 		}
-		allshape[g_cur_img][cur_shape_no].t_max = topvalue;;
-		allshape[g_cur_img][cur_shape_no].t_min = bottomvalue;
-		allshape[g_cur_img][cur_shape_no].t_aver = aver;
-		allshape[g_cur_img][cur_shape_no].t_msd = sqrt(sd) / num;
+		allshape[cur_img][cur_shape_no].t_max = topvalue;;
+		allshape[cur_img][cur_shape_no].t_min = bottomvalue;
+		allshape[cur_img][cur_shape_no].t_aver = aver;
+		allshape[cur_img][cur_shape_no].t_msd = sqrt(sd) / num;
+
+		emit calData();
 	}
 
 }

@@ -5,6 +5,10 @@
 #include<opencv2\highgui\highgui.hpp>
 #include "ui_IRProc.h"
 #include "string.h"
+#include "SetAuthDlg.h"
+#include "SettingDlg.h"
+#include "RegDlg.h"
+#include "CrossDlg.h"
 
 struct shape{
 	bool del_flag;
@@ -28,6 +32,10 @@ class IRProc : public QMainWindow
 public:
 	IRProc(QWidget *parent = Q_NULLPTR);
 
+	void conDataBase();//连接数据库
+	void updateData();
+	void addData(int index, QString cardID, QString scanID, QString RegTime);
+
 private:
 	Ui::IRProcClass ui;
 
@@ -35,6 +43,7 @@ private:
 	void imgMerge();//图像融合
 	void dataManage();//数据管理
 	void sysSetting();//系统设置
+	virtual void resizeEvent(QResizeEvent * event);
 
 public slots:
 
@@ -42,20 +51,30 @@ public slots:
 	void toolBarExpand();//系统设置-展开所有工具栏
 	void sysSettingOp();//系统设置-权限设置
 	void customize();//系统设置-定制
+	void btn_sysPar();//系统参数设置
 
 	void imgChange();//图像右上角按钮
 	void btnAnalyze();//打开图像，转到分析页面
 	void updateImage();//更新图像
 	void colorTypeChange();
 	void changeWinWidth();
-	void setStep();//设置断层步长
 	void setFilter(int);//设置滤波方式
 	void addPoint();//画点
 	void addRect();//画矩形
 	void addCircle();//画圆形
 	void addEllipse();//画椭圆
+	void btn_closeAll();//关闭所有
+	void btn_closeOther();//关闭其他
+	void sliderBot();//断层
+	void btn_hist();//直方图
+	void btn_cross();//交叉线分析
+	void btn_sel();//选择
+	void btn_zoom();//放大缩小
+	void showTemper();//显示温度
+
 	void btnMerDef();//自定义融合图
 	void sliderMerRatio();//融合度调整
+	void sliderMerRatio2();//融合度调整
 	void btnMerWid();//融合图变宽
 	void btnMerNar();//融合图变窄
 	void btnMerHigher();//融合图变高
@@ -64,10 +83,22 @@ public slots:
 	void btnMerRight();//融合图右移
 	void btnMerUp();//融合图上移
 	void btnMerDown();//融合图下移
-
 	void changeMerGender();
 	void changeMerPose();
 	void changeMerType();
+	
+	void btn_del();
+	void btn_change();
+	void btn_pre();
+	void btn_next();
+	void btn_start();
+	void btn_end();
+	void btn_dateSel();
+	void btn_nameSel();
+	void btn_showAll();
+
+	void calData();
+	void time_update();
 
 public:
 	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数
@@ -79,12 +110,21 @@ public:
 
 	//void mouseRelease(QMouseEvent *event);
 
-	void calPar(Mat &T, Shape &s);//统计最大最小等
+	//void calPar(Mat &T, Shape &s);//统计最大最小等
+	double calTR(Mat &img);//计算图像均方差
+
+	void showThum();//显示缩略图
 
 //	void draw_shape(Mat& img, Shape allshape[], int shape_no);//显示标签
 
 	int m_mx, m_my;
 
+	SettingDlg *dlg;
+	SetAuthDlg *adlg;
+	RegDlg *rdlg;
+	CrossDlg *cdlg;
 
+	QString m_msg;
 
+	QLabel *currentTimeLabel;//显示系统时间
 };

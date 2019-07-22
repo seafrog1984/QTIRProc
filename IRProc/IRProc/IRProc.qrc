@@ -76,5 +76,6 @@
         <file alias="MFront">Resources/mergeFront.png</file>
         <file alias="MLeft">Resources/mergeLeft.png</file>
         <file alias="MRight">Resources/mergeRight.png</file>
+        <file alias="SysPara">Resources/sys-Para.png</file>
     </qresource>
 </RCC>

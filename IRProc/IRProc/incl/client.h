@@ -8,7 +8,7 @@
 #include "../utils/string/string_utils.h"
 
 
-#define  PIC_SIZE  320*240
+#define  PIC_SIZE  384*288
 #define  MAX_DATA  1024*10
 
 using namespace std;
@@ -55,6 +55,8 @@ public:
 	bool send_info(std::map<std::string, std::string> &mapUserInfo);
 	//获取个人信息
 	int get_info(const std::string &scan_id, std::map<std::string, std::string> &mapUserInfo);
+	//获取图片IDs
+	int get_png_id(const std::string &scan_id, std::map<std::string, std::string> &mapInfo);
 	//获取图片
 	bool get_png(const std::string &scan_id, const std::string &png_id, unsigned short *pic, int pic_len);
 	//发送结果图片
@@ -73,6 +75,11 @@ public:
 	bool del_user(string &user, string &loginuser, string &loginpasswd);
 	//修改用户
 	bool update_user(string &user, string &passwd, int &permissions, string &loginuser, string &loginpasswd);
+
+	//获取列表
+	int get_listdata(std::string &params, std::string &data);
+	//删除扫描ID
+	int del_scanid(const std::string &scan_id);
 
 private:
 	//设置请求头

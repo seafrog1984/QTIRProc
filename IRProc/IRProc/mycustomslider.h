@@ -8,6 +8,7 @@ class MyCustomSlider : public QSlider
 public:
 	MyCustomSlider(QWidget *parent = 0);
 	~MyCustomSlider();
+	int type;
 
 protected:
 	virtual void mousePressEvent(QMouseEvent *event);

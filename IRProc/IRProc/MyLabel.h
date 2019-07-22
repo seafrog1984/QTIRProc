@@ -18,8 +18,9 @@ public:
 	~MyLabel(){}
 
 	void setShapeType(int shapeType);
-//signals:
-//
+signals:
+
+	void calData();
 //	void clicked(QMouseEvent *ev);  //Ì§Æð
 //	void pressed(QMouseEvent *ev);  //°´ÏÂ
 //	void doubled(QMouseEvent *ev);  //Ë«»÷
@@ -51,7 +52,16 @@ public:
 	//private slots :
 	//void  slotGetOneFrame(QImage img);
 
+	QString m_name;
+	QString m_age;
+	QString m_gender;
+	QString m_ID;
+	QString m_scanID;
+	QString m_cardID;
+
 	QImage wb_Image;
+	int cur_img;
+	double m_temper;
 };
 
 #endif // MYLABEL_H

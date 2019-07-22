@@ -15,6 +15,8 @@ MyCustomSlider::MyCustomSlider(QWidget *parent) :QSlider(parent)
 
 	m_displayLabel->setVisible(false);
 	m_displayLabel->move(0, 0);
+
+	type = 0;
 }
 
 MyCustomSlider::~MyCustomSlider()
@@ -43,7 +45,11 @@ void MyCustomSlider::mouseReleaseEvent(QMouseEvent *event)
 
 void MyCustomSlider::mouseMoveEvent(QMouseEvent *event)
 {
-	m_displayLabel->setText(QString::number(this->value())+"%");
+	if (type==0)
+		m_displayLabel->setText(QString::number(this->value()));
+	else
+		m_displayLabel->setText(QString::number(this->value()*1.0/10));
 	m_displayLabel->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum()), 0);
+
 	QSlider::mouseMoveEvent(event);
 }
