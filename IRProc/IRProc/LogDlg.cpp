@@ -9,8 +9,9 @@ QString g_ip;
 QString g_port;
 QString g_uport;
 extern float g_step;
+extern int g_remember_flag;
 
-QString g_user = "test";
+QString g_user = "admin";
 QString g_passwd = "test@1234";
 
 int iTestFlag = 0;
@@ -38,14 +39,25 @@ LogDlg::LogDlg(QWidget *parent)
 		exit(-1);
 	}
 
-	string str1, str2, str3,str4;
+	string str1, str2, str3, str4, str5, str6;
 
 
-	fin >> str1 >> str2 >> str3>>str4;
+	fin >> str1 >> str2 >> str3>>str4>>str5>>str6>>g_remember_flag;
 	g_ip = QString::fromStdString(str1);
 	g_port = QString::fromStdString(str2);
 	g_uport = QString::fromStdString(str3);
 	g_step = QString::fromStdString(str4).toFloat();
+
+	if (g_remember_flag)
+	{
+		g_user = QString::fromStdString(str5);
+		g_passwd = QString::fromStdString(str6);
+	}
+	else
+	{
+		g_user = "";
+		g_passwd = "";
+	}
 
 
 	fin.close();
@@ -60,6 +72,7 @@ LogDlg::LogDlg(QWidget *parent)
 
 	ui.lineEdit_user->setText(g_user);
 	ui.lineEdit_pw->setText(g_passwd);
+	ui.lineEdit_pw->setEchoMode(QLineEdit::Password);
 
 	iTestFlag = 1;
 
@@ -169,6 +182,15 @@ void LogDlg::log()
 			m_msg.append(QString::fromLocal8Bit("没有权限"));
 			QMessageBox::information(NULL, "Title", m_msg);
 		}
+
+	}
+	if (g_remember_flag)
+	{
+		ofstream fout("config.ini");
+
+		fout << g_ip.toStdString() << ' ' << g_port.toStdString() << ' ' << g_uport.toStdString() << ' ' << QString::number(g_step).toStdString()<<' '<< g_user.toStdString() << ' ' << g_passwd.toStdString() << ' ' << g_remember_flag;
+
+		fout.close();
 
 	}
 

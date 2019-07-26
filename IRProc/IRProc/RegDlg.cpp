@@ -57,7 +57,7 @@ void RegDlg::btn_reg()
 	g_name = ui.lineEdit_name->text();
 	g_cardID = ui.lineEdit_card->text();
 	g_scanID = ui.lineEdit_5->text();
-
+	g_gender = ui.comboBox->currentText();
 	g_reg_flag = 1;
 
 	close();

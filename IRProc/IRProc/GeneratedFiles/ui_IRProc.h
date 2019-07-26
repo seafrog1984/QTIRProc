@@ -65,7 +65,7 @@ public:
     QToolButton *btn_colorType_change;
     QToolButton *btn_smaller;
     QToolButton *btn_sel;
-    QCheckBox *checkBox_8;
+    QCheckBox *update_all;
     QCheckBox *show_temper;
     QFrame *line_2;
     QFrame *line_3;
@@ -86,10 +86,15 @@ public:
     QToolButton *btn_win_w10;
     QToolButton *btn_win_w8;
     QComboBox *cbox_smooth;
+    QLabel *label_9;
+    QLabel *label_42;
+    QLabel *label_43;
     QGroupBox *groupBox_8;
     MyCustomSlider *slider_mer_ratio2;
     QLabel *label_20;
     QLabel *label_21;
+    QLabel *label_44;
+    QLabel *label_45;
     QGroupBox *groupBox_9;
     QLabel *label_24;
     QLabel *label_23;
@@ -137,9 +142,11 @@ public:
     MyCustomSlider *slider_mer_ratio;
     QLabel *label_35;
     QLabel *label_36;
+    QLabel *label_46;
+    QLabel *label_47;
     QGroupBox *groupBox_6;
     QToolButton *btn_mer_hb;
-    QToolButton *btn_mer_acu;
+    QToolButton *btn_mer_meridian;
     QToolButton *btn_mer_def;
     QLabel *label_37;
     QLabel *label_38;
@@ -154,8 +161,8 @@ public:
     QWidget *pageData;
     QGroupBox *groupBox_10;
     QToolButton *btn_analyze;
-    QToolButton *toolButton_28;
-    QToolButton *toolButton_29;
+    QToolButton *btn_data_in;
+    QToolButton *btn_data_out;
     QToolButton *btn_del;
     QToolButton *btn_change;
     QLabel *label_25;
@@ -194,8 +201,6 @@ public:
     QGroupBox *groupBox;
     QToolButton *userAreaBt;
     QLabel *label_4;
-    QToolButton *toolBarExpandBt;
-    QLabel *label_9;
     QToolButton *btn_set_auth;
     QLabel *label_10;
     QLabel *label_39;
@@ -218,13 +223,6 @@ public:
     QTableWidget *tableWidget;
     QWidget *showpageImg;
     QGridLayout *gridLayout_4;
-    QStackedWidget *stackedWidget_21;
-    QWidget *widget2;
-    QGridLayout *gridLayout;
-    QGridLayout *gridLayout_2;
-    QWidget *pageBigImg;
-    QGridLayout *gridLayout_7;
-    QGridLayout *gridLayout_6;
     QTabWidget *tabWidget;
     QWidget *pageDataCal;
     QLabel *label_7;
@@ -240,6 +238,15 @@ public:
     QListWidget *listWidget_date;
     QComboBox *comboBox_user;
     QGridLayout *gridLayout_3;
+    QToolButton *btn_show_func;
+    QStackedWidget *stackedWidget_21;
+    QWidget *widget2;
+    QGridLayout *gridLayout;
+    QGridLayout *gridLayout_2;
+    QWidget *pageBigImg;
+    QGridLayout *gridLayout_7;
+    QGridLayout *gridLayout_6;
+    QToolButton *toolBarExpandBt;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
@@ -462,10 +469,10 @@ public:
         icon15.addFile(QStringLiteral(":/IRProc/Pro-Sel"), QSize(), QIcon::Normal, QIcon::Off);
         btn_sel->setIcon(icon15);
         btn_sel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        checkBox_8 = new QCheckBox(groupBox_7);
-        checkBox_8->setObjectName(QStringLiteral("checkBox_8"));
-        checkBox_8->setGeometry(QRect(400, 20, 71, 16));
-        checkBox_8->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
+        update_all = new QCheckBox(groupBox_7);
+        update_all->setObjectName(QStringLiteral("update_all"));
+        update_all->setGeometry(QRect(400, 20, 71, 16));
+        update_all->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
         show_temper = new QCheckBox(groupBox_7);
         show_temper->setObjectName(QStringLiteral("show_temper"));
         show_temper->setGeometry(QRect(400, 50, 80, 16));
@@ -621,6 +628,15 @@ public:
         cbox_smooth->setStyleSheet(QLatin1String("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);"));
         cbox_smooth->setEditable(false);
+        label_9 = new QLabel(groupBox_7);
+        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setGeometry(QRect(600, 15, 54, 12));
+        label_42 = new QLabel(groupBox_7);
+        label_42->setObjectName(QStringLiteral("label_42"));
+        label_42->setGeometry(QRect(570, 60, 10, 12));
+        label_43 = new QLabel(groupBox_7);
+        label_43->setObjectName(QStringLiteral("label_43"));
+        label_43->setGeometry(QRect(680, 60, 20, 12));
         groupBox_15->raise();
         btn_close_all->raise();
         btn_close_other->raise();
@@ -633,7 +649,7 @@ public:
         btn_colorType_change->raise();
         btn_smaller->raise();
         btn_sel->raise();
-        checkBox_8->raise();
+        update_all->raise();
         show_temper->raise();
         line_2->raise();
         line_3->raise();
@@ -653,6 +669,9 @@ public:
         btn_win_w10->raise();
         btn_win_w8->raise();
         cbox_smooth->raise();
+        label_9->raise();
+        label_42->raise();
+        label_43->raise();
         groupBox_8 = new QGroupBox(pageProc);
         groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
         groupBox_8->setGeometry(QRect(702, 0, 190, 90));
@@ -677,6 +696,12 @@ public:
         label_21->setGeometry(QRect(35, 20, 16, 50));
         label_21->setStyleSheet(QStringLiteral(""));
         label_21->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_44 = new QLabel(groupBox_8);
+        label_44->setObjectName(QStringLiteral("label_44"));
+        label_44->setGeometry(QRect(70, 60, 10, 12));
+        label_45 = new QLabel(groupBox_8);
+        label_45->setObjectName(QStringLiteral("label_45"));
+        label_45->setGeometry(QRect(160, 60, 20, 12));
         groupBox_9 = new QGroupBox(pageProc);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
         groupBox_9->setGeometry(QRect(900, 0, 420, 90));
@@ -1085,6 +1110,12 @@ public:
         label_36->setGeometry(QRect(30, 30, 16, 55));
         label_36->setStyleSheet(QStringLiteral(""));
         label_36->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_46 = new QLabel(groupBox_5);
+        label_46->setObjectName(QStringLiteral("label_46"));
+        label_46->setGeometry(QRect(80, 70, 10, 12));
+        label_47 = new QLabel(groupBox_5);
+        label_47->setObjectName(QStringLiteral("label_47"));
+        label_47->setGeometry(QRect(170, 70, 20, 12));
         groupBox_6 = new QGroupBox(pageMerge);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(860, 0, 420, 90));
@@ -1104,17 +1135,17 @@ public:
         btn_mer_hb->setIcon(icon47);
         btn_mer_hb->setIconSize(QSize(40, 40));
         btn_mer_hb->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        btn_mer_acu = new QToolButton(groupBox_6);
-        btn_mer_acu->setObjectName(QStringLiteral("btn_mer_acu"));
-        btn_mer_acu->setGeometry(QRect(280, 20, 64, 60));
-        btn_mer_acu->setMinimumSize(QSize(64, 60));
-        btn_mer_acu->setMaximumSize(QSize(48, 48));
-        btn_mer_acu->setStyleSheet(QStringLiteral("background-color: rgb(37, 77, 118);"));
+        btn_mer_meridian = new QToolButton(groupBox_6);
+        btn_mer_meridian->setObjectName(QStringLiteral("btn_mer_meridian"));
+        btn_mer_meridian->setGeometry(QRect(280, 20, 64, 60));
+        btn_mer_meridian->setMinimumSize(QSize(64, 60));
+        btn_mer_meridian->setMaximumSize(QSize(48, 48));
+        btn_mer_meridian->setStyleSheet(QStringLiteral("background-color: rgb(37, 77, 118);"));
         QIcon icon48;
         icon48.addFile(QStringLiteral(":/IRProc/M-Meridian"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_mer_acu->setIcon(icon48);
-        btn_mer_acu->setIconSize(QSize(40, 40));
-        btn_mer_acu->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        btn_mer_meridian->setIcon(icon48);
+        btn_mer_meridian->setIconSize(QSize(40, 40));
+        btn_mer_meridian->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_mer_def = new QToolButton(groupBox_6);
         btn_mer_def->setObjectName(QStringLiteral("btn_mer_def"));
         btn_mer_def->setGeometry(QRect(350, 20, 50, 60));
@@ -1240,28 +1271,28 @@ public:
         btn_analyze->setIcon(icon50);
         btn_analyze->setIconSize(QSize(20, 20));
         btn_analyze->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        toolButton_28 = new QToolButton(groupBox_10);
-        toolButton_28->setObjectName(QStringLiteral("toolButton_28"));
-        toolButton_28->setGeometry(QRect(140, 30, 32, 50));
-        toolButton_28->setMinimumSize(QSize(32, 50));
-        toolButton_28->setMaximumSize(QSize(32, 50));
-        toolButton_28->setStyleSheet(QStringLiteral(""));
+        btn_data_in = new QToolButton(groupBox_10);
+        btn_data_in->setObjectName(QStringLiteral("btn_data_in"));
+        btn_data_in->setGeometry(QRect(140, 30, 32, 50));
+        btn_data_in->setMinimumSize(QSize(32, 50));
+        btn_data_in->setMaximumSize(QSize(32, 50));
+        btn_data_in->setStyleSheet(QStringLiteral(""));
         QIcon icon51;
         icon51.addFile(QStringLiteral(":/IRProc/Data-In"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_28->setIcon(icon51);
-        toolButton_28->setIconSize(QSize(20, 20));
-        toolButton_28->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        toolButton_29 = new QToolButton(groupBox_10);
-        toolButton_29->setObjectName(QStringLiteral("toolButton_29"));
-        toolButton_29->setGeometry(QRect(175, 30, 32, 50));
-        toolButton_29->setMinimumSize(QSize(32, 50));
-        toolButton_29->setMaximumSize(QSize(32, 50));
-        toolButton_29->setStyleSheet(QStringLiteral(""));
+        btn_data_in->setIcon(icon51);
+        btn_data_in->setIconSize(QSize(20, 20));
+        btn_data_in->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        btn_data_out = new QToolButton(groupBox_10);
+        btn_data_out->setObjectName(QStringLiteral("btn_data_out"));
+        btn_data_out->setGeometry(QRect(175, 30, 32, 50));
+        btn_data_out->setMinimumSize(QSize(32, 50));
+        btn_data_out->setMaximumSize(QSize(32, 50));
+        btn_data_out->setStyleSheet(QStringLiteral(""));
         QIcon icon52;
         icon52.addFile(QStringLiteral(":/IRProc/Data-Out"), QSize(), QIcon::Normal, QIcon::Off);
-        toolButton_29->setIcon(icon52);
-        toolButton_29->setIconSize(QSize(20, 20));
-        toolButton_29->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        btn_data_out->setIcon(icon52);
+        btn_data_out->setIconSize(QSize(20, 20));
+        btn_data_out->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_del = new QToolButton(groupBox_10);
         btn_del->setObjectName(QStringLiteral("btn_del"));
         btn_del->setGeometry(QRect(245, 30, 32, 50));
@@ -1504,7 +1535,7 @@ public:
         groupBox->setStyleSheet(QStringLiteral(""));
         userAreaBt = new QToolButton(groupBox);
         userAreaBt->setObjectName(QStringLiteral("userAreaBt"));
-        userAreaBt->setGeometry(QRect(90, 20, 32, 32));
+        userAreaBt->setGeometry(QRect(110, 20, 32, 32));
         userAreaBt->setMinimumSize(QSize(32, 32));
         userAreaBt->setMaximumSize(QSize(32, 32));
         userAreaBt->setStyleSheet(QStringLiteral(""));
@@ -1514,35 +1545,21 @@ public:
         userAreaBt->setToolButtonStyle(Qt::ToolButtonIconOnly);
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(70, 60, 75, 20));
+        label_4->setGeometry(QRect(90, 60, 75, 20));
         label_4->setMinimumSize(QSize(75, 20));
         label_4->setMaximumSize(QSize(75, 20));
-        toolBarExpandBt = new QToolButton(groupBox);
-        toolBarExpandBt->setObjectName(QStringLiteral("toolBarExpandBt"));
-        toolBarExpandBt->setGeometry(QRect(175, 20, 32, 32));
-        toolBarExpandBt->setMinimumSize(QSize(32, 32));
-        toolBarExpandBt->setMaximumSize(QSize(32, 32));
-        toolBarExpandBt->setStyleSheet(QStringLiteral(""));
-        QIcon icon60;
-        icon60.addFile(QStringLiteral(":/IRProc/Sys-Extand-Tool"), QSize(), QIcon::Normal, QIcon::Off);
-        toolBarExpandBt->setIcon(icon60);
-        label_9 = new QLabel(groupBox);
-        label_9->setObjectName(QStringLiteral("label_9"));
-        label_9->setGeometry(QRect(150, 60, 95, 20));
-        label_9->setMinimumSize(QSize(95, 20));
-        label_9->setMaximumSize(QSize(95, 20));
         btn_set_auth = new QToolButton(groupBox);
         btn_set_auth->setObjectName(QStringLiteral("btn_set_auth"));
-        btn_set_auth->setGeometry(QRect(250, 20, 32, 32));
+        btn_set_auth->setGeometry(QRect(200, 20, 32, 32));
         btn_set_auth->setMinimumSize(QSize(32, 32));
         btn_set_auth->setMaximumSize(QSize(32, 32));
         btn_set_auth->setStyleSheet(QStringLiteral(""));
-        QIcon icon61;
-        icon61.addFile(QStringLiteral(":/IRProc/Sys-Right-Set"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_set_auth->setIcon(icon61);
+        QIcon icon60;
+        icon60.addFile(QStringLiteral(":/IRProc/Sys-Right-Set"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_set_auth->setIcon(icon60);
         label_10 = new QLabel(groupBox);
         label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setGeometry(QRect(240, 60, 60, 20));
+        label_10->setGeometry(QRect(190, 60, 60, 20));
         label_10->setMinimumSize(QSize(60, 20));
         label_10->setMaximumSize(QSize(60, 20));
         label_39 = new QLabel(groupBox);
@@ -1577,17 +1594,17 @@ public:
         checkBox_4->setMaximumSize(QSize(85, 16777215));
         checkBox_5 = new QCheckBox(groupBox_2);
         checkBox_5->setObjectName(QStringLiteral("checkBox_5"));
-        checkBox_5->setGeometry(QRect(70, 55, 100, 16));
+        checkBox_5->setGeometry(QRect(310, 60, 100, 16));
         checkBox_5->setMinimumSize(QSize(100, 0));
         checkBox_5->setMaximumSize(QSize(100, 16777215));
         checkBox_6 = new QCheckBox(groupBox_2);
         checkBox_6->setObjectName(QStringLiteral("checkBox_6"));
-        checkBox_6->setGeometry(QRect(170, 55, 85, 16));
+        checkBox_6->setGeometry(QRect(70, 55, 85, 16));
         checkBox_6->setMinimumSize(QSize(85, 0));
         checkBox_6->setMaximumSize(QSize(85, 16777215));
         checkBox_7 = new QCheckBox(groupBox_2);
         checkBox_7->setObjectName(QStringLiteral("checkBox_7"));
-        checkBox_7->setGeometry(QRect(260, 55, 85, 16));
+        checkBox_7->setGeometry(QRect(170, 55, 85, 16));
         checkBox_7->setMinimumSize(QSize(85, 0));
         checkBox_7->setMaximumSize(QSize(85, 16777215));
         label_40 = new QLabel(groupBox_2);
@@ -1613,9 +1630,9 @@ public:
         btn_sys_par->setMinimumSize(QSize(32, 32));
         btn_sys_par->setMaximumSize(QSize(32, 32));
         btn_sys_par->setStyleSheet(QStringLiteral(""));
-        QIcon icon62;
-        icon62.addFile(QStringLiteral(":/IRProc/SysPara"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_sys_par->setIcon(icon62);
+        QIcon icon61;
+        icon61.addFile(QStringLiteral(":/IRProc/SysPara"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_sys_par->setIcon(icon61);
         stackedWidget->addWidget(pageSetting);
 
         verticalLayout->addWidget(stackedWidget);
@@ -1690,39 +1707,6 @@ public:
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        stackedWidget_21 = new QStackedWidget(showpageImg);
-        stackedWidget_21->setObjectName(QStringLiteral("stackedWidget_21"));
-        stackedWidget_21->setMinimumSize(QSize(400, 300));
-        widget2 = new QWidget();
-        widget2->setObjectName(QStringLiteral("widget2"));
-        widget2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
-        gridLayout = new QGridLayout(widget2);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-
-        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
-
-        stackedWidget_21->addWidget(widget2);
-        pageBigImg = new QWidget();
-        pageBigImg->setObjectName(QStringLiteral("pageBigImg"));
-        gridLayout_7 = new QGridLayout(pageBigImg);
-        gridLayout_7->setSpacing(6);
-        gridLayout_7->setContentsMargins(11, 11, 11, 11);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        gridLayout_6 = new QGridLayout();
-        gridLayout_6->setSpacing(6);
-        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
-
-        gridLayout_7->addLayout(gridLayout_6, 0, 0, 1, 1);
-
-        stackedWidget_21->addWidget(pageBigImg);
-
-        gridLayout_4->addWidget(stackedWidget_21, 0, 0, 1, 1);
-
         tabWidget = new QTabWidget(showpageImg);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setMinimumSize(QSize(170, 0));
@@ -1796,7 +1780,56 @@ public:
 
         tabWidget->addTab(pageImgThum, QString());
 
-        gridLayout_4->addWidget(tabWidget, 0, 1, 1, 1);
+        gridLayout_4->addWidget(tabWidget, 0, 3, 1, 1);
+
+        btn_show_func = new QToolButton(showpageImg);
+        btn_show_func->setObjectName(QStringLiteral("btn_show_func"));
+        btn_show_func->setMinimumSize(QSize(1, 1));
+        btn_show_func->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(btn_show_func, 0, 2, 1, 1);
+
+        stackedWidget_21 = new QStackedWidget(showpageImg);
+        stackedWidget_21->setObjectName(QStringLiteral("stackedWidget_21"));
+        stackedWidget_21->setMinimumSize(QSize(400, 300));
+        widget2 = new QWidget();
+        widget2->setObjectName(QStringLiteral("widget2"));
+        widget2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        gridLayout = new QGridLayout(widget2);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+
+        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
+
+        stackedWidget_21->addWidget(widget2);
+        pageBigImg = new QWidget();
+        pageBigImg->setObjectName(QStringLiteral("pageBigImg"));
+        gridLayout_7 = new QGridLayout(pageBigImg);
+        gridLayout_7->setSpacing(6);
+        gridLayout_7->setContentsMargins(11, 11, 11, 11);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        gridLayout_6 = new QGridLayout();
+        gridLayout_6->setSpacing(6);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+
+        gridLayout_7->addLayout(gridLayout_6, 0, 0, 1, 1);
+
+        stackedWidget_21->addWidget(pageBigImg);
+
+        gridLayout_4->addWidget(stackedWidget_21, 0, 0, 1, 1);
+
+        toolBarExpandBt = new QToolButton(showpageImg);
+        toolBarExpandBt->setObjectName(QStringLiteral("toolBarExpandBt"));
+        toolBarExpandBt->setMinimumSize(QSize(1, 1));
+        toolBarExpandBt->setMaximumSize(QSize(1, 1));
+        toolBarExpandBt->setStyleSheet(QStringLiteral(""));
+        toolBarExpandBt->setIconSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolBarExpandBt, 0, 1, 1, 1);
 
         stackedWidget_2->addWidget(showpageImg);
 
@@ -1830,8 +1863,8 @@ public:
 
         retranslateUi(IRProcClass);
 
-        stackedWidget->setCurrentIndex(0);
-        tabWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(IRProcClass);
@@ -1880,8 +1913,8 @@ public:
         btn_colorType_change->setText(QApplication::translate("IRProcClass", "...", 0));
         btn_smaller->setText(QApplication::translate("IRProcClass", "...", 0));
         btn_sel->setText(QApplication::translate("IRProcClass", "\351\200\211\346\213\251", 0));
-        checkBox_8->setText(QApplication::translate("IRProcClass", "\345\220\214\346\255\245\346\226\255\345\261\202", 0));
-        show_temper->setText(QApplication::translate("IRProcClass", "\351\232\220\350\227\217\346\265\213\351\207\217", 0));
+        update_all->setText(QApplication::translate("IRProcClass", "\345\220\214\346\255\245\346\226\255\345\261\202", 0));
+        show_temper->setText(QApplication::translate("IRProcClass", "\346\230\276\347\244\272\346\270\251\345\272\246", 0));
         groupBox_15->setTitle(QString());
         label_22->setText(QApplication::translate("IRProcClass", "\345\233\276\n"
 "\345\203\217\n"
@@ -1893,6 +1926,9 @@ public:
         btn_win_w12->setText(QApplication::translate("IRProcClass", "12", 0));
         btn_win_w10->setText(QApplication::translate("IRProcClass", "10", 0));
         btn_win_w8->setText(QApplication::translate("IRProcClass", "08", 0));
+        label_9->setText(QApplication::translate("IRProcClass", "\346\226\255\345\261\202\350\260\203\346\225\264", 0));
+        label_42->setText(QApplication::translate("IRProcClass", "0", 0));
+        label_43->setText(QApplication::translate("IRProcClass", "50", 0));
         groupBox_8->setTitle(QString());
         label_20->setText(QApplication::translate("IRProcClass", "\350\236\215\n"
 "\345\220\210\n"
@@ -1900,6 +1936,8 @@ public:
 "", 0));
         label_21->setText(QApplication::translate("IRProcClass", "\350\260\203\n"
 "\346\225\264", 0));
+        label_44->setText(QApplication::translate("IRProcClass", "0", 0));
+        label_45->setText(QApplication::translate("IRProcClass", "100", 0));
         groupBox_9->setTitle(QString());
         label_24->setText(QApplication::translate("IRProcClass", "\350\260\203\n"
 "\346\225\264", 0));
@@ -1955,9 +1993,11 @@ public:
 "\345\220\210\n"
 "\345\272\246\n"
 "", 0));
+        label_46->setText(QApplication::translate("IRProcClass", "0", 0));
+        label_47->setText(QApplication::translate("IRProcClass", "100", 0));
         groupBox_6->setTitle(QString());
         btn_mer_hb->setText(QApplication::translate("IRProcClass", "Human body", 0));
-        btn_mer_acu->setText(QApplication::translate("IRProcClass", "Meridian", 0));
+        btn_mer_meridian->setText(QApplication::translate("IRProcClass", "Meridian", 0));
         btn_mer_def->setText(QApplication::translate("IRProcClass", "Define", 0));
         label_37->setText(QApplication::translate("IRProcClass", "\350\260\203\n"
 "\346\225\264", 0));
@@ -1981,8 +2021,8 @@ public:
         btn_analyze->setWhatsThis(QApplication::translate("IRProcClass", "\345\210\206\346\236\220\345\233\276\345\203\217", 0));
 #endif // QT_NO_WHATSTHIS
         btn_analyze->setText(QApplication::translate("IRProcClass", "\345\210\206\346\236\220", 0));
-        toolButton_28->setText(QApplication::translate("IRProcClass", "\345\257\274\345\205\245", 0));
-        toolButton_29->setText(QApplication::translate("IRProcClass", "\345\257\274\345\207\272", 0));
+        btn_data_in->setText(QApplication::translate("IRProcClass", "\345\257\274\345\205\245", 0));
+        btn_data_out->setText(QApplication::translate("IRProcClass", "\345\257\274\345\207\272", 0));
         btn_del->setText(QApplication::translate("IRProcClass", "\345\210\240\351\231\244", 0));
         btn_change->setText(QApplication::translate("IRProcClass", "\344\277\256\346\224\271", 0));
         label_25->setText(QApplication::translate("IRProcClass", "\346\223\215\n"
@@ -2035,21 +2075,10 @@ public:
         userAreaBt->setStatusTip(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
 #endif // QT_NO_STATUSTIP
 #ifndef QT_NO_WHATSTHIS
-        userAreaBt->setWhatsThis(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
+        userAreaBt->setWhatsThis(QString());
 #endif // QT_NO_WHATSTHIS
         userAreaBt->setText(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
         label_4->setText(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
-#ifndef QT_NO_TOOLTIP
-        toolBarExpandBt->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_STATUSTIP
-        toolBarExpandBt->setStatusTip(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-#endif // QT_NO_STATUSTIP
-#ifndef QT_NO_WHATSTHIS
-        toolBarExpandBt->setWhatsThis(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-#endif // QT_NO_WHATSTHIS
-        toolBarExpandBt->setText(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-        label_9->setText(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
         btn_set_auth->setText(QApplication::translate("IRProcClass", "\346\235\203\351\231\220\350\256\276\347\275\256", 0));
         label_10->setText(QApplication::translate("IRProcClass", "\346\235\203\351\231\220\350\256\276\347\275\256", 0));
         label_39->setText(QApplication::translate("IRProcClass", "\345\270\203\n"
@@ -2107,6 +2136,19 @@ public:
         label_19->setText(QApplication::translate("IRProcClass", "max-max", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageDataCal), QApplication::translate("IRProcClass", "\346\225\260\346\215\256\346\265\213\351\207\217", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageImgThum), QApplication::translate("IRProcClass", "\347\274\251\347\225\245\345\233\276", 0));
+        btn_show_func->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_show_func->setShortcut(QApplication::translate("IRProcClass", "Ctrl+F", 0));
+#ifndef QT_NO_TOOLTIP
+        toolBarExpandBt->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_STATUSTIP
+        toolBarExpandBt->setStatusTip(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+#endif // QT_NO_STATUSTIP
+#ifndef QT_NO_WHATSTHIS
+        toolBarExpandBt->setWhatsThis(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+#endif // QT_NO_WHATSTHIS
+        toolBarExpandBt->setText(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+        toolBarExpandBt->setShortcut(QApplication::translate("IRProcClass", "Ctrl+E", 0));
         toolBar->setWindowTitle(QApplication::translate("IRProcClass", "toolBar", 0));
     } // retranslateUi
 

@@ -59,8 +59,7 @@ MyLabel::MyLabel( QWidget* parent)
 	//connect(this, SIGNAL(sig_GetOneFrame(QImage)), this, SLOT(slotGetOneFrame(QImage)));
 	p1 = QPoint(0, 0);
 	p2 = QPoint(0, 0);//QPoint¹¹Ôìº¯Êý
-	getCurImgIndex();
-	m_temper = m_temper = g_temper[cur_img].at<float>(0, 0);
+	m_temper = 25;
 	g_mouse_mode = 6;
 
 	offset = QPoint(0, 0);
@@ -149,13 +148,25 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 	m_flag_press = 1;
 	p1 = event->pos();
 	g_cur_img=getCurImgIndex();
-
-	for (int i = 0; i < g_picNum; i++)
+	if (g_flagShowBigImg)
 	{
-		QLabel *p = parent()->findChild<QLabel*>(QString::number(i));
-		if (p!=NULL)
-			p->setStyleSheet("border-width: 0px");
+		for (int i = 0; i < g_picNum; i++)
+		{
+			QLabel *p = parent()->findChild<QLabel*>(QString::number(i+20));
+			if (p != NULL)
+				p->setStyleSheet("backgroud-color:rgb(255,255,255);border:0px;");
+		}
 	}
+	else
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			QLabel *p = parent()->findChild<QLabel*>(QString::number(i));
+			if (p!=NULL)
+				p->setStyleSheet("backgroud-color:rgb(255,255,255);border:0px;");
+		}
+	}
+
 	setStyleSheet("border-width: 2px;border-style: solid;border-color: rgb(255, 0, 0);");
 
 //	QMessageBox::information(NULL, "Title", QString::number(cur_img));

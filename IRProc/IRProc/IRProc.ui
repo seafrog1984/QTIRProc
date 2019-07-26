@@ -92,7 +92,7 @@ background-color: rgb(15, 21, 42);
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="pageProc">
            <property name="styleSheet">
@@ -526,7 +526,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_8">
+            <widget class="QCheckBox" name="update_all">
              <property name="geometry">
               <rect>
                <x>400</x>
@@ -555,7 +555,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <string notr="true">background-color: rgb(18, 59, 101);</string>
              </property>
              <property name="text">
-              <string>隐藏测量</string>
+              <string>显示温度</string>
              </property>
             </widget>
             <widget class="Line" name="line_2">
@@ -1100,6 +1100,45 @@ color: rgb(0, 0, 0);</string>
               <bool>false</bool>
              </property>
             </widget>
+            <widget class="QLabel" name="label_9">
+             <property name="geometry">
+              <rect>
+               <x>600</x>
+               <y>15</y>
+               <width>54</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>断层调整</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_42">
+             <property name="geometry">
+              <rect>
+               <x>570</x>
+               <y>60</y>
+               <width>10</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_43">
+             <property name="geometry">
+              <rect>
+               <x>680</x>
+               <y>60</y>
+               <width>20</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>50</string>
+             </property>
+            </widget>
             <zorder>groupBox_15</zorder>
             <zorder>btn_close_all</zorder>
             <zorder>btn_close_other</zorder>
@@ -1112,7 +1151,7 @@ color: rgb(0, 0, 0);</string>
             <zorder>btn_colorType_change</zorder>
             <zorder>btn_smaller</zorder>
             <zorder>btn_sel</zorder>
-            <zorder>checkBox_8</zorder>
+            <zorder>update_all</zorder>
             <zorder>show_temper</zorder>
             <zorder>line_2</zorder>
             <zorder>line_3</zorder>
@@ -1132,6 +1171,9 @@ color: rgb(0, 0, 0);</string>
             <zorder>btn_win_w10</zorder>
             <zorder>btn_win_w8</zorder>
             <zorder>cbox_smooth</zorder>
+            <zorder>label_9</zorder>
+            <zorder>label_42</zorder>
+            <zorder>label_43</zorder>
            </widget>
            <widget class="QGroupBox" name="groupBox_8">
             <property name="geometry">
@@ -1219,6 +1261,32 @@ background-color: rgb(18, 59, 101);</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_44">
+             <property name="geometry">
+              <rect>
+               <x>70</x>
+               <y>60</y>
+               <width>10</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_45">
+             <property name="geometry">
+              <rect>
+               <x>160</x>
+               <y>60</y>
+               <width>20</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>100</string>
              </property>
             </widget>
            </widget>
@@ -2744,6 +2812,32 @@ background-image: url(:/IRProc/DataBg2);
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
+            <widget class="QLabel" name="label_46">
+             <property name="geometry">
+              <rect>
+               <x>80</x>
+               <y>70</y>
+               <width>10</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_47">
+             <property name="geometry">
+              <rect>
+               <x>170</x>
+               <y>70</y>
+               <width>20</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>100</string>
+             </property>
+            </widget>
            </widget>
            <widget class="QGroupBox" name="groupBox_6">
             <property name="geometry">
@@ -2815,7 +2909,7 @@ background-image: url(:/IRProc/DataBg3);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="btn_mer_acu">
+            <widget class="QToolButton" name="btn_mer_meridian">
              <property name="geometry">
               <rect>
                <x>280</x>
@@ -3342,7 +3436,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_28">
+            <widget class="QToolButton" name="btn_data_in">
              <property name="geometry">
               <rect>
                <x>140</x>
@@ -3383,7 +3477,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolButton_29">
+            <widget class="QToolButton" name="btn_data_out">
              <property name="geometry">
               <rect>
                <x>175</x>
@@ -4294,7 +4388,7 @@ border:0px;
             <widget class="QToolButton" name="userAreaBt">
              <property name="geometry">
               <rect>
-               <x>90</x>
+               <x>110</x>
                <y>20</y>
                <width>32</width>
                <height>32</height>
@@ -4319,7 +4413,7 @@ border:0px;
               <string>用户区最大化</string>
              </property>
              <property name="whatsThis">
-              <string>用户区最大化</string>
+              <string/>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -4338,7 +4432,7 @@ border:0px;
             <widget class="QLabel" name="label_4">
              <property name="geometry">
               <rect>
-               <x>70</x>
+               <x>90</x>
                <y>60</y>
                <width>75</width>
                <height>20</height>
@@ -4360,76 +4454,10 @@ border:0px;
               <string>用户区最大化</string>
              </property>
             </widget>
-            <widget class="QToolButton" name="toolBarExpandBt">
-             <property name="geometry">
-              <rect>
-               <x>175</x>
-               <y>20</y>
-               <width>32</width>
-               <height>32</height>
-              </rect>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="statusTip">
-              <string>展开所有工具栏</string>
-             </property>
-             <property name="whatsThis">
-              <string>展开所有工具栏</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>展开所有工具栏</string>
-             </property>
-             <property name="icon">
-              <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/Sys-Extand-Tool</normaloff>:/IRProc/Sys-Extand-Tool</iconset>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_9">
-             <property name="geometry">
-              <rect>
-               <x>150</x>
-               <y>60</y>
-               <width>95</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>95</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>95</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>展开所有工具栏</string>
-             </property>
-            </widget>
             <widget class="QToolButton" name="btn_set_auth">
              <property name="geometry">
               <rect>
-               <x>250</x>
+               <x>200</x>
                <y>20</y>
                <width>32</width>
                <height>32</height>
@@ -4461,7 +4489,7 @@ border:0px;
             <widget class="QLabel" name="label_10">
              <property name="geometry">
               <rect>
-               <x>240</x>
+               <x>190</x>
                <y>60</y>
                <width>60</width>
                <height>20</height>
@@ -4632,8 +4660,8 @@ border:0px;
             <widget class="QCheckBox" name="checkBox_5">
              <property name="geometry">
               <rect>
-               <x>70</x>
-               <y>55</y>
+               <x>310</x>
+               <y>60</y>
                <width>100</width>
                <height>16</height>
               </rect>
@@ -4657,7 +4685,7 @@ border:0px;
             <widget class="QCheckBox" name="checkBox_6">
              <property name="geometry">
               <rect>
-               <x>170</x>
+               <x>70</x>
                <y>55</y>
                <width>85</width>
                <height>16</height>
@@ -4682,7 +4710,7 @@ border:0px;
             <widget class="QCheckBox" name="checkBox_7">
              <property name="geometry">
               <rect>
-               <x>260</x>
+               <x>170</x>
                <y>55</y>
                <width>85</width>
                <height>16</height>
@@ -4973,34 +5001,7 @@ border:0px;
           </widget>
           <widget class="QWidget" name="showpageImg">
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QStackedWidget" name="stackedWidget_21">
-              <property name="minimumSize">
-               <size>
-                <width>400</width>
-                <height>300</height>
-               </size>
-              </property>
-              <widget class="QWidget" name="widget2">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="gridLayout_2"/>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="pageBigImg">
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="gridLayout_6"/>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-            <item row="0" column="1">
+            <item row="0" column="3">
              <widget class="QTabWidget" name="tabWidget">
               <property name="minimumSize">
                <size>
@@ -5022,7 +5023,7 @@ color: rgb(255, 255, 255);
 }</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="pageDataCal">
                <attribute name="title">
@@ -5190,6 +5191,95 @@ color: rgb(255, 255, 255);
                 </item>
                </layout>
               </widget>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QToolButton" name="btn_show_func">
+              <property name="minimumSize">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+F</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_21">
+              <property name="minimumSize">
+               <size>
+                <width>400</width>
+                <height>300</height>
+               </size>
+              </property>
+              <widget class="QWidget" name="widget2">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_2"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="pageBigImg">
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_6"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QToolButton" name="toolBarExpandBt">
+              <property name="minimumSize">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="statusTip">
+               <string>展开所有工具栏</string>
+              </property>
+              <property name="whatsThis">
+               <string>展开所有工具栏</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>展开所有工具栏</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>1</width>
+                <height>1</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+E</string>
+              </property>
              </widget>
             </item>
            </layout>

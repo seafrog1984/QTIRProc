@@ -9,6 +9,7 @@
 #include "SettingDlg.h"
 #include "RegDlg.h"
 #include "CrossDlg.h"
+#include "ThumLabel.h"
 
 struct shape{
 	bool del_flag;
@@ -52,6 +53,7 @@ public slots:
 	void sysSettingOp();//系统设置-权限设置
 	void customize();//系统设置-定制
 	void btn_sysPar();//系统参数设置
+	void btn_show_func();//显示功能区
 
 	void imgChange();//图像右上角按钮
 	void btnAnalyze();//打开图像，转到分析页面
@@ -71,6 +73,8 @@ public slots:
 	void btn_sel();//选择
 	void btn_zoom();//放大缩小
 	void showTemper();//显示温度
+	void saveMeasure();//保存测量
+	void setUpAll();//同步断层
 
 	void btnMerDef();//自定义融合图
 	void sliderMerRatio();//融合度调整
@@ -83,9 +87,10 @@ public slots:
 	void btnMerRight();//融合图右移
 	void btnMerUp();//融合图上移
 	void btnMerDown();//融合图下移
-	void changeMerGender();
-	void changeMerPose();
-	void changeMerType();
+	void changeMerGender();//设置性别
+	void changeMerPose();//设置体位
+	void changeMerType();//设置类型
+
 	
 	void btn_del();
 	void btn_change();
@@ -96,9 +101,12 @@ public slots:
 	void btn_dateSel();
 	void btn_nameSel();
 	void btn_showAll();
+	void dataOut();//数据导出
+	void dataIn();//数据导入
 
 	void calData();
 	void time_update();
+	void thumClicked();
 
 public:
 	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数

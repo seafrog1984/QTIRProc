@@ -7,11 +7,14 @@
 using namespace std;
 
 
-
+extern QString g_user;
+extern QString g_passwd;
 extern QString g_ip;
 extern QString g_port;
 extern QString g_uport;
 extern float g_step;
+
+extern int g_remember_flag;
 
 SettingDlg::SettingDlg(QWidget *parent)
 : QWidget(parent)
@@ -41,7 +44,7 @@ void SettingDlg::btn_setPar()
 
 	ofstream fout("config.ini");
 
-	fout << g_ip.toStdString() << ' ' << g_port.toStdString() << ' ' << g_uport.toStdString()<<' '<<QString::number(g_step).toStdString();
+	fout << g_ip.toStdString() << ' ' << g_port.toStdString() << ' ' << g_uport.toStdString() << ' ' << QString::number(g_step).toStdString() << ' ' << g_user.toStdString() << ' ' << g_passwd.toStdString() << ' ' << g_remember_flag;
 
 	fout.close();
 

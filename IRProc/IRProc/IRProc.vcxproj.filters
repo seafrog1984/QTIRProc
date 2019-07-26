@@ -166,6 +166,15 @@
     <ClCompile Include="MyHistLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThumLabel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThumLabel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThumLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="IRProc.h">
@@ -211,6 +220,9 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="MyHistLabel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThumLabel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
