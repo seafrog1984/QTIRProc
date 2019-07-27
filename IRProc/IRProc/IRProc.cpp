@@ -106,7 +106,7 @@ QString g_regTime = "2019-07-25 10:51";
 
 QString g_dataFolder;//数据导出目录
 
-int g_pageSize = 10;
+int g_pageSize = 20;
 int g_maxPage = 2;
 int g_curPage = 1;
 
