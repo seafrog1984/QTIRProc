@@ -29,7 +29,7 @@ extern int g_flagShowBigImg;
 extern int g_cur_img;
 extern int g_picNum;
 extern double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
-extern Mat g_mer;//融合图像
+extern Mat g_mer[IMGE_TOTAL_NUM];//融合图像
 extern Mat g_src[IMGE_TOTAL_NUM];
 extern Mat g_img[IMGE_TOTAL_NUM];//opencv图像-彩色
 extern Mat g_img_gray[IMGE_TOTAL_NUM];//opencv图像-灰度
@@ -51,6 +51,8 @@ extern QString g_ID ;
 extern QString g_scanID;
 extern QString g_cardID;
 
+double g_size_change[11] = {1, 1.2, 1.5, 1.9, 2.4, 3.0, 3.8, 4.7, 5.9, 7.3, 9.2 };
+int g_size_index = 0;
 
 MyLabel::MyLabel( QWidget* parent)
 :QLabel(parent)
@@ -182,15 +184,19 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 	{// 如果是鼠标左键按下
 			  if (event->button() == Qt::LeftButton)
 			  {
-				  g_ratio[cur_img] += (0.1+3e-6);
-				  if (g_ratio[cur_img] > 3) g_ratio[cur_img] = 3;
+				  if (g_size_index<10)
+					  g_size_index++;
+				  g_ratio[cur_img]=g_size_change[g_size_index];
+				  //if (g_ratio[cur_img] > 3) g_ratio[cur_img] = 3;
 			  }
 			  // 如果是鼠标右键按下
 			  else if (event->button() == Qt::RightButton)
 			  {
 				  m_flag_press = 0;
-				  g_ratio[cur_img] -= (0.1-3e-6);
-				  if (g_ratio[cur_img] < 1) g_ratio[cur_img] = 1;
+				  if (g_size_index>0)
+					  g_size_index--;
+				  g_ratio[cur_img] = g_size_change[g_size_index];;
+				  //if (g_ratio[cur_img] < 1) g_ratio[cur_img] = 1;
 			  }
 			  update();
 			  break;
@@ -301,6 +307,8 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	int cur_img=getCurImgIndex();
 	QLabel::paintEvent(ev);
 	QPainter painter(this);
+	painter.setPen(QColor(0, 0, 0));
+
 
 	QPixmap pixmap = QPixmap::fromImage(g_qImgShow[cur_img]);
 	//QPixmap fitpixmap = pixmap.scaled(with, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  // 饱满填充
@@ -420,11 +428,11 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	
 	QString strText = QString::number(g_ratio[cur_img], 10, 2);
 	painter.drawText(Paint.x() + 10, Paint.y() + 10, strText);
-	painter.drawText(Paint.x() + 10, Paint.y() + 20, m_ID);
-	painter.drawText(Paint.x() + 10, Paint.y() + 30, m_name);
-	painter.drawText(Paint.x() + 10, Paint.y() + 40, m_gender);
-	painter.drawText(Paint.x() + 10, Paint.y() + 50, m_age);
-	painter.drawText(Paint.x() + 10, Paint.y() + 60, m_scanID);
+	painter.drawText(Paint.x() + 10, Paint.y() + 25, m_ID);
+	painter.drawText(Paint.x() + 10, Paint.y() + 40, m_name);
+	painter.drawText(Paint.x() + 10, Paint.y() + 55, m_gender);
+	painter.drawText(Paint.x() + 10, Paint.y() + 65, m_age);
+	painter.drawText(Paint.x() + 10, Paint.y() + 80, m_scanID);
 
 	if (g_flag_showTemper&&g_mouse_mode==6)
 	{
@@ -449,7 +457,7 @@ void MyLabel::draw_shape(int shape_no)
 	text.setFont(nullptr, &size, nullptr, 0);
 	g_src[cur_img].copyTo(g_img[cur_img]);
 
-	g_img[cur_img] = g_img[cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+	g_img[cur_img] = g_img[cur_img] * (1 - g_mer_ratio) + g_mer[cur_img] * g_mer_ratio;
 
 	for (int i = 0; i < shape_no; i++)
 	{
@@ -461,14 +469,14 @@ void MyLabel::draw_shape(int shape_no)
 		{
 		case 1:
 			{
-				  rectangle(g_img[cur_img], Point(x - 1, y - 1), Point(x + 1, y + 1), CV_RGB(255, 255, 255), CV_FILLED, 8, 0);
+				  rectangle(g_img[cur_img], Point(x - 1, y - 1), Point(x + 1, y + 1), CV_RGB(0, 0, 0), CV_FILLED, 8, 0);
 				  sprintf(label, "[%02d]- %.2lf", i+1, allshape[cur_img][i].t_max);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 2:
 			{
-				  rectangle(g_img[cur_img], Point(allshape[cur_img][i].lt_x, allshape[cur_img][i].lt_y), Point(allshape[cur_img][i].rb_x, allshape[cur_img][i].rb_y), Scalar(255, 255, 255), 1, 8, 0);
+				  rectangle(g_img[cur_img], Point(allshape[cur_img][i].lt_x, allshape[cur_img][i].lt_y), Point(allshape[cur_img][i].rb_x, allshape[cur_img][i].rb_y), Scalar(0, 0, 0), 1, 8, 0);
 				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
@@ -476,14 +484,14 @@ void MyLabel::draw_shape(int shape_no)
 		case 3:
 			{
 				  int radius = (allshape[cur_img][i].rb_x - allshape[cur_img][i].lt_x)/2;
-				  circle(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), radius, Scalar(255, 255, 255), 1, 8, 0);
+				  circle(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), radius, Scalar(0, 0, 0), 1, 8, 0);
 				  sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 4:
 			{
-				ellipse(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), Size(abs(allshape[cur_img][i].lt_x - allshape[cur_img][i].rb_x)/2, abs(allshape[cur_img][i].lt_y - allshape[cur_img][i].rb_y)/2), 0, 0, 360, Scalar(255, 255, 255), 1, 8, 0);
+				ellipse(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), Size(abs(allshape[cur_img][i].lt_x - allshape[cur_img][i].rb_x)/2, abs(allshape[cur_img][i].lt_y - allshape[cur_img][i].rb_y)/2), 0, 0, 360, Scalar(0, 0, 0), 1, 8, 0);
 				sprintf(label, "[%02d]-%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
 				text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}

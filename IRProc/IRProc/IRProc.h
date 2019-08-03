@@ -59,7 +59,7 @@ public slots:
 	void btnAnalyze();//打开图像，转到分析页面
 	void updateImage();//更新图像
 	void colorTypeChange();
-	void changeWinWidth();
+	void changeWinWidth();//修改窗宽
 	void setFilter(int);//设置滤波方式
 	void addPoint();//画点
 	void addRect();//画矩形

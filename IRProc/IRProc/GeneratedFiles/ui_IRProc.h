@@ -308,7 +308,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 1346, 717));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 1340, 700));
         scrollAreaWidgetContents_3->setMinimumSize(QSize(1340, 700));
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout->setSpacing(6);
@@ -471,7 +471,7 @@ public:
         btn_sel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         update_all = new QCheckBox(groupBox_7);
         update_all->setObjectName(QStringLiteral("update_all"));
-        update_all->setGeometry(QRect(400, 20, 71, 16));
+        update_all->setGeometry(QRect(400, 20, 80, 16));
         update_all->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
         show_temper = new QCheckBox(groupBox_7);
         show_temper->setObjectName(QStringLiteral("show_temper"));
@@ -500,9 +500,28 @@ public:
         line_4->setFrameShadow(QFrame::Sunken);
         slider_bot = new MyCustomSlider(groupBox_7);
         slider_bot->setObjectName(QStringLiteral("slider_bot"));
-        slider_bot->setGeometry(QRect(570, 35, 121, 22));
-        slider_bot->setStyleSheet(QLatin1String("image: url(:/IRProc/Color-Bar);\n"
-"background-color: rgb(18, 59, 101);"));
+        slider_bot->setGeometry(QRect(570, 30, 121, 40));
+        slider_bot->setStyleSheet(QLatin1String("QSlider::handle:horizontal{                               \n"
+"     \n"
+"	background-color: rgb(26,149 , 238);\n"
+"     border: 0px ;                           \n"
+"   \n"
+"     width: 15px;\n"
+"	 height:4px;\n"
+"     margin: -4px 0px -4px 0px;                  \n"
+"}\n"
+"QSlider{\n"
+"\n"
+"background-color: rgb(18, 59, 101);\n"
+"}\n"
+"QSlider::groove:horizontal {                                \n"
+"     border: 1px solid;                             \n"
+"     height: 1px;                                           \n"
+"    margin: 0px 0;                                         \n"
+"     left: 5px; right: 5px; \n"
+"border-image: url(:/IRProc/Color-Bar);\n"
+" }\n"
+""));
         slider_bot->setOrientation(Qt::Horizontal);
         groupBox_15 = new QGroupBox(groupBox_7);
         groupBox_15->setObjectName(QStringLiteral("groupBox_15"));
@@ -569,9 +588,12 @@ public:
         btn_win_w4->setMaximumSize(QSize(20, 20));
         btn_win_w4->setStyleSheet(QStringLiteral(""));
         QIcon icon16;
-        icon16.addFile(QStringLiteral(":/IRProc/ImageProc04-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon16.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_01i.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon16.addFile(QStringLiteral(":/IRProc/ImageProc04-Sel"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w4->setIcon(icon16);
         btn_win_w4->setIconSize(QSize(20, 20));
+        btn_win_w4->setCheckable(true);
+        btn_win_w4->setAutoExclusive(true);
         btn_win_w5 = new QToolButton(groupBox_7);
         btn_win_w5->setObjectName(QStringLiteral("btn_win_w5"));
         btn_win_w5->setGeometry(QRect(495, 35, 20, 20));
@@ -580,8 +602,11 @@ public:
         btn_win_w5->setStyleSheet(QStringLiteral(""));
         QIcon icon17;
         icon17.addFile(QStringLiteral(":/IRProc/ImageProc05-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon17.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_03.jpg"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w5->setIcon(icon17);
         btn_win_w5->setIconSize(QSize(20, 20));
+        btn_win_w5->setCheckable(true);
+        btn_win_w5->setAutoExclusive(true);
         btn_win_w6 = new QToolButton(groupBox_7);
         btn_win_w6->setObjectName(QStringLiteral("btn_win_w6"));
         btn_win_w6->setGeometry(QRect(495, 60, 20, 20));
@@ -590,8 +615,11 @@ public:
         btn_win_w6->setStyleSheet(QStringLiteral(""));
         QIcon icon18;
         icon18.addFile(QStringLiteral(":/IRProc/ImageProc06-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon18.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_05.jpg"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w6->setIcon(icon18);
         btn_win_w6->setIconSize(QSize(20, 20));
+        btn_win_w6->setCheckable(true);
+        btn_win_w6->setAutoExclusive(true);
         btn_win_w12 = new QToolButton(groupBox_7);
         btn_win_w12->setObjectName(QStringLiteral("btn_win_w12"));
         btn_win_w12->setGeometry(QRect(530, 60, 20, 20));
@@ -600,8 +628,11 @@ public:
         btn_win_w12->setStyleSheet(QStringLiteral(""));
         QIcon icon19;
         icon19.addFile(QStringLiteral(":/IRProc/ImageProc12-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon19.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_06.jpg"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w12->setIcon(icon19);
         btn_win_w12->setIconSize(QSize(20, 20));
+        btn_win_w12->setCheckable(true);
+        btn_win_w12->setAutoExclusive(true);
         btn_win_w10 = new QToolButton(groupBox_7);
         btn_win_w10->setObjectName(QStringLiteral("btn_win_w10"));
         btn_win_w10->setGeometry(QRect(530, 35, 20, 20));
@@ -610,8 +641,11 @@ public:
         btn_win_w10->setStyleSheet(QStringLiteral(""));
         QIcon icon20;
         icon20.addFile(QStringLiteral(":/IRProc/ImageProc10-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon20.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_04.jpg"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w10->setIcon(icon20);
         btn_win_w10->setIconSize(QSize(20, 20));
+        btn_win_w10->setCheckable(true);
+        btn_win_w10->setAutoExclusive(true);
         btn_win_w8 = new QToolButton(groupBox_7);
         btn_win_w8->setObjectName(QStringLiteral("btn_win_w8"));
         btn_win_w8->setGeometry(QRect(530, 10, 20, 20));
@@ -620,11 +654,14 @@ public:
         btn_win_w8->setStyleSheet(QStringLiteral(""));
         QIcon icon21;
         icon21.addFile(QStringLiteral(":/IRProc/ImageProc08-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon21.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_02.jpg"), QSize(), QIcon::Normal, QIcon::On);
         btn_win_w8->setIcon(icon21);
         btn_win_w8->setIconSize(QSize(20, 20));
+        btn_win_w8->setCheckable(true);
+        btn_win_w8->setAutoExclusive(true);
         cbox_smooth = new QComboBox(groupBox_7);
         cbox_smooth->setObjectName(QStringLiteral("cbox_smooth"));
-        cbox_smooth->setGeometry(QRect(250, 20, 81, 22));
+        cbox_smooth->setGeometry(QRect(260, 20, 81, 22));
         cbox_smooth->setStyleSheet(QLatin1String("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);"));
         cbox_smooth->setEditable(false);
@@ -633,10 +670,10 @@ public:
         label_9->setGeometry(QRect(600, 15, 54, 12));
         label_42 = new QLabel(groupBox_7);
         label_42->setObjectName(QStringLiteral("label_42"));
-        label_42->setGeometry(QRect(570, 60, 10, 12));
+        label_42->setGeometry(QRect(570, 70, 10, 12));
         label_43 = new QLabel(groupBox_7);
         label_43->setObjectName(QStringLiteral("label_43"));
-        label_43->setGeometry(QRect(680, 60, 20, 12));
+        label_43->setGeometry(QRect(680, 70, 20, 12));
         groupBox_15->raise();
         btn_close_all->raise();
         btn_close_other->raise();
@@ -682,13 +719,34 @@ public:
 "}"));
         slider_mer_ratio2 = new MyCustomSlider(groupBox_8);
         slider_mer_ratio2->setObjectName(QStringLiteral("slider_mer_ratio2"));
-        slider_mer_ratio2->setGeometry(QRect(75, 35, 100, 20));
-        slider_mer_ratio2->setStyleSheet(QLatin1String("\n"
-"background-color: rgb(18, 59, 101);"));
+        slider_mer_ratio2->setGeometry(QRect(75, 25, 100, 40));
+        slider_mer_ratio2->setStyleSheet(QLatin1String("QSlider::handle:horizontal{                               \n"
+"     \n"
+"	background-color: rgb(26,149 , 238);\n"
+"     border: 0px ;                           \n"
+"   \n"
+"     width: 15px;\n"
+"	 height:4px;\n"
+"     margin: -4px -2px -4px -2px;                  \n"
+"}\n"
+"QSlider{\n"
+"\n"
+"background-color: rgb(18, 59, 101);\n"
+"}\n"
+"QSlider::groove:horizontal {                                \n"
+"     border: 1px solid;                             \n"
+"     height: 1px;                                           \n"
+"    margin: 0px 0;                                         \n"
+"     left: 5px; right: 5px;\n"
+" \n"
+"	background-color: rgb(255, 255, 255);\n"
+"\n"
+" }\n"
+""));
         slider_mer_ratio2->setOrientation(Qt::Horizontal);
         label_20 = new QLabel(groupBox_8);
         label_20->setObjectName(QStringLiteral("label_20"));
-        label_20->setGeometry(QRect(20, 25, 16, 55));
+        label_20->setGeometry(QRect(20, 22, 16, 65));
         label_20->setStyleSheet(QStringLiteral(""));
         label_20->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_21 = new QLabel(groupBox_8);
@@ -701,7 +759,7 @@ public:
         label_44->setGeometry(QRect(70, 60, 10, 12));
         label_45 = new QLabel(groupBox_8);
         label_45->setObjectName(QStringLiteral("label_45"));
-        label_45->setGeometry(QRect(160, 60, 20, 12));
+        label_45->setGeometry(QRect(150, 60, 30, 12));
         groupBox_9 = new QGroupBox(pageProc);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
         groupBox_9->setGeometry(QRect(900, 0, 420, 90));
@@ -717,7 +775,7 @@ public:
         label_24->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_23 = new QLabel(groupBox_9);
         label_23->setObjectName(QStringLiteral("label_23"));
-        label_23->setGeometry(QRect(25, 25, 16, 55));
+        label_23->setGeometry(QRect(25, 22, 16, 65));
         label_23->setStyleSheet(QStringLiteral(""));
         label_23->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         btn_1 = new QToolButton(groupBox_9);
@@ -727,9 +785,12 @@ public:
         btn_1->setMaximumSize(QSize(20, 20));
         btn_1->setStyleSheet(QStringLiteral(""));
         QIcon icon22;
-        icon22.addFile(QStringLiteral(":/IRProc/M01-Sel"), QSize(), QIcon::Normal, QIcon::Off);
+        icon22.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_07i.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon22.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_07.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_1->setIcon(icon22);
         btn_1->setIconSize(QSize(20, 20));
+        btn_1->setCheckable(true);
+        btn_1->setAutoExclusive(true);
         btn_2 = new QToolButton(groupBox_9);
         btn_2->setObjectName(QStringLiteral("btn_2"));
         btn_2->setGeometry(QRect(100, 20, 20, 20));
@@ -738,8 +799,11 @@ public:
         btn_2->setStyleSheet(QStringLiteral(""));
         QIcon icon23;
         icon23.addFile(QStringLiteral(":/IRProc/M02"), QSize(), QIcon::Normal, QIcon::Off);
+        icon23.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_08.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_2->setIcon(icon23);
         btn_2->setIconSize(QSize(20, 20));
+        btn_2->setCheckable(true);
+        btn_2->setAutoExclusive(true);
         btn_3 = new QToolButton(groupBox_9);
         btn_3->setObjectName(QStringLiteral("btn_3"));
         btn_3->setGeometry(QRect(130, 20, 20, 20));
@@ -748,8 +812,11 @@ public:
         btn_3->setStyleSheet(QStringLiteral(""));
         QIcon icon24;
         icon24.addFile(QStringLiteral(":/IRProc/M03"), QSize(), QIcon::Normal, QIcon::Off);
+        icon24.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_09.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_3->setIcon(icon24);
         btn_3->setIconSize(QSize(20, 20));
+        btn_3->setCheckable(true);
+        btn_3->setAutoExclusive(true);
         btn_4 = new QToolButton(groupBox_9);
         btn_4->setObjectName(QStringLiteral("btn_4"));
         btn_4->setGeometry(QRect(160, 20, 20, 20));
@@ -758,8 +825,11 @@ public:
         btn_4->setStyleSheet(QStringLiteral(""));
         QIcon icon25;
         icon25.addFile(QStringLiteral(":/IRProc/M04"), QSize(), QIcon::Normal, QIcon::Off);
+        icon25.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_10.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_4->setIcon(icon25);
         btn_4->setIconSize(QSize(20, 20));
+        btn_4->setCheckable(true);
+        btn_4->setAutoExclusive(true);
         btn_8 = new QToolButton(groupBox_9);
         btn_8->setObjectName(QStringLiteral("btn_8"));
         btn_8->setGeometry(QRect(160, 50, 20, 20));
@@ -768,8 +838,11 @@ public:
         btn_8->setStyleSheet(QStringLiteral(""));
         QIcon icon26;
         icon26.addFile(QStringLiteral(":/IRProc/M08"), QSize(), QIcon::Normal, QIcon::Off);
+        icon26.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_14.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_8->setIcon(icon26);
         btn_8->setIconSize(QSize(20, 20));
+        btn_8->setCheckable(true);
+        btn_8->setAutoExclusive(true);
         btn_6 = new QToolButton(groupBox_9);
         btn_6->setObjectName(QStringLiteral("btn_6"));
         btn_6->setGeometry(QRect(100, 50, 20, 20));
@@ -778,8 +851,11 @@ public:
         btn_6->setStyleSheet(QStringLiteral(""));
         QIcon icon27;
         icon27.addFile(QStringLiteral(":/IRProc/M06"), QSize(), QIcon::Normal, QIcon::Off);
+        icon27.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_12.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_6->setIcon(icon27);
         btn_6->setIconSize(QSize(20, 20));
+        btn_6->setCheckable(true);
+        btn_6->setAutoExclusive(true);
         btn_5 = new QToolButton(groupBox_9);
         btn_5->setObjectName(QStringLiteral("btn_5"));
         btn_5->setGeometry(QRect(70, 50, 20, 20));
@@ -788,8 +864,11 @@ public:
         btn_5->setStyleSheet(QStringLiteral(""));
         QIcon icon28;
         icon28.addFile(QStringLiteral(":/IRProc/M05"), QSize(), QIcon::Normal, QIcon::Off);
+        icon28.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_11.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_5->setIcon(icon28);
         btn_5->setIconSize(QSize(20, 20));
+        btn_5->setCheckable(true);
+        btn_5->setAutoExclusive(true);
         btn_7 = new QToolButton(groupBox_9);
         btn_7->setObjectName(QStringLiteral("btn_7"));
         btn_7->setGeometry(QRect(130, 50, 20, 20));
@@ -798,8 +877,11 @@ public:
         btn_7->setStyleSheet(QStringLiteral(""));
         QIcon icon29;
         icon29.addFile(QStringLiteral(":/IRProc/M07"), QSize(), QIcon::Normal, QIcon::Off);
+        icon29.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_13.jpg"), QSize(), QIcon::Disabled, QIcon::Off);
         btn_7->setIcon(icon29);
         btn_7->setIconSize(QSize(20, 20));
+        btn_7->setCheckable(true);
+        btn_7->setAutoExclusive(true);
         line_11 = new QFrame(groupBox_9);
         line_11->setObjectName(QStringLiteral("line_11"));
         line_11->setGeometry(QRect(187, 10, 1, 70));
@@ -1034,16 +1116,22 @@ public:
         btn_male->setMinimumSize(QSize(30, 64));
         QIcon icon41;
         icon41.addFile(QStringLiteral(":/IRProc/M-Male"), QSize(), QIcon::Normal, QIcon::Off);
+        icon41.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_09i.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_male->setIcon(icon41);
         btn_male->setIconSize(QSize(30, 64));
+        btn_male->setCheckable(true);
+        btn_male->setAutoExclusive(true);
         btn_female = new QToolButton(groupBox_4);
         btn_female->setObjectName(QStringLiteral("btn_female"));
         btn_female->setGeometry(QRect(105, 15, 37, 64));
         btn_female->setMinimumSize(QSize(33, 64));
         QIcon icon42;
         icon42.addFile(QStringLiteral(":/IRProc/M-Female"), QSize(), QIcon::Normal, QIcon::Off);
+        icon42.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_10i.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_female->setIcon(icon42);
-        btn_female->setIconSize(QSize(33, 64));
+        btn_female->setIconSize(QSize(30, 64));
+        btn_female->setCheckable(true);
+        btn_female->setAutoExclusive(true);
         btn_pose_front = new QToolButton(groupBox_4);
         btn_pose_front->setObjectName(QStringLiteral("btn_pose_front"));
         btn_pose_front->setGeometry(QRect(160, 15, 25, 25));
@@ -1052,8 +1140,11 @@ public:
         btn_pose_front->setStyleSheet(QStringLiteral(""));
         QIcon icon43;
         icon43.addFile(QStringLiteral(":/IRProc/MFront"), QSize(), QIcon::Normal, QIcon::Off);
+        icon43.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_11.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_pose_front->setIcon(icon43);
         btn_pose_front->setIconSize(QSize(25, 25));
+        btn_pose_front->setCheckable(true);
+        btn_pose_front->setAutoExclusive(true);
         btn_pose_back = new QToolButton(groupBox_4);
         btn_pose_back->setObjectName(QStringLiteral("btn_pose_back"));
         btn_pose_back->setGeometry(QRect(200, 15, 25, 25));
@@ -1062,8 +1153,11 @@ public:
         btn_pose_back->setStyleSheet(QStringLiteral(""));
         QIcon icon44;
         icon44.addFile(QStringLiteral(":/IRProc/MBack"), QSize(), QIcon::Normal, QIcon::Off);
+        icon44.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_13.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_pose_back->setIcon(icon44);
         btn_pose_back->setIconSize(QSize(25, 25));
+        btn_pose_back->setCheckable(true);
+        btn_pose_back->setAutoExclusive(true);
         btn_pose_left = new QToolButton(groupBox_4);
         btn_pose_left->setObjectName(QStringLiteral("btn_pose_left"));
         btn_pose_left->setGeometry(QRect(160, 50, 25, 25));
@@ -1072,8 +1166,11 @@ public:
         btn_pose_left->setStyleSheet(QStringLiteral(""));
         QIcon icon45;
         icon45.addFile(QStringLiteral(":/IRProc/MLeft"), QSize(), QIcon::Normal, QIcon::Off);
+        icon45.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_12.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_pose_left->setIcon(icon45);
         btn_pose_left->setIconSize(QSize(25, 25));
+        btn_pose_left->setCheckable(true);
+        btn_pose_left->setAutoExclusive(true);
         btn_pose_right = new QToolButton(groupBox_4);
         btn_pose_right->setObjectName(QStringLiteral("btn_pose_right"));
         btn_pose_right->setGeometry(QRect(200, 50, 25, 25));
@@ -1082,8 +1179,11 @@ public:
         btn_pose_right->setStyleSheet(QStringLiteral(""));
         QIcon icon46;
         icon46.addFile(QStringLiteral(":/IRProc/MRight"), QSize(), QIcon::Normal, QIcon::Off);
+        icon46.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_14.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_pose_right->setIcon(icon46);
         btn_pose_right->setIconSize(QSize(25, 25));
+        btn_pose_right->setCheckable(true);
+        btn_pose_right->setAutoExclusive(true);
         groupBox_5 = new QGroupBox(pageMerge);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
         groupBox_5->setGeometry(QRect(660, 0, 200, 90));
@@ -1094,10 +1194,32 @@ public:
 "}"));
         slider_mer_ratio = new MyCustomSlider(groupBox_5);
         slider_mer_ratio->setObjectName(QStringLiteral("slider_mer_ratio"));
-        slider_mer_ratio->setGeometry(QRect(80, 40, 110, 20));
-        slider_mer_ratio->setMinimumSize(QSize(0, 20));
-        slider_mer_ratio->setMaximumSize(QSize(16777215, 20));
-        slider_mer_ratio->setStyleSheet(QStringLiteral("background-color: rgb(18, 59, 101);"));
+        slider_mer_ratio->setGeometry(QRect(80, 25, 110, 40));
+        slider_mer_ratio->setMinimumSize(QSize(0, 40));
+        slider_mer_ratio->setMaximumSize(QSize(16777215, 40));
+        slider_mer_ratio->setStyleSheet(QLatin1String("QSlider::handle:horizontal{                               \n"
+"     \n"
+"	background-color: rgb(26,149 , 238);\n"
+"     border: 0px ;                           \n"
+"   \n"
+"     width: 15px;\n"
+"	 height:4px;\n"
+"     margin: -4px 0px -4px 0px;                  \n"
+"}\n"
+"QSlider{\n"
+"\n"
+"background-color: rgb(18, 59, 101);\n"
+"}\n"
+"QSlider::groove:horizontal {                                \n"
+"     border: 1px solid;                             \n"
+"     height: 1px;                                           \n"
+"    margin: 0px 0;                                         \n"
+"     left: 5px; right: 5px;\n"
+" \n"
+"	background-color: rgb(255, 255, 255);\n"
+"\n"
+" }\n"
+""));
         slider_mer_ratio->setMaximum(100);
         slider_mer_ratio->setOrientation(Qt::Horizontal);
         label_35 = new QLabel(groupBox_5);
@@ -1107,7 +1229,7 @@ public:
         label_35->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_36 = new QLabel(groupBox_5);
         label_36->setObjectName(QStringLiteral("label_36"));
-        label_36->setGeometry(QRect(30, 30, 16, 55));
+        label_36->setGeometry(QRect(30, 22, 16, 65));
         label_36->setStyleSheet(QStringLiteral(""));
         label_36->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_46 = new QLabel(groupBox_5);
@@ -1115,7 +1237,7 @@ public:
         label_46->setGeometry(QRect(80, 70, 10, 12));
         label_47 = new QLabel(groupBox_5);
         label_47->setObjectName(QStringLiteral("label_47"));
-        label_47->setGeometry(QRect(170, 70, 20, 12));
+        label_47->setGeometry(QRect(170, 70, 30, 12));
         groupBox_6 = new QGroupBox(pageMerge);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(860, 0, 420, 90));
@@ -1129,23 +1251,28 @@ public:
         btn_mer_hb->setGeometry(QRect(200, 20, 85, 60));
         btn_mer_hb->setMinimumSize(QSize(85, 60));
         btn_mer_hb->setMaximumSize(QSize(64, 60));
-        btn_mer_hb->setStyleSheet(QStringLiteral("background-color: rgb(26,149,238);"));
+        btn_mer_hb->setStyleSheet(QStringLiteral(""));
         QIcon icon47;
         icon47.addFile(QStringLiteral(":/IRProc/M-Human"), QSize(), QIcon::Normal, QIcon::Off);
+        icon47.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_15.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_mer_hb->setIcon(icon47);
-        btn_mer_hb->setIconSize(QSize(40, 40));
-        btn_mer_hb->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        btn_mer_hb->setIconSize(QSize(70, 60));
+        btn_mer_hb->setCheckable(true);
+        btn_mer_hb->setAutoExclusive(true);
+        btn_mer_hb->setToolButtonStyle(Qt::ToolButtonIconOnly);
         btn_mer_meridian = new QToolButton(groupBox_6);
         btn_mer_meridian->setObjectName(QStringLiteral("btn_mer_meridian"));
-        btn_mer_meridian->setGeometry(QRect(280, 20, 64, 60));
-        btn_mer_meridian->setMinimumSize(QSize(64, 60));
-        btn_mer_meridian->setMaximumSize(QSize(48, 48));
+        btn_mer_meridian->setGeometry(QRect(280, 20, 60, 60));
+        btn_mer_meridian->setMinimumSize(QSize(60, 60));
+        btn_mer_meridian->setMaximumSize(QSize(60, 60));
         btn_mer_meridian->setStyleSheet(QStringLiteral("background-color: rgb(37, 77, 118);"));
         QIcon icon48;
         icon48.addFile(QStringLiteral(":/IRProc/M-Meridian"), QSize(), QIcon::Normal, QIcon::Off);
+        icon48.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txrh_16.png"), QSize(), QIcon::Normal, QIcon::On);
         btn_mer_meridian->setIcon(icon48);
-        btn_mer_meridian->setIconSize(QSize(40, 40));
-        btn_mer_meridian->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        btn_mer_meridian->setIconSize(QSize(60, 60));
+        btn_mer_meridian->setCheckable(true);
+        btn_mer_meridian->setAutoExclusive(true);
         btn_mer_def = new QToolButton(groupBox_6);
         btn_mer_def->setObjectName(QStringLiteral("btn_mer_def"));
         btn_mer_def->setGeometry(QRect(350, 20, 50, 60));
@@ -1164,7 +1291,7 @@ public:
         label_37->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_38 = new QLabel(groupBox_6);
         label_38->setObjectName(QStringLiteral("label_38"));
-        label_38->setGeometry(QRect(30, 30, 16, 55));
+        label_38->setGeometry(QRect(30, 22, 16, 65));
         label_38->setStyleSheet(QStringLiteral(""));
         label_38->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         btn_mer_type5 = new QToolButton(groupBox_6);
@@ -1173,64 +1300,104 @@ public:
         btn_mer_type5->setMinimumSize(QSize(20, 20));
         btn_mer_type5->setMaximumSize(QSize(20, 20));
         btn_mer_type5->setStyleSheet(QStringLiteral(""));
-        btn_mer_type5->setIcon(icon28);
+        QIcon icon50;
+        icon50.addFile(QStringLiteral(":/IRProc/M05"), QSize(), QIcon::Normal, QIcon::Off);
+        icon50.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_11.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type5->setIcon(icon50);
         btn_mer_type5->setIconSize(QSize(20, 20));
+        btn_mer_type5->setCheckable(true);
+        btn_mer_type5->setAutoExclusive(true);
         btn_mer_type8 = new QToolButton(groupBox_6);
         btn_mer_type8->setObjectName(QStringLiteral("btn_mer_type8"));
         btn_mer_type8->setGeometry(QRect(170, 55, 20, 20));
         btn_mer_type8->setMinimumSize(QSize(20, 20));
         btn_mer_type8->setMaximumSize(QSize(20, 20));
         btn_mer_type8->setStyleSheet(QStringLiteral(""));
-        btn_mer_type8->setIcon(icon26);
+        QIcon icon51;
+        icon51.addFile(QStringLiteral(":/IRProc/M08"), QSize(), QIcon::Normal, QIcon::Off);
+        icon51.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_14.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type8->setIcon(icon51);
         btn_mer_type8->setIconSize(QSize(20, 20));
+        btn_mer_type8->setCheckable(true);
+        btn_mer_type8->setAutoExclusive(true);
         btn_mer_type1 = new QToolButton(groupBox_6);
         btn_mer_type1->setObjectName(QStringLiteral("btn_mer_type1"));
         btn_mer_type1->setGeometry(QRect(80, 25, 20, 20));
         btn_mer_type1->setMinimumSize(QSize(20, 20));
         btn_mer_type1->setMaximumSize(QSize(20, 20));
         btn_mer_type1->setStyleSheet(QStringLiteral(""));
-        btn_mer_type1->setIcon(icon22);
+        QIcon icon52;
+        icon52.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_07i.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon52.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_07.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type1->setIcon(icon52);
         btn_mer_type1->setIconSize(QSize(20, 20));
+        btn_mer_type1->setCheckable(true);
+        btn_mer_type1->setAutoExclusive(true);
         btn_mer_type2 = new QToolButton(groupBox_6);
         btn_mer_type2->setObjectName(QStringLiteral("btn_mer_type2"));
         btn_mer_type2->setGeometry(QRect(110, 25, 20, 20));
         btn_mer_type2->setMinimumSize(QSize(20, 20));
         btn_mer_type2->setMaximumSize(QSize(20, 20));
         btn_mer_type2->setStyleSheet(QStringLiteral(""));
-        btn_mer_type2->setIcon(icon23);
+        QIcon icon53;
+        icon53.addFile(QStringLiteral(":/IRProc/M02"), QSize(), QIcon::Normal, QIcon::Off);
+        icon53.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_08.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type2->setIcon(icon53);
         btn_mer_type2->setIconSize(QSize(20, 20));
+        btn_mer_type2->setCheckable(true);
+        btn_mer_type2->setAutoExclusive(true);
         btn_mer_type3 = new QToolButton(groupBox_6);
         btn_mer_type3->setObjectName(QStringLiteral("btn_mer_type3"));
         btn_mer_type3->setGeometry(QRect(140, 25, 20, 20));
         btn_mer_type3->setMinimumSize(QSize(20, 20));
         btn_mer_type3->setMaximumSize(QSize(20, 20));
         btn_mer_type3->setStyleSheet(QStringLiteral(""));
-        btn_mer_type3->setIcon(icon24);
+        QIcon icon54;
+        icon54.addFile(QStringLiteral(":/IRProc/M03"), QSize(), QIcon::Normal, QIcon::Off);
+        icon54.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_09.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type3->setIcon(icon54);
         btn_mer_type3->setIconSize(QSize(20, 20));
+        btn_mer_type3->setCheckable(true);
+        btn_mer_type3->setAutoExclusive(true);
         btn_mer_type7 = new QToolButton(groupBox_6);
         btn_mer_type7->setObjectName(QStringLiteral("btn_mer_type7"));
         btn_mer_type7->setGeometry(QRect(140, 55, 20, 20));
         btn_mer_type7->setMinimumSize(QSize(20, 20));
         btn_mer_type7->setMaximumSize(QSize(20, 20));
         btn_mer_type7->setStyleSheet(QStringLiteral(""));
-        btn_mer_type7->setIcon(icon29);
+        QIcon icon55;
+        icon55.addFile(QStringLiteral(":/IRProc/M07"), QSize(), QIcon::Normal, QIcon::Off);
+        icon55.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_13.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type7->setIcon(icon55);
         btn_mer_type7->setIconSize(QSize(20, 20));
+        btn_mer_type7->setCheckable(true);
+        btn_mer_type7->setAutoExclusive(true);
         btn_mer_type4 = new QToolButton(groupBox_6);
         btn_mer_type4->setObjectName(QStringLiteral("btn_mer_type4"));
         btn_mer_type4->setGeometry(QRect(170, 25, 20, 20));
         btn_mer_type4->setMinimumSize(QSize(20, 20));
         btn_mer_type4->setMaximumSize(QSize(20, 20));
         btn_mer_type4->setStyleSheet(QStringLiteral(""));
-        btn_mer_type4->setIcon(icon25);
+        QIcon icon56;
+        icon56.addFile(QStringLiteral(":/IRProc/M04"), QSize(), QIcon::Normal, QIcon::Off);
+        icon56.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_10.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type4->setIcon(icon56);
         btn_mer_type4->setIconSize(QSize(20, 20));
+        btn_mer_type4->setCheckable(true);
+        btn_mer_type4->setAutoExclusive(true);
         btn_mer_type6 = new QToolButton(groupBox_6);
         btn_mer_type6->setObjectName(QStringLiteral("btn_mer_type6"));
         btn_mer_type6->setGeometry(QRect(110, 55, 20, 20));
         btn_mer_type6->setMinimumSize(QSize(20, 20));
         btn_mer_type6->setMaximumSize(QSize(20, 20));
         btn_mer_type6->setStyleSheet(QStringLiteral(""));
-        btn_mer_type6->setIcon(icon27);
+        QIcon icon57;
+        icon57.addFile(QStringLiteral(":/IRProc/M06"), QSize(), QIcon::Normal, QIcon::Off);
+        icon57.addFile(QString::fromUtf8("../../../../../work/\345\256\236\351\252\214\345\256\244/\347\272\242\345\244\226\346\211\253\346\217\217/GTT\350\275\257\344\273\266\346\223\215\344\275\234\345\233\276/button images/txcl_12.jpg"), QSize(), QIcon::Normal, QIcon::On);
+        btn_mer_type6->setIcon(icon57);
         btn_mer_type6->setIconSize(QSize(20, 20));
+        btn_mer_type6->setCheckable(true);
+        btn_mer_type6->setAutoExclusive(true);
         stackedWidget->addWidget(pageMerge);
         pageData = new QWidget();
         pageData->setObjectName(QStringLiteral("pageData"));
@@ -1266,9 +1433,9 @@ public:
         btn_analyze->setMinimumSize(QSize(32, 50));
         btn_analyze->setMaximumSize(QSize(32, 50));
         btn_analyze->setStyleSheet(QStringLiteral(""));
-        QIcon icon50;
-        icon50.addFile(QStringLiteral(":/IRProc/Data-Analyze"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_analyze->setIcon(icon50);
+        QIcon icon58;
+        icon58.addFile(QStringLiteral(":/IRProc/Data-Analyze"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_analyze->setIcon(icon58);
         btn_analyze->setIconSize(QSize(20, 20));
         btn_analyze->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_data_in = new QToolButton(groupBox_10);
@@ -1277,9 +1444,9 @@ public:
         btn_data_in->setMinimumSize(QSize(32, 50));
         btn_data_in->setMaximumSize(QSize(32, 50));
         btn_data_in->setStyleSheet(QStringLiteral(""));
-        QIcon icon51;
-        icon51.addFile(QStringLiteral(":/IRProc/Data-In"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_data_in->setIcon(icon51);
+        QIcon icon59;
+        icon59.addFile(QStringLiteral(":/IRProc/Data-In"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_data_in->setIcon(icon59);
         btn_data_in->setIconSize(QSize(20, 20));
         btn_data_in->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_data_out = new QToolButton(groupBox_10);
@@ -1288,9 +1455,9 @@ public:
         btn_data_out->setMinimumSize(QSize(32, 50));
         btn_data_out->setMaximumSize(QSize(32, 50));
         btn_data_out->setStyleSheet(QStringLiteral(""));
-        QIcon icon52;
-        icon52.addFile(QStringLiteral(":/IRProc/Data-Out"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_data_out->setIcon(icon52);
+        QIcon icon60;
+        icon60.addFile(QStringLiteral(":/IRProc/Data-Out"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_data_out->setIcon(icon60);
         btn_data_out->setIconSize(QSize(20, 20));
         btn_data_out->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_del = new QToolButton(groupBox_10);
@@ -1299,9 +1466,9 @@ public:
         btn_del->setMinimumSize(QSize(32, 50));
         btn_del->setMaximumSize(QSize(32, 50));
         btn_del->setStyleSheet(QStringLiteral(""));
-        QIcon icon53;
-        icon53.addFile(QStringLiteral(":/IRProc/Data-Del"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_del->setIcon(icon53);
+        QIcon icon61;
+        icon61.addFile(QStringLiteral(":/IRProc/Data-Del"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_del->setIcon(icon61);
         btn_del->setIconSize(QSize(20, 20));
         btn_del->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         btn_change = new QToolButton(groupBox_10);
@@ -1310,10 +1477,10 @@ public:
         btn_change->setMinimumSize(QSize(32, 50));
         btn_change->setMaximumSize(QSize(32, 50));
         btn_change->setStyleSheet(QStringLiteral(""));
-        QIcon icon54;
-        icon54.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::Off);
-        icon54.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::On);
-        btn_change->setIcon(icon54);
+        QIcon icon62;
+        icon62.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::Off);
+        icon62.addFile(QStringLiteral(":/IRProc/Data-Change"), QSize(), QIcon::Normal, QIcon::On);
+        btn_change->setIcon(icon62);
         btn_change->setIconSize(QSize(20, 20));
         btn_change->setCheckable(true);
         btn_change->setChecked(false);
@@ -1349,9 +1516,9 @@ public:
         btn_start->setMinimumSize(QSize(15, 15));
         btn_start->setMaximumSize(QSize(15, 15));
         btn_start->setStyleSheet(QStringLiteral("border-image: url(:/IRProc/Pro-Rect1);"));
-        QIcon icon55;
-        icon55.addFile(QStringLiteral(":/IRProc/Data-DLeft"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_start->setIcon(icon55);
+        QIcon icon63;
+        icon63.addFile(QStringLiteral(":/IRProc/Data-DLeft"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_start->setIcon(icon63);
         btn_next = new QToolButton(groupBox_11);
         btn_next->setObjectName(QStringLiteral("btn_next"));
         btn_next->setGeometry(QRect(150, 30, 15, 15));
@@ -1365,9 +1532,9 @@ public:
         btn_end->setMinimumSize(QSize(15, 15));
         btn_end->setMaximumSize(QSize(15, 15));
         btn_end->setStyleSheet(QStringLiteral("border-image: url(:/IRProc/Pro-Rect1);"));
-        QIcon icon56;
-        icon56.addFile(QStringLiteral(":/IRProc/Data-DRight"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_end->setIcon(icon56);
+        QIcon icon64;
+        icon64.addFile(QStringLiteral(":/IRProc/Data-DRight"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_end->setIcon(icon64);
         lineEdit_page_size = new QLineEdit(groupBox_11);
         lineEdit_page_size->setObjectName(QStringLiteral("lineEdit_page_size"));
         lineEdit_page_size->setGeometry(QRect(120, 60, 40, 15));
@@ -1415,9 +1582,9 @@ public:
         btn_date_sel->setMinimumSize(QSize(32, 50));
         btn_date_sel->setMaximumSize(QSize(50, 166667));
         btn_date_sel->setStyleSheet(QStringLiteral(""));
-        QIcon icon57;
-        icon57.addFile(QStringLiteral(":/IRProc/Data-Filter"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_date_sel->setIcon(icon57);
+        QIcon icon65;
+        icon65.addFile(QStringLiteral(":/IRProc/Data-Filter"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_date_sel->setIcon(icon65);
         btn_date_sel->setIconSize(QSize(24, 24));
         btn_date_sel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         checkBox_10 = new QCheckBox(groupBox_12);
@@ -1470,7 +1637,7 @@ public:
         btn_name_sel->setMinimumSize(QSize(32, 50));
         btn_name_sel->setMaximumSize(QSize(32, 50));
         btn_name_sel->setStyleSheet(QStringLiteral(""));
-        btn_name_sel->setIcon(icon57);
+        btn_name_sel->setIcon(icon65);
         btn_name_sel->setIconSize(QSize(24, 24));
         btn_name_sel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         label_30 = new QLabel(groupBox_13);
@@ -1497,9 +1664,9 @@ public:
         btn_show_all->setMinimumSize(QSize(50, 50));
         btn_show_all->setMaximumSize(QSize(50, 50));
         btn_show_all->setStyleSheet(QStringLiteral(""));
-        QIcon icon58;
-        icon58.addFile(QStringLiteral(":/IRProc/Data-Show-All"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_show_all->setIcon(icon58);
+        QIcon icon66;
+        icon66.addFile(QStringLiteral(":/IRProc/Data-Show-All"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_show_all->setIcon(icon66);
         btn_show_all->setIconSize(QSize(48, 48));
         btn_show_all->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         label_32 = new QLabel(groupBox_14);
@@ -1539,9 +1706,9 @@ public:
         userAreaBt->setMinimumSize(QSize(32, 32));
         userAreaBt->setMaximumSize(QSize(32, 32));
         userAreaBt->setStyleSheet(QStringLiteral(""));
-        QIcon icon59;
-        icon59.addFile(QStringLiteral(":/IRProc/Sys-User-Max"), QSize(), QIcon::Normal, QIcon::Off);
-        userAreaBt->setIcon(icon59);
+        QIcon icon67;
+        icon67.addFile(QStringLiteral(":/IRProc/Sys-User-Max"), QSize(), QIcon::Normal, QIcon::Off);
+        userAreaBt->setIcon(icon67);
         userAreaBt->setToolButtonStyle(Qt::ToolButtonIconOnly);
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QStringLiteral("label_4"));
@@ -1554,9 +1721,9 @@ public:
         btn_set_auth->setMinimumSize(QSize(32, 32));
         btn_set_auth->setMaximumSize(QSize(32, 32));
         btn_set_auth->setStyleSheet(QStringLiteral(""));
-        QIcon icon60;
-        icon60.addFile(QStringLiteral(":/IRProc/Sys-Right-Set"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_set_auth->setIcon(icon60);
+        QIcon icon68;
+        icon68.addFile(QStringLiteral(":/IRProc/Sys-Right-Set"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_set_auth->setIcon(icon68);
         label_10 = new QLabel(groupBox);
         label_10->setObjectName(QStringLiteral("label_10"));
         label_10->setGeometry(QRect(190, 60, 60, 20));
@@ -1630,9 +1797,9 @@ public:
         btn_sys_par->setMinimumSize(QSize(32, 32));
         btn_sys_par->setMaximumSize(QSize(32, 32));
         btn_sys_par->setStyleSheet(QStringLiteral(""));
-        QIcon icon61;
-        icon61.addFile(QStringLiteral(":/IRProc/SysPara"), QSize(), QIcon::Normal, QIcon::Off);
-        btn_sys_par->setIcon(icon61);
+        QIcon icon69;
+        icon69.addFile(QStringLiteral(":/IRProc/SysPara"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_sys_par->setIcon(icon69);
         stackedWidget->addWidget(pageSetting);
 
         verticalLayout->addWidget(stackedWidget);
@@ -1842,7 +2009,7 @@ public:
         IRProcClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(IRProcClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1442, 23));
+        menuBar->setGeometry(QRect(0, 0, 1442, 26));
         IRProcClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(IRProcClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));

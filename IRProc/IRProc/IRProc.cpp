@@ -44,8 +44,8 @@ int g_img_show_flag[IMGE_TOTAL_NUM] = { 0 };//图像显示标志
 
 unsigned short *g_pData[IMGE_TOTAL_NUM];//原始数据
 
-Mat g_mer_src;//原始融合图像
-Mat g_mer=Mat::zeros(IMAGE_WIDTH, IMAGE_HEIGHT, CV_8UC3);;//融合图像
+Mat g_mer_src[IMGE_TOTAL_NUM];//原始融合图像
+Mat g_mer[IMGE_TOTAL_NUM];//融合图像
 Mat g_src[IMGE_TOTAL_NUM]; // opencv图像原始- 彩色
 Mat g_src_gray[IMGE_TOTAL_NUM];//opencv图像原始- 灰度
 Mat g_img[IMGE_TOTAL_NUM];//opencv图像-彩色
@@ -58,7 +58,7 @@ QImage g_qImgShow_gray[IMGE_TOTAL_NUM];//Qt原始图像-灰度
 QPoint g_offset[IMGE_TOTAL_NUM] = {};//显示图像的偏移量
 
 float g_referTemper = 25;//参考温度
-int g_win_width = 16;//窗宽
+int g_win_width[IMGE_TOTAL_NUM];//窗宽
 int g_color_type = 2;// 颜色模式 0-灰度；1-传统伪彩色；2-TTM
 int g_filter_type = 2;//滤波模式 0-中值；1-直方图均衡；2-不滤波
 float g_bot = 22;//断层参考值，初始22
@@ -252,9 +252,9 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.slider_mer_ratio2, SIGNAL(valueChanged(int)), this, SLOT(sliderMerRatio2()));
 	
 	ui.slider_bot->setMinimum(0);
-	ui.slider_bot->setMaximum(500);
+	ui.slider_bot->setMaximum(5000);
 	ui.slider_bot->setSingleStep(1);
-	ui.slider_bot->setValue(220);
+	ui.slider_bot->setValue(2200);
 	ui.slider_bot->type = 1;
 
 	connect(ui.slider_bot, SIGNAL(valueChanged(int)), this, SLOT(sliderBot()));
@@ -553,8 +553,8 @@ void IRProc::dataIn()
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot);
 		g_img[g_picNum].copyTo(g_src[g_picNum]);
 		g_img_gray[g_picNum].copyTo(g_src_gray[g_picNum]);
 
@@ -829,8 +829,8 @@ void IRProc::changeMerType()
 	}
 
 	cvtColor(timg, timg, CV_BGR2RGB);
-	cv::resize(timg, g_mer_src, Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
-	g_mer_src.copyTo(g_mer);
+	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
 
 	g_mer_ratio = 0.2;
 	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
@@ -844,7 +844,7 @@ void IRProc::btnMerWid()
 {
 	Mat acu_n;
 	g_mer_hratio = g_mer_hratio + 0.2;
-	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
 	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
@@ -854,7 +854,7 @@ void IRProc::btnMerWid()
 	Mat roi1;
 	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-	roi1.copyTo(g_mer);
+	roi1.copyTo(g_mer[g_cur_img]);
 	updateImage();
 
 }
@@ -867,7 +867,7 @@ void IRProc::btnMerNar()
 	else
 		g_mer_hratio = 1;
 
-	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
 	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
@@ -877,14 +877,14 @@ void IRProc::btnMerNar()
 	Mat roi1;
 	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-	roi1.copyTo(g_mer);
+	roi1.copyTo(g_mer[g_cur_img]);
 	updateImage();
 }
 void IRProc::btnMerHigher()
 {
 	Mat acu_n;
 	g_mer_vratio = g_mer_vratio + 0.2;
-	cv::resize(g_mer_src, acu_n, Size( IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size( IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT/2;
 	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH/2;
@@ -894,7 +894,7 @@ void IRProc::btnMerHigher()
 	Mat roi1;
 	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-	roi1.copyTo(g_mer);
+	roi1.copyTo(g_mer[g_cur_img]);
 	updateImage();
 
 }
@@ -907,7 +907,7 @@ void IRProc::btnMerLower()
 	else
 		g_mer_vratio = 1;
 
-	cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
 	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
@@ -917,7 +917,7 @@ void IRProc::btnMerLower()
 	Mat roi1;
 	acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-	roi1.copyTo(g_mer);
+	roi1.copyTo(g_mer[g_cur_img]);
 	updateImage();
 
 }
@@ -927,7 +927,7 @@ void IRProc::btnMerLeft()
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 		m_mx = m_mx + 20;
 		if (m_mx >= (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT)) m_mx = (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT) - 1;
@@ -937,7 +937,7 @@ void IRProc::btnMerLeft()
 		Mat roi1;
 		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-		roi1.copyTo(g_mer);
+		roi1.copyTo(g_mer[g_cur_img]);
 		updateImage();
 	}
 
@@ -950,7 +950,7 @@ void IRProc::btnMerRight()
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 		m_mx = m_mx - 20;
 		if (m_mx <0) m_mx = 0;
@@ -960,7 +960,7 @@ void IRProc::btnMerRight()
 		Mat roi1;
 		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-		roi1.copyTo(g_mer);
+		roi1.copyTo(g_mer[g_cur_img]);
 		updateImage();
 	}
 	
@@ -972,7 +972,7 @@ void IRProc::btnMerUp()
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 		m_my = m_my + 20;
 		if (m_my >= (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH)) m_my = (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH) - 1;
@@ -982,7 +982,7 @@ void IRProc::btnMerUp()
 		Mat roi1;
 		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-		roi1.copyTo(g_mer);
+		roi1.copyTo(g_mer[g_cur_img]);
 		updateImage();
 
 	}
@@ -997,7 +997,7 @@ void IRProc::btnMerDown()
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src, acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
 
 		m_my = m_my - 20;
 		if (m_my <0) m_my = 0;
@@ -1008,7 +1008,7 @@ void IRProc::btnMerDown()
 		Mat roi1;
 		acu_n(rect1).copyTo(roi1); // copy the region rect1 from the image to roi1
 
-		roi1.copyTo(g_mer);
+		roi1.copyTo(g_mer[g_cur_img]);
 		updateImage();
 	}
 	
@@ -1018,7 +1018,7 @@ void IRProc::btnMerDown()
 void IRProc::sliderBot()
 {
 	int pos = ui.slider_bot->value();
-	g_bot = pos*1.0/10;
+	g_bot = pos*1.0/100;
 	updateImage();
 
 }
@@ -1152,8 +1152,8 @@ void IRProc::btnMerDef()
 	Mat timg = imread(path);
 
 	cvtColor(timg, timg, CV_BGR2RGB);
-	cv::resize(timg, g_mer_src, Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
-	g_mer_src.copyTo(g_mer);
+	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
 
 	g_mer_ratio = 0.2;
 //	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
@@ -1280,10 +1280,22 @@ void IRProc::customize()
 void IRProc::changeWinWidth()
 {
 
+
 	QToolButton  *tb = (QToolButton*)this->sender();
+
+	//QList<QToolButton*> btList = ui.groupBox_7->findChildren<QToolButton*>();
+	//for (int i = 0; i < btList.size(); i++)
+	//{
+	//	QToolButton* bt = btList.at(i);
+	//	if (bt!=tb)
+	//		bt->setCheckable(false);
+
+	//	bt->setCheckable(true);
+	//}
+
 	QString text = tb->text();
 
-	g_win_width = text.toInt();
+	g_win_width[g_cur_img] = text.toInt();
 
 	updateImage();
 
@@ -1447,17 +1459,20 @@ void IRProc::btnAnalyze()
 
 	for (g_picNum = 0; g_picNum < pic_count; g_picNum++)
 	{
+		g_win_width[g_picNum] = 12;
+
 		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
 
 		data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot);
 		g_img[g_picNum].copyTo(g_src[g_picNum]);
 		g_img_gray[g_picNum].copyTo(g_src_gray[g_picNum]);
 
+		g_mer[g_picNum] = Mat::zeros(IMAGE_WIDTH, IMAGE_HEIGHT, CV_8UC3);
 
 		if (g_color_type)
 		{
@@ -1746,16 +1761,17 @@ void IRProc::updateImage()
 		{
 			if (g_color_type)
 			{
-				data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
+				g_src[i].copyTo(g_img[i]);
+				data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], g_color_type, g_filter_type, g_bot);
 				g_img[i].copyTo(g_src[i]);
-				g_img[i] = g_img[i] * (1 - g_mer_ratio) + g_mer* g_mer_ratio;
+				g_img[i] = g_img[i] * (1 - g_mer_ratio) + g_mer[i] * g_mer_ratio;
 				//draw_shape(g_img[i], allshape[i], g_shape_no[i]);
 				QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 				g_qImgShow[i] = image.copy();
 			}
 			else
 			{
-				data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
+				data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], 0, g_filter_type, g_bot);
 				g_img_gray[i].copyTo(g_src_gray[i]);
 				//draw_shape(g_img_gray[i], allshape[i], g_shape_no[i]);
 				QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
@@ -1768,16 +1784,16 @@ void IRProc::updateImage()
 	{
 		if (g_color_type)
 		{
-			data2Img(g_pData[g_cur_img], g_img[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, g_color_type, g_filter_type, g_bot);
+			data2Img(g_pData[g_cur_img], g_img[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], g_color_type, g_filter_type, g_bot);
 			g_img[g_cur_img].copyTo(g_src[g_cur_img]);
-			g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer* g_mer_ratio;
+			g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer[g_cur_img] * g_mer_ratio;
 			//draw_shape(g_img[g_cur_img], allshape[g_cur_img], g_shape_no[g_cur_img]);
 			QImage image = QImage((const unsigned char*)(g_img[g_cur_img].data), g_img[g_cur_img].cols, g_img[g_cur_img].rows, QImage::Format_RGB888);
 			g_qImgShow[g_cur_img] = image.copy();
 		}
 		else
 		{
-			data2Img(g_pData[g_cur_img], g_img_gray[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width, 0, g_filter_type, g_bot);
+			data2Img(g_pData[g_cur_img], g_img_gray[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], 0, g_filter_type, g_bot);
 			g_img_gray[g_cur_img].copyTo(g_src_gray[g_cur_img]);
 			//draw_shape(g_img_gray[g_cur_img], allshape[g_cur_img], g_shape_no[g_cur_img]);
 			QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_cur_img].data), g_img_gray[g_cur_img].cols, g_img_gray[g_cur_img].rows, QImage::Format_Grayscale8);
@@ -1794,7 +1810,12 @@ void IRProc::wheelEvent(QWheelEvent*event)
 	g_bot += 1.0*event->delta() / 120 * g_step;
 	updateImage();
 
-	ui.slider_bot->setValue(g_bot * 10);
+	ui.slider_bot->setValue(g_bot * 100);
+	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
+
+	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
+	ui.slider_bot->update();
+
 
 }
 
