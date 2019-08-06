@@ -20,8 +20,8 @@ protected:
 	void paintEvent(QPaintEvent *ev);
 
 public:
-	QLabel*	m_displayLabel;
-	QLabel*	m_displayLabel2;
+	//QLabel*	m_displayLabel;
+	//QLabel*	m_displayLabel2;
 };
 
 #endif // MYCUSTOMSLIDER_H

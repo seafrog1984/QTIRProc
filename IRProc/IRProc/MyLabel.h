@@ -21,6 +21,7 @@ public:
 signals:
 
 	void calData();
+	void upInfo();
 //	void clicked(QMouseEvent *ev);  //Ì§Æð
 //	void pressed(QMouseEvent *ev);  //°´ÏÂ
 //	void doubled(QMouseEvent *ev);  //Ë«»÷

@@ -53,8 +53,8 @@
         <file alias="Data-Slider">Resources/data-slider.png</file>
         <file alias="Tool-Bg">Resources/bg.png</file>
         <file alias="Txcl-bg">Resources/txcl-bg.png</file>
-        <file alias="ImageProc05-Sel">Resources/imageProc05.png</file>
-        <file alias="ImageProc06-Sel">Resources/imageProc06.png</file>
+        <file alias="ImageProc05">Resources/imageProc05.png</file>
+        <file alias="ImageProc06">Resources/imageProc06.png</file>
         <file alias="ImageProc08-Sel">Resources/ImageProc08-Sel.png</file>
         <file alias="ImageProc10-Sel">Resources/ImageProc10-Sel.png</file>
         <file alias="ImageProc12-Sel">Resources/ImageProc12-Sel.png</file>
@@ -75,7 +75,29 @@
         <file alias="MLeft">Resources/mergeLeft.png</file>
         <file alias="MRight">Resources/mergeRight.png</file>
         <file alias="SysPara">Resources/sys-Para.png</file>
-        <file alias="ImageProc04-Sel">Resources/imageProc04.jpg</file>
+        <file alias="ImageProc04">Resources/imageProc04.jpg</file>
         <file alias="MFront">Resources/mergeFront.png</file>
+        <file alias="ImageProc04-Sel">Resources/imageProc04-sel.png</file>
+        <file alias="ImageProc08">Resources/ImageProc08.png</file>
+        <file alias="ImageProc10">Resources/ImageProc10.png</file>
+        <file alias="ImageProc12">Resources/ImageProc12.png</file>
+        <file alias="M02-Sel">Resources/Merg-02-sel.png</file>
+        <file alias="M03-Sel">Resources/Merg-03-sel.png</file>
+        <file alias="M04-Sel">Resources/Merg-04-sel.png</file>
+        <file alias="M05-Sel">Resources/Merg-05-sel.png</file>
+        <file alias="M06-Sel">Resources/Merg-06-sel.png</file>
+        <file alias="M07-Sel">Resources/Merg-07-sel.png</file>
+        <file alias="M08-Sel">Resources/Merg-08-sel.png</file>
+        <file alias="M01">Resources/Merg-01.png</file>
+        <file alias="ImageProc05-Sel">Resources/imageProc05-sel.png</file>
+        <file alias="ImageProc06-Sel">Resources/imageProc06-sel.png</file>
+        <file alias="M-Male-Sel">Resources/merge-male-sel.png</file>
+        <file alias="M-Female-Sel">Resources/merge-female-sel.png</file>
+        <file alias="MFront-Sel">Resources/mergeFront-sel.png</file>
+        <file alias="MLeft-Sel">Resources/mergeLeft-sel.png</file>
+        <file alias="MBack-sel">Resources/mergeBack-sel.png</file>
+        <file alias="MRight-sel">Resources/mergeRight-sel.png</file>
+        <file alias="M-Human-Sel">Resources/merge-human-sel.png</file>
+        <file alias="M-Meridian-Sel">Resources/merge-meridian-sel.png</file>
     </qresource>
 </RCC>

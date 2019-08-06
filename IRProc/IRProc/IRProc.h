@@ -37,6 +37,8 @@ public:
 	void updateData();
 	void addData(int index, QString cardID, QString scanID, QString RegTime);
 
+	void keyPressEvent(QKeyEvent *event);
+
 private:
 	Ui::IRProcClass ui;
 
@@ -75,6 +77,10 @@ public slots:
 	void showTemper();//显示温度
 	void saveMeasure();//保存测量
 	void setUpAll();//同步断层
+	void tagSel();//选择标签
+	void tagDel();//删除标签
+
+	
 
 	void btnMerDef();//自定义融合图
 	void sliderMerRatio();//融合度调整
@@ -104,9 +110,10 @@ public slots:
 	void dataOut();//数据导出
 	void dataIn();//数据导入
 
-	void calData();
-	void time_update();
-	void thumClicked();
+	void calData();//更新数据区
+	void upInfo();//更新图像信息
+	void time_update();//更新时间
+	void thumClicked();//点击缩略图
 
 public:
 	void changeLabel(int totalNum,int imagePerRow);//调整显示窗口数

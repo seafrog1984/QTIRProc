@@ -12,6 +12,7 @@
 #include <imgProcDll.h>
 #include <CvxText.h>
 #include <QTimer>
+#include <QProgressDialog>
 
 #include "IRProc.h"
 #include "MyLabel.h"
@@ -61,7 +62,9 @@ float g_referTemper = 25;//参考温度
 int g_win_width[IMGE_TOTAL_NUM];//窗宽
 int g_color_type = 2;// 颜色模式 0-灰度；1-传统伪彩色；2-TTM
 int g_filter_type = 2;//滤波模式 0-中值；1-直方图均衡；2-不滤波
-float g_bot = 22;//断层参考值，初始22
+float g_bot[IMGE_TOTAL_NUM];//断层参考值，初始22
+
+extern int g_sel_tag[IMGE_TOTAL_NUM] = { 0 };//当前标签下标
 
 float g_step = 0.01;
 
@@ -75,11 +78,12 @@ int g_remember_flag;//记住密码标志
 int g_upAll_flag=1;//同步断层标志
 
 QString g_merge_path;
-QString g_mer_gender="Male";//融合图性别
-QString g_mer_pose = "Front";// 融合图姿势
-QString g_mer_type="ACU";//融合图类别
-double g_mer_ratio = 0;//融合度
-double g_mer_hratio = 1, g_mer_vratio = 1;//融合图水平垂直放大倍数
+QString g_mer_gender[IMGE_TOTAL_NUM];//融合图性别
+QString g_mer_pose[IMGE_TOTAL_NUM];// 融合图姿势
+QString g_mer_type[IMGE_TOTAL_NUM];//融合图类别
+double g_mer_ratio[IMGE_TOTAL_NUM] = { 0 };//融合度
+double g_mer_hratio[IMGE_TOTAL_NUM];//融合图水平放大倍数
+double g_mer_vratio[IMGE_TOTAL_NUM];//融合图垂直放大倍数
 
 
 extern QString g_ip;
@@ -167,6 +171,9 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.show_temper, SIGNAL(clicked()), this, SLOT(showTemper()));
 	connect(ui.btn_save_measure, SIGNAL(clicked()), this, SLOT(saveMeasure()));
 	connect(ui.update_all, SIGNAL(clicked()), this, SLOT(setUpAll()));
+	connect(ui.btn_sel_tag, SIGNAL(clicked()), this, SLOT(tagSel()));
+	connect(ui.btn_del_tag, SIGNAL(clicked()), this, SLOT(tagDel()));
+
 
 	ui.btn_sel->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
 
@@ -248,6 +255,14 @@ IRProc::IRProc(QWidget *parent)
 	ui.slider_mer_ratio->setSingleStep(1);
 	ui.slider_mer_ratio->setValue(20);
 
+	ui.slider_mer_ratio2->setMinimum(0);
+	ui.slider_mer_ratio2->setMaximum(100);
+	ui.slider_mer_ratio2->setSingleStep(1);
+	ui.slider_mer_ratio2->setValue(20);
+
+	ui.mer_cur_ratio->setText("20");
+	ui.mer_cur_ratio2->setText("20");
+
 	connect(ui.slider_mer_ratio, SIGNAL(valueChanged(int)), this, SLOT(sliderMerRatio()));
 	connect(ui.slider_mer_ratio2, SIGNAL(valueChanged(int)), this, SLOT(sliderMerRatio2()));
 	
@@ -256,6 +271,9 @@ IRProc::IRProc(QWidget *parent)
 	ui.slider_bot->setSingleStep(1);
 	ui.slider_bot->setValue(2200);
 	ui.slider_bot->type = 1;
+
+	ui.tmper_low->setText("22");
+	ui.temper_high->setText("34");
 
 	connect(ui.slider_bot, SIGNAL(valueChanged(int)), this, SLOT(sliderBot()));
 
@@ -280,8 +298,8 @@ IRProc::IRProc(QWidget *parent)
 	g_merge_path = dir.currentPath() + "/Refer_image/";
 	g_dataFolder = dir.currentPath() + "//Data//";
 
-	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
-	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	m_mx = IMAGE_HEIGHT/ 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH / 2 - IMAGE_WIDTH / 2;
 
 	ui.lineEdit_cur_page->setText(QString::number(g_curPage));
 	ui.lineEdit_page_size->setText(QString::number(g_pageSize));
@@ -292,6 +310,15 @@ IRProc::IRProc(QWidget *parent)
 	ui.checkBox_3->setChecked(true);
 	if (g_remember_flag) ui.checkBox_6->setChecked(true);
 	ui.update_all->setChecked(true);
+
+	ui.btn_win_w12->setChecked(true);
+
+	ui.btn_male->setChecked(true);
+	ui.btn_pose_front->setChecked(true);
+	ui.btn_mer_type1->setChecked(true);
+	ui.btn_1->setChecked(true);
+
+
 
 	updateData();
 
@@ -305,7 +332,7 @@ IRProc::IRProc(QWidget *parent)
 	timer->start(1000); //每隔1000ms发送timeout的信号
 	connect(timer, SIGNAL(timeout()), this, SLOT(time_update()));
 
-
+	this->grabKeyboard();//捕获键盘事件
 	
 	// 检查目录是否存在，若不存在则新建
 
@@ -317,6 +344,91 @@ IRProc::IRProc(QWidget *parent)
 
 
 }
+
+void IRProc::keyPressEvent(QKeyEvent *event)
+{
+	double step = 0.01;
+	if (event->modifiers() == Qt::ControlModifier)
+	{
+		step = 0.1;
+	}
+	else if (event->modifiers() == Qt::ShiftModifier)
+	{
+		step = 0.05;
+	}
+
+	if (event->key() == Qt::Key_Up)
+	{
+		g_bot[g_cur_img] += step;
+	}
+	else if (event->key() == Qt::Key_Down)
+	{
+		g_bot[g_cur_img] -= step;
+	}
+
+	if (g_upAll_flag)
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			g_bot[i] = g_bot[g_cur_img];
+		}
+	}
+
+	updateImage();
+
+	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
+	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
+
+	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
+	ui.slider_bot->update();
+
+	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
+
+}
+
+void IRProc::tagSel()
+{
+	int tagIndex = ui.tag_index->text().toInt()-1;
+
+	if (tagIndex >= 0 && tagIndex < g_shape_no[g_cur_img]&&allshape[g_cur_img][tagIndex].del_flag==false)
+	{
+		g_sel_tag[g_cur_img] = tagIndex;
+	}
+	else
+	{
+		m_msg = QString::fromLocal8Bit("编号不正确\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+	}
+	showImage(g_picNum);
+}
+
+void IRProc::tagDel()
+{
+	int tagIndex = ui.tag_index->text().toInt() - 1;
+
+	if (tagIndex >= 0 && tagIndex < g_shape_no[g_cur_img] && allshape[g_cur_img][tagIndex].del_flag == false)
+	{
+		allshape[g_cur_img][tagIndex].del_flag = true;
+		g_sel_tag[g_cur_img] = 0;
+		ui.tag_index->setText("1");
+	}
+	else if (tagIndex==-1)
+	{
+		for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+		{
+			allshape[g_cur_img][i].del_flag = true;
+		}
+
+	}
+	else
+	{
+		m_msg = QString::fromLocal8Bit("编号不正确\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+	}
+	showImage(g_picNum);
+}
+
 
 void IRProc::saveMeasure()
 {
@@ -553,8 +665,8 @@ void IRProc::dataIn()
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot);
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot[g_picNum]);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot[g_picNum]);
 		g_img[g_picNum].copyTo(g_src[g_picNum]);
 		g_img_gray[g_picNum].copyTo(g_src_gray[g_picNum]);
 
@@ -770,7 +882,7 @@ void IRProc::changeMerGender()
 	QToolButton  *tb = (QToolButton*)this->sender();
 	QString text = tb->text();
 
-	g_mer_gender = text;
+	g_mer_gender[g_cur_img] = text;
 
 }
 void IRProc::changeMerPose()
@@ -779,7 +891,7 @@ void IRProc::changeMerPose()
 	QToolButton  *tb = (QToolButton*)this->sender();
 	QString text = tb->text();
 	
-	g_mer_pose = text;
+	g_mer_pose[g_cur_img] = text;
 
 }
 void IRProc::changeMerType()
@@ -793,10 +905,10 @@ void IRProc::changeMerType()
 
 	int type = text.toInt();
 
-	g_mer_type = text;//1-人体；2-穴位；3-8？
+	g_mer_type[g_cur_img] = text;//1-人体；2-穴位；3-8？
 
 
-	QString merFilePath = g_merge_path + g_mer_type + "/" + g_mer_gender;
+	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender[g_cur_img];
 	QDir dir;
 
 	if (!dir.exists(merFilePath))
@@ -805,7 +917,7 @@ void IRProc::changeMerType()
 		//		qDebug() << "新建目录是否成功" << res;
 	}
 
-	merFilePath = merFilePath + "/" + g_mer_pose + ".jpg";
+	merFilePath = merFilePath + "/" + g_mer_pose[g_cur_img] + ".jpg";
 	if (merFilePath.isEmpty())
 	{
 		QMessageBox msg(QMessageBox::Information,tr("Information"), merFilePath + " does not exist!");
@@ -832,7 +944,8 @@ void IRProc::changeMerType()
 	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
 	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
 
-	g_mer_ratio = 0.2;
+	g_mer_ratio[g_cur_img] = 0.2;
+	g_mer_hratio[g_cur_img] = g_mer_vratio[g_cur_img] = 1;
 	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	updateImage();
@@ -843,11 +956,11 @@ void IRProc::changeMerType()
 void IRProc::btnMerWid()
 {
 	Mat acu_n;
-	g_mer_hratio = g_mer_hratio + 0.2;
-	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] + 0.2;
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
-	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
-	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	m_mx = IMAGE_HEIGHT* g_mer_hratio[g_cur_img] / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio[g_cur_img] / 2 - IMAGE_WIDTH / 2;
 	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 	//	Rect rect2(224, 224, 128, 128);
 
@@ -862,15 +975,15 @@ void IRProc::btnMerNar()
 {
 	Mat acu_n;
 
-	if (g_mer_hratio - 1.2 > 0.0000001)
-		g_mer_hratio = g_mer_hratio - 0.2;
+	if (g_mer_hratio[g_cur_img] - 1.2 > 0.0000001)
+		g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] - 0.2;
 	else
-		g_mer_hratio = 1;
+		g_mer_hratio[g_cur_img] = 1;
 
-	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
-	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
-	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	m_mx = IMAGE_HEIGHT* g_mer_hratio[g_cur_img] / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio[g_cur_img] / 2 - IMAGE_WIDTH / 2;
 	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 	//	Rect rect2(224, 224, 128, 128);
 
@@ -883,11 +996,11 @@ void IRProc::btnMerNar()
 void IRProc::btnMerHigher()
 {
 	Mat acu_n;
-	g_mer_vratio = g_mer_vratio + 0.2;
-	cv::resize(g_mer_src[g_cur_img], acu_n, Size( IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] + 0.2;
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size( IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
-	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT/2;
-	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH/2;
+	m_mx = IMAGE_HEIGHT* g_mer_hratio[g_cur_img] / 2 - IMAGE_HEIGHT/2;
+	m_my = IMAGE_WIDTH * g_mer_vratio[g_cur_img] / 2 - IMAGE_WIDTH/2;
 	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 	//	Rect rect2(224, 224, 128, 128);
 
@@ -902,15 +1015,15 @@ void IRProc::btnMerLower()
 {
 	Mat acu_n;
 	
-	if (g_mer_vratio - 1.2 > 0.0000001)
-		g_mer_vratio = g_mer_vratio - 0.2;
+	if (g_mer_vratio[g_cur_img] - 1.2 > 0.0000001)
+		g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] - 0.2;
 	else
-		g_mer_vratio = 1;
+		g_mer_vratio[g_cur_img] = 1;
 
-	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+	cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
-	m_mx = IMAGE_HEIGHT* g_mer_hratio / 2 - IMAGE_HEIGHT / 2;
-	m_my = IMAGE_WIDTH * g_mer_vratio / 2 - IMAGE_WIDTH / 2;
+	m_mx = IMAGE_HEIGHT* g_mer_hratio[g_cur_img] / 2 - IMAGE_HEIGHT / 2;
+	m_my = IMAGE_WIDTH * g_mer_vratio[g_cur_img] / 2 - IMAGE_WIDTH / 2;
 	Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 	//	Rect rect2(224, 224, 128, 128);
 
@@ -923,14 +1036,14 @@ void IRProc::btnMerLower()
 }
 void IRProc::btnMerLeft()
 {
-	if (g_mer_hratio > 1)
+	if (g_mer_hratio[g_cur_img] > 1)
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
 		m_mx = m_mx + 20;
-		if (m_mx >= (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT)) m_mx = (IMAGE_HEIGHT* g_mer_hratio - IMAGE_HEIGHT) - 1;
+		if (m_mx >= (IMAGE_HEIGHT* g_mer_hratio[g_cur_img] - IMAGE_HEIGHT)) m_mx = (IMAGE_HEIGHT* g_mer_hratio[g_cur_img] - IMAGE_HEIGHT) - 1;
 
 		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 
@@ -946,11 +1059,11 @@ void IRProc::btnMerLeft()
 }
 void IRProc::btnMerRight()
 {
-	if (g_mer_hratio > 1)
+	if (g_mer_hratio[g_cur_img] > 1)
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
 		m_mx = m_mx - 20;
 		if (m_mx <0) m_mx = 0;
@@ -968,14 +1081,14 @@ void IRProc::btnMerRight()
 }
 void IRProc::btnMerUp()
 {
-	if (g_mer_vratio > 1)
+	if (g_mer_vratio[g_cur_img] > 1)
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
 		m_my = m_my + 20;
-		if (m_my >= (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH)) m_my = (IMAGE_WIDTH * g_mer_vratio - IMAGE_WIDTH) - 1;
+		if (m_my >= (IMAGE_WIDTH * g_mer_vratio[g_cur_img] - IMAGE_WIDTH)) m_my = (IMAGE_WIDTH * g_mer_vratio[g_cur_img] - IMAGE_WIDTH) - 1;
 	
 		Rect rect1(m_mx, m_my, IMAGE_HEIGHT, IMAGE_WIDTH);
 
@@ -993,11 +1106,11 @@ void IRProc::btnMerUp()
 }
 void IRProc::btnMerDown()
 {
-	if (g_mer_vratio > 1)
+	if (g_mer_vratio[g_cur_img] > 1)
 	{
 		Mat acu_n;
 
-		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio, IMAGE_WIDTH * g_mer_vratio), 0, 0);
+		cv::resize(g_mer_src[g_cur_img], acu_n, Size(IMAGE_HEIGHT* g_mer_hratio[g_cur_img], IMAGE_WIDTH * g_mer_vratio[g_cur_img]), 0, 0);
 
 		m_my = m_my - 20;
 		if (m_my <0) m_my = 0;
@@ -1018,16 +1131,31 @@ void IRProc::btnMerDown()
 void IRProc::sliderBot()
 {
 	int pos = ui.slider_bot->value();
-	g_bot = pos*1.0/100;
+	g_bot[g_cur_img] = pos*1.0/100;
+
+	if (g_upAll_flag)
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			g_bot[i] = g_bot[g_cur_img];
+		}
+	}
+
 	updateImage();
+
+	
+	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
 
 }
 
 void IRProc::sliderMerRatio2()
 {
 	int pos = ui.slider_mer_ratio2->value();
-	g_mer_ratio = pos*1.0 / 100;
+	g_mer_ratio[g_cur_img] = pos*1.0 / 100;
 	ui.slider_mer_ratio->setValue(pos);
+	ui.mer_cur_ratio->setText(QString::number(g_mer_ratio[g_cur_img]*100));
+	ui.mer_cur_ratio2->setText(QString::number(g_mer_ratio[g_cur_img]*100));
 	updateImage();
 
 }
@@ -1035,8 +1163,10 @@ void IRProc::sliderMerRatio2()
 void IRProc::sliderMerRatio()
 {
 	int pos = ui.slider_mer_ratio->value();
-	g_mer_ratio = pos*1.0 / 100;
+	g_mer_ratio[g_cur_img] = pos*1.0 / 100;
 	ui.slider_mer_ratio2->setValue(pos);
+	ui.mer_cur_ratio->setText(QString::number(g_mer_ratio[g_cur_img]*100));
+	ui.mer_cur_ratio2->setText(QString::number(g_mer_ratio[g_cur_img]*100));
 	updateImage();
 
 }
@@ -1155,7 +1285,7 @@ void IRProc::btnMerDef()
 	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
 	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
 
-	g_mer_ratio = 0.2;
+	g_mer_ratio[g_cur_img] = 0.2;
 //	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	updateImage();
@@ -1283,19 +1413,19 @@ void IRProc::changeWinWidth()
 
 	QToolButton  *tb = (QToolButton*)this->sender();
 
-	//QList<QToolButton*> btList = ui.groupBox_7->findChildren<QToolButton*>();
-	//for (int i = 0; i < btList.size(); i++)
-	//{
-	//	QToolButton* bt = btList.at(i);
-	//	if (bt!=tb)
-	//		bt->setCheckable(false);
-
-	//	bt->setCheckable(true);
-	//}
-
 	QString text = tb->text();
 
 	g_win_width[g_cur_img] = text.toInt();
+
+	if (g_upAll_flag)
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			g_win_width[i] = g_win_width[g_cur_img];
+		}
+	}
+
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
 
 	updateImage();
 
@@ -1349,8 +1479,6 @@ void IRProc::imgChange()
 void IRProc::btnAnalyze()
 {
 
-	imgProc();
-
 	//QString filename;
 	//filename = QFileDialog::getOpenFileName(this, tr("Select Data"), "", tr("Data (*.dat)"));
 	//if (filename.isEmpty())
@@ -1360,6 +1488,29 @@ void IRProc::btnAnalyze()
 	//char*  path;
 	//QByteArray t = filename.toLatin1(); // must
 	//path = t.data();
+	Qt::WindowFlags flags = Qt::Dialog;
+	flags |= Qt::WindowCloseButtonHint;
+
+	QProgressDialog *progressDialog = new QProgressDialog(this); 
+	progressDialog->setWindowFlags(flags);
+
+	QLabel *lb = new QLabel;
+	lb->setStyleSheet("color:rgb(255,255,255)");
+	QPushButton *bt = new QPushButton;
+	bt->setStyleSheet("color:rgb(255,255,255)");
+
+	progressDialog->setLabel(lb);
+	progressDialog->setLabelText(QString::fromLocal8Bit("图像载入中..."));
+	progressDialog->setCancelButton(bt);
+	progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+
+	progressDialog->setWindowModality(Qt::WindowModal);
+	progressDialog->setMinimumDuration(5);
+	progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
+
+
+
+
 	int row = ui.tableWidget->currentIndex().row();
 
 	if (row == -1)
@@ -1374,6 +1525,16 @@ void IRProc::btnAnalyze()
 	g_age = ui.tableWidget->item(row, 6)->text();
 	g_name = ui.tableWidget->item(row, 3)->text();
 	g_gender = ui.tableWidget->item(row, 4)->text();
+
+	if (g_gender == QString::fromLocal8Bit("男"))
+	{
+		ui.btn_male->setChecked(true);
+	}
+	else
+	{
+		ui.btn_female->setChecked(true);
+	}
+
 	g_regTime = ui.tableWidget->item(row, 7)->text();
 
 	ui.comboBox_user->addItem(g_name);
@@ -1423,6 +1584,12 @@ void IRProc::btnAnalyze()
 		pic_count = (int)vecPngIDResp.size();
 
 		if (pic_count > IMGE_TOTAL_NUM) pic_count = IMGE_TOTAL_NUM;
+
+		int num = pic_count;
+	
+		progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+
+
 		for (int i = 0; i < pic_count; ++i)
 		{
 			g_pData[i] = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
@@ -1453,12 +1620,19 @@ void IRProc::btnAnalyze()
 				}
 
 				//	 QMessageBox::information(NULL, "Title", m_msg);
+
+				progressDialog->setValue(i+1);
+				if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
+					return;
 			}
 		}
 	}
 
+	imgProc();
+
 	for (g_picNum = 0; g_picNum < pic_count; g_picNum++)
 	{
+		g_bot[g_picNum] = 22;
 		g_win_width[g_picNum] = 12;
 
 		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
@@ -1467,8 +1641,8 @@ void IRProc::btnAnalyze()
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
-		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot);
-		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot);
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot[g_picNum]);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot[g_picNum]);
 		g_img[g_picNum].copyTo(g_src[g_picNum]);
 		g_img_gray[g_picNum].copyTo(g_src_gray[g_picNum]);
 
@@ -1486,7 +1660,13 @@ void IRProc::btnAnalyze()
 		}
 
 		g_ratio[g_picNum] = 1;
+
 		g_img_show_flag[g_picNum] = 1;
+
+		g_mer_hratio[g_picNum] = g_mer_vratio[g_picNum] = 1;
+		g_mer_gender[g_picNum] = "Male";
+		g_mer_pose[g_picNum] = "Front";
+		g_mer_type[g_picNum] = "1";
 	}
 
 	changeLabel(g_picNum, IMAGE_PER_ROW);
@@ -1576,6 +1756,8 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 				lb->setObjectName(QString::number(r + BIG_IMG_BASE));
 				lb->setFrameShape(QFrame::Box);
 				lb->setStyleSheet(QLatin1String("backgroud-color:rgb(255,255,255);border:0px;"));
+				connect(lb, SIGNAL(calData()), this, SLOT(calData()));
+				connect(lb, SIGNAL(upInfo()), this, SLOT(upInfo()));
 		
 				//lb->setMouseTracking(true);
 				ui.gridLayout_6->addWidget(lb, 0, i);
@@ -1655,6 +1837,7 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 					ui.gridLayout_2->addWidget(lb, x, y);
 
 					connect(lb, SIGNAL(calData()), this, SLOT(calData()));
+					connect(lb, SIGNAL(upInfo()), this, SLOT(upInfo()));
 
 					QPushButton *bt = new QPushButton;
 					//lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -1701,19 +1884,102 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 	}
 }
 
-void IRProc::calData()
+void IRProc::upInfo()
 {
-	//QMessageBox::information(this, "size", QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_max) + "," + QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_min) + "," + QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_aver));
-	ui.max_TR->setText(QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_max - g_TR[g_cur_img],10,4));
-	ui.min_TR->setText(QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_min - g_TR[g_cur_img], 10, 4));
-	ui.av_TR->setText(QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_aver - g_TR[g_cur_img], 10, 4));
-	if (g_shape_no[g_cur_img] == 0)
+	ui.tag_index->setText(QString::number(g_sel_tag[g_cur_img]+1));
+
+	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img]+g_win_width[g_cur_img]));
+
+	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
+	ui.slider_bot->update();
+
+	ui.slider_mer_ratio->setValue(g_mer_ratio[g_cur_img]);
+	ui.mer_cur_ratio->setText(QString::number(g_mer_ratio[g_cur_img]));
+
+	ui.slider_mer_ratio2->setValue(g_mer_ratio[g_cur_img]);
+	ui.mer_cur_ratio2->setText(QString::number(g_mer_ratio[g_cur_img]));
+
+	switch (g_win_width[g_cur_img])
 	{
-		ui.max_max->setText(QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_max, 10, 4));
+	case 4:
+		ui.btn_win_w4->setChecked(true);
+		break;
+	case 5:
+		ui.btn_win_w5->setChecked(true);
+		break;
+	case 6:
+		ui.btn_win_w6->setChecked(true);
+		break;
+	case 8:
+		ui.btn_win_w8->setChecked(true);
+		break;
+	case 10:
+		ui.btn_win_w10->setChecked(true);
+		break;
+	case 12:
+		ui.btn_win_w12->setChecked(true);
+		break;
+	}
+
+	if (g_mer_gender[g_cur_img] == "Male")
+	{
+		ui.btn_male->setChecked(true);
 	}
 	else
 	{
-		ui.max_max->setText(QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_max - allshape[g_cur_img][g_shape_no[g_cur_img] - 1].t_max, 10, 4));
+		ui.btn_female->setChecked(true);
+	}
+
+
+	if (g_mer_pose[g_cur_img] == "Front")
+	{
+		ui.btn_pose_front->setChecked(true);
+	}
+	else if (g_mer_pose[g_cur_img] == "Back")
+	{
+		ui.btn_pose_back->setChecked(true);
+	}
+	else if (g_mer_pose[g_cur_img] == "Left")
+	{
+		ui.btn_pose_left->setChecked(true);
+	}
+	else if (g_mer_pose[g_cur_img] == "Right")
+	{
+		ui.btn_pose_right->setChecked(true);
+	}
+
+	QString typeName = "btn_mer_type" + g_mer_type[g_cur_img];
+
+	QToolButton *bt = ui.pageMerge->findChild<QToolButton*>(typeName);
+
+	if (bt != NULL)
+		bt->setChecked(true);
+
+
+	QString typeName2 = "btn_" + g_mer_type[g_cur_img];
+
+	QToolButton *bt2 = ui.pageProc->findChild<QToolButton*>(typeName2);
+
+	if (bt != NULL)
+		bt2->setChecked(true);
+
+
+}
+
+void IRProc::calData()
+{
+	//QMessageBox::information(this, "size", QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_max) + "," + QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_min) + "," + QString::number(allshape[g_cur_img][g_shape_no[g_cur_img]].t_aver));
+	ui.max_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max - g_TR[g_cur_img],10,4));
+	ui.min_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_min - g_TR[g_cur_img], 10, 4));
+	ui.av_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_aver - g_TR[g_cur_img], 10, 4));
+	if (g_shape_no[g_cur_img] == 0)
+	{
+		ui.max_max->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max, 10, 4));
+	}
+	else
+	{
+		ui.max_max->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max - allshape[g_cur_img][g_sel_tag[g_cur_img] - 1].t_max, 10, 4));
 	}
 
 
@@ -1762,16 +2028,16 @@ void IRProc::updateImage()
 			if (g_color_type)
 			{
 				g_src[i].copyTo(g_img[i]);
-				data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], g_color_type, g_filter_type, g_bot);
+				data2Img(g_pData[i], g_img[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], g_color_type, g_filter_type, g_bot[i]);
 				g_img[i].copyTo(g_src[i]);
-				g_img[i] = g_img[i] * (1 - g_mer_ratio) + g_mer[i] * g_mer_ratio;
+				g_img[i] = g_img[i] * (1 - g_mer_ratio[i]) + g_mer[i] * g_mer_ratio[i];
 				//draw_shape(g_img[i], allshape[i], g_shape_no[i]);
 				QImage image = QImage((const unsigned char*)(g_img[i].data), g_img[i].cols, g_img[i].rows, QImage::Format_RGB888);
 				g_qImgShow[i] = image.copy();
 			}
 			else
 			{
-				data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], 0, g_filter_type, g_bot);
+				data2Img(g_pData[i], g_img_gray[i], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[i], 0, g_filter_type, g_bot[i]);
 				g_img_gray[i].copyTo(g_src_gray[i]);
 				//draw_shape(g_img_gray[i], allshape[i], g_shape_no[i]);
 				QImage image_gray = QImage((const unsigned char*)(g_img_gray[i].data), g_img_gray[i].cols, g_img_gray[i].rows, QImage::Format_Grayscale8);
@@ -1784,16 +2050,16 @@ void IRProc::updateImage()
 	{
 		if (g_color_type)
 		{
-			data2Img(g_pData[g_cur_img], g_img[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], g_color_type, g_filter_type, g_bot);
+			data2Img(g_pData[g_cur_img], g_img[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], g_color_type, g_filter_type, g_bot[g_cur_img]);
 			g_img[g_cur_img].copyTo(g_src[g_cur_img]);
-			g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer[g_cur_img] * g_mer_ratio;
+			g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio[g_cur_img]) + g_mer[g_cur_img] * g_mer_ratio[g_cur_img];
 			//draw_shape(g_img[g_cur_img], allshape[g_cur_img], g_shape_no[g_cur_img]);
 			QImage image = QImage((const unsigned char*)(g_img[g_cur_img].data), g_img[g_cur_img].cols, g_img[g_cur_img].rows, QImage::Format_RGB888);
 			g_qImgShow[g_cur_img] = image.copy();
 		}
 		else
 		{
-			data2Img(g_pData[g_cur_img], g_img_gray[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], 0, g_filter_type, g_bot);
+			data2Img(g_pData[g_cur_img], g_img_gray[g_cur_img], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_cur_img], 0, g_filter_type, g_bot[g_cur_img]);
 			g_img_gray[g_cur_img].copyTo(g_src_gray[g_cur_img]);
 			//draw_shape(g_img_gray[g_cur_img], allshape[g_cur_img], g_shape_no[g_cur_img]);
 			QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_cur_img].data), g_img_gray[g_cur_img].cols, g_img_gray[g_cur_img].rows, QImage::Format_Grayscale8);
@@ -1807,15 +2073,27 @@ void IRProc::updateImage()
 
 void IRProc::wheelEvent(QWheelEvent*event)
 {
-	g_bot += 1.0*event->delta() / 120 * g_step;
+
+	g_bot[g_cur_img] += 1.0*event->delta() / 120 * g_step;
+
+	if (g_upAll_flag)
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			g_bot[i] = g_bot[g_cur_img];
+		}
+	}
+
 	updateImage();
 
-	ui.slider_bot->setValue(g_bot * 100);
+	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
 	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
 
 	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
 	ui.slider_bot->update();
 
+	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
 
 }
 
@@ -2201,7 +2479,30 @@ void IRProc::updateData()
 	std::string sParams = map_join(mapParams, '&', '=');
 
 	std::string sData;
-	;
+
+
+	Qt::WindowFlags flags = Qt::Dialog;
+	flags |= Qt::WindowCloseButtonHint;
+
+	QProgressDialog *progressDialog = new QProgressDialog(this);
+	progressDialog->setWindowFlags(flags);
+
+	QLabel *lb = new QLabel;
+	lb->setStyleSheet("color:rgb(255,255,255)");
+	QPushButton *bt = new QPushButton;
+	bt->setStyleSheet("color:rgb(255,255,255)");
+
+	progressDialog->setLabel(lb);
+	progressDialog->setLabelText(QString::fromLocal8Bit("数据载入中..."));
+	progressDialog->setCancelButton(bt);
+	progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+
+	progressDialog->setWindowModality(Qt::WindowModal);
+	progressDialog->setMinimumDuration(5);
+	progressDialog->setWindowTitle(QString::fromLocal8Bit("数据载入中..."));
+
+
+
 	int iRet = m_cli.get_listdata(sParams, sData);
 
 	if (0 < iRet)
@@ -2215,6 +2516,10 @@ void IRProc::updateData()
 		QString temp = lst[0].section('&', 0, 0);
 		int dataNum = temp.section('=', -1, -1).toInt();
 
+		int num = dataNum;
+
+		progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+
 		g_maxPage = (dataNum - 1) / g_pageSize + 1;
 
 
@@ -2225,6 +2530,9 @@ void IRProc::updateData()
 			//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
 
 			addData(i, lst[i].section(',', 0, 0), lst[i].section(',', 1, 1), lst[i].section(',', -1, -1));
+			progressDialog->setValue(i + 1);
+			if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
+				return;
 		}
 
 	}

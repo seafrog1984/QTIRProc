@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1442</width>
+    <width>1540</width>
     <height>782</height>
    </rect>
   </property>
@@ -58,8 +58,8 @@ color:rgb(255,255,255);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1340</width>
-         <height>700</height>
+         <width>1444</width>
+         <height>717</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -108,6 +108,11 @@ QLabel{
 background-color: rgb(19, 65, 115);
 border:0px;
 }
+QLineEdit{
+
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
 </string>
            </property>
            <widget class="QGroupBox" name="groupBox_7">
@@ -115,19 +120,19 @@ border:0px;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>700</width>
+              <width>810</width>
               <height>90</height>
              </rect>
             </property>
             <property name="minimumSize">
              <size>
-              <width>700</width>
+              <width>810</width>
               <height>90</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>700</width>
+              <width>810</width>
               <height>90</height>
              </size>
             </property>
@@ -902,9 +907,9 @@ background-image: url();
               <string>04</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_01i.jpg</normaloff>
-               <normalon>:/IRProc/ImageProc04-Sel</normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_01i.jpg</iconset>
+              <iconset resource="IRProc.qrc">
+               <normaloff>:/IRProc/ImageProc04</normaloff>
+               <normalon>:/IRProc/ImageProc04-Sel</normalon>:/IRProc/ImageProc04</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -918,6 +923,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_win_w5">
              <property name="geometry">
@@ -948,8 +956,8 @@ background-image: url();
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/ImageProc05-Sel</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_03.jpg</normalon>:/IRProc/ImageProc05-Sel</iconset>
+               <normaloff>:/IRProc/ImageProc05</normaloff>
+               <normalon>:/IRProc/ImageProc05-Sel</normalon>:/IRProc/ImageProc05</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -963,6 +971,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_win_w6">
              <property name="geometry">
@@ -993,8 +1004,8 @@ background-image: url();
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/ImageProc06-Sel</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_05.jpg</normalon>:/IRProc/ImageProc06-Sel</iconset>
+               <normaloff>:/IRProc/ImageProc06</normaloff>
+               <normalon>:/IRProc/ImageProc06-Sel</normalon>:/IRProc/ImageProc06</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1008,6 +1019,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_win_w12">
              <property name="geometry">
@@ -1038,8 +1052,8 @@ background-image: url();
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/ImageProc12-Sel</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_06.jpg</normalon>:/IRProc/ImageProc12-Sel</iconset>
+               <normaloff>:/IRProc/ImageProc12</normaloff>
+               <normalon>:/IRProc/ImageProc12-Sel</normalon>:/IRProc/ImageProc12</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1053,6 +1067,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_win_w10">
              <property name="geometry">
@@ -1083,8 +1100,8 @@ background-image: url();
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/ImageProc10-Sel</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_04.jpg</normalon>:/IRProc/ImageProc10-Sel</iconset>
+               <normaloff>:/IRProc/ImageProc10</normaloff>
+               <normalon>:/IRProc/ImageProc10-Sel</normalon>:/IRProc/ImageProc10</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1098,6 +1115,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_win_w8">
              <property name="geometry">
@@ -1128,8 +1148,8 @@ background-image: url();
              </property>
              <property name="icon">
               <iconset resource="IRProc.qrc">
-               <normaloff>:/IRProc/ImageProc08-Sel</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_02.jpg</normalon>:/IRProc/ImageProc08-Sel</iconset>
+               <normaloff>:/IRProc/ImageProc08</normaloff>
+               <normalon>:/IRProc/ImageProc08-Sel</normalon>:/IRProc/ImageProc08</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1143,6 +1163,9 @@ background-image: url();
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup</string>
+             </attribute>
             </widget>
             <widget class="QComboBox" name="cbox_smooth">
              <property name="geometry">
@@ -1200,6 +1223,112 @@ color: rgb(0, 0, 0);</string>
               <string>50</string>
              </property>
             </widget>
+            <widget class="QLabel" name="tmper_low">
+             <property name="geometry">
+              <rect>
+               <x>600</x>
+               <y>70</y>
+               <width>30</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+            <widget class="QLabel" name="temper_high">
+             <property name="geometry">
+              <rect>
+               <x>640</x>
+               <y>70</y>
+               <width>30</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+            <widget class="Line" name="line_12">
+             <property name="geometry">
+              <rect>
+               <x>700</x>
+               <y>10</y>
+               <width>1</width>
+               <height>70</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>70</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>70</height>
+              </size>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_49">
+             <property name="geometry">
+              <rect>
+               <x>710</x>
+               <y>20</y>
+               <width>54</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>选框编号：</string>
+             </property>
+            </widget>
+            <widget class="QLineEdit" name="tag_index">
+             <property name="geometry">
+              <rect>
+               <x>772</x>
+               <y>15</y>
+               <width>31</width>
+               <height>20</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QToolButton" name="btn_sel_tag">
+             <property name="geometry">
+              <rect>
+               <x>710</x>
+               <y>60</y>
+               <width>37</width>
+               <height>18</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(21, 86, 141);</string>
+             </property>
+             <property name="text">
+              <string>选择</string>
+             </property>
+            </widget>
+            <widget class="QToolButton" name="btn_del_tag">
+             <property name="geometry">
+              <rect>
+               <x>760</x>
+               <y>60</y>
+               <width>37</width>
+               <height>18</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(21, 86, 141);</string>
+             </property>
+             <property name="text">
+              <string>删除</string>
+             </property>
+            </widget>
             <zorder>groupBox_15</zorder>
             <zorder>btn_close_all</zorder>
             <zorder>btn_close_other</zorder>
@@ -1235,25 +1364,32 @@ color: rgb(0, 0, 0);</string>
             <zorder>label_9</zorder>
             <zorder>label_42</zorder>
             <zorder>label_43</zorder>
+            <zorder>tmper_low</zorder>
+            <zorder>temper_high</zorder>
+            <zorder>line_12</zorder>
+            <zorder>label_49</zorder>
+            <zorder>tag_index</zorder>
+            <zorder>btn_sel_tag</zorder>
+            <zorder>btn_del_tag</zorder>
            </widget>
            <widget class="QGroupBox" name="groupBox_8">
             <property name="geometry">
              <rect>
-              <x>702</x>
+              <x>810</x>
               <y>0</y>
-              <width>190</width>
+              <width>170</width>
               <height>90</height>
              </rect>
             </property>
             <property name="minimumSize">
              <size>
-              <width>190</width>
+              <width>170</width>
               <height>90</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>190</width>
+              <width>170</width>
               <height>90</height>
              </size>
             </property>
@@ -1270,7 +1406,7 @@ background-image: url(:/IRProc/Tool-Bg);
               <rect>
                <x>75</x>
                <y>25</y>
-               <width>100</width>
+               <width>90</width>
                <height>40</height>
               </rect>
              </property>
@@ -1361,7 +1497,7 @@ QSlider::groove:horizontal {
             <widget class="QLabel" name="label_45">
              <property name="geometry">
               <rect>
-               <x>150</x>
+               <x>140</x>
                <y>60</y>
                <width>30</width>
                <height>12</height>
@@ -1371,19 +1507,32 @@ QSlider::groove:horizontal {
               <string>100</string>
              </property>
             </widget>
+            <widget class="QLabel" name="mer_cur_ratio">
+             <property name="geometry">
+              <rect>
+               <x>100</x>
+               <y>60</y>
+               <width>30</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </widget>
            <widget class="QGroupBox" name="groupBox_9">
             <property name="geometry">
              <rect>
-              <x>900</x>
+              <x>980</x>
               <y>0</y>
-              <width>420</width>
+              <width>405</width>
               <height>90</height>
              </rect>
             </property>
             <property name="minimumSize">
              <size>
-              <width>420</width>
+              <width>405</width>
               <height>90</height>
              </size>
             </property>
@@ -1471,9 +1620,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
               <string>1</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07i.jpg</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07.jpg</disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07i.jpg</iconset>
+              <iconset resource="IRProc.qrc">
+               <normaloff>:/IRProc/M01</normaloff>
+               <normalon>:/IRProc/M01-Sel</normalon>:/IRProc/M01</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1487,6 +1636,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_2">
              <property name="geometry">
@@ -1518,7 +1670,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M02</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_08.jpg</disabledoff>:/IRProc/M02</iconset>
+               <normalon>:/IRProc/M02-Sel</normalon>:/IRProc/M02</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1532,6 +1684,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_3">
              <property name="geometry">
@@ -1563,7 +1718,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M03</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_09.jpg</disabledoff>:/IRProc/M03</iconset>
+               <normalon>:/IRProc/M03-Sel</normalon>:/IRProc/M03</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1577,6 +1732,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_4">
              <property name="geometry">
@@ -1608,7 +1766,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M04</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_10.jpg</disabledoff>:/IRProc/M04</iconset>
+               <normalon>:/IRProc/M04-Sel</normalon>:/IRProc/M04</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1622,6 +1780,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_8">
              <property name="geometry">
@@ -1653,7 +1814,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M08</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_14.jpg</disabledoff>:/IRProc/M08</iconset>
+               <normalon>:/IRProc/M08-Sel</normalon>:/IRProc/M08</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1667,6 +1828,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_6">
              <property name="geometry">
@@ -1698,7 +1862,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M06</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_12.jpg</disabledoff>:/IRProc/M06</iconset>
+               <normalon>:/IRProc/M06-Sel</normalon>:/IRProc/M06</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1712,6 +1876,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_5">
              <property name="geometry">
@@ -1743,7 +1910,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M05</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_11.jpg</disabledoff>:/IRProc/M05</iconset>
+               <normalon>:/IRProc/M05-Sel</normalon>:/IRProc/M05</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1757,6 +1924,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_7">
              <property name="geometry">
@@ -1788,7 +1958,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M07</normaloff>
-               <disabledoff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_13.jpg</disabledoff>:/IRProc/M07</iconset>
+               <normalon>:/IRProc/M07-Sel</normalon>:/IRProc/M07</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1802,6 +1972,9 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2</string>
+             </attribute>
             </widget>
             <widget class="Line" name="line_11">
              <property name="geometry">
@@ -1832,7 +2005,7 @@ background-image: url(:/IRProc/ImProcMerge-Bg);
            <widget class="QToolButton" name="btn_cross">
             <property name="geometry">
              <rect>
-              <x>1100</x>
+              <x>1175</x>
               <y>15</y>
               <width>64</width>
               <height>64</height>
@@ -1875,7 +2048,7 @@ font: 7pt &quot;宋体&quot;;
            <widget class="QToolButton" name="btn_hist">
             <property name="geometry">
              <rect>
-              <x>1170</x>
+              <x>1245</x>
               <y>15</y>
               <width>64</width>
               <height>64</height>
@@ -1918,7 +2091,7 @@ font: 7pt &quot;宋体&quot;;
            <widget class="QToolButton" name="btn_save_measure">
             <property name="geometry">
              <rect>
-              <x>1240</x>
+              <x>1315</x>
               <y>15</y>
               <width>64</width>
               <height>64</height>
@@ -2658,7 +2831,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M-Male</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_09i.png</normalon>:/IRProc/M-Male</iconset>
+               <normalon>:/IRProc/M-Male-Sel</normalon>:/IRProc/M-Male</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2672,6 +2845,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_3</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_female">
              <property name="geometry">
@@ -2694,7 +2870,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M-Female</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_10i.png</normalon>:/IRProc/M-Female</iconset>
+               <normalon>:/IRProc/M-Female-Sel</normalon>:/IRProc/M-Female</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2708,6 +2884,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_3</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_pose_front">
              <property name="geometry">
@@ -2739,7 +2918,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/MFront</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_11.png</normalon>:/IRProc/MFront</iconset>
+               <normalon>:/IRProc/MFront-Sel</normalon>:/IRProc/MFront</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2753,6 +2932,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_4</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_pose_back">
              <property name="geometry">
@@ -2784,7 +2966,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/MBack</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_13.png</normalon>:/IRProc/MBack</iconset>
+               <normalon>:/IRProc/MBack-sel</normalon>:/IRProc/MBack</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2798,6 +2980,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_4</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_pose_left">
              <property name="geometry">
@@ -2829,7 +3014,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/MLeft</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_12.png</normalon>:/IRProc/MLeft</iconset>
+               <normalon>:/IRProc/MLeft-Sel</normalon>:/IRProc/MLeft</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2843,6 +3028,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_4</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_pose_right">
              <property name="geometry">
@@ -2874,7 +3062,7 @@ background-color: rgb(19, 65, 115);</string>
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/MRight</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_14.png</normalon>:/IRProc/MRight</iconset>
+               <normalon>:/IRProc/MRight-sel</normalon>:/IRProc/MRight</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2888,6 +3076,9 @@ background-color: rgb(19, 65, 115);</string>
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_4</string>
+             </attribute>
             </widget>
            </widget>
            <widget class="QGroupBox" name="groupBox_5">
@@ -3040,6 +3231,19 @@ QSlider::groove:horizontal {
               <string>100</string>
              </property>
             </widget>
+            <widget class="QLabel" name="mer_cur_ratio2">
+             <property name="geometry">
+              <rect>
+               <x>120</x>
+               <y>70</y>
+               <width>30</width>
+               <height>12</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </widget>
            <widget class="QGroupBox" name="groupBox_6">
             <property name="geometry">
@@ -3074,21 +3278,21 @@ background-image: url(:/IRProc/DataBg3);
              <property name="geometry">
               <rect>
                <x>200</x>
-               <y>20</y>
+               <y>15</y>
                <width>85</width>
-               <height>60</height>
+               <height>70</height>
               </rect>
              </property>
              <property name="minimumSize">
               <size>
                <width>85</width>
-               <height>60</height>
+               <height>70</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>64</width>
-               <height>60</height>
+               <width>85</width>
+               <height>70</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -3100,12 +3304,12 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M-Human</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_15.png</normalon>:/IRProc/M-Human</iconset>
+               <normalon>:/IRProc/M-Human-Sel</normalon>:/IRProc/M-Human</iconset>
              </property>
              <property name="iconSize">
               <size>
                <width>70</width>
-               <height>60</height>
+               <height>70</height>
               </size>
              </property>
              <property name="checkable">
@@ -3117,6 +3321,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="toolButtonStyle">
               <enum>Qt::ToolButtonIconOnly</enum>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_meridian">
              <property name="geometry">
@@ -3140,7 +3347,7 @@ background-image: url(:/IRProc/DataBg3);
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(37, 77, 118);</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Meridian</string>
@@ -3148,7 +3355,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M-Meridian</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txrh_16.png</normalon>:/IRProc/M-Meridian</iconset>
+               <normalon>:/IRProc/M-Meridian-Sel</normalon>:/IRProc/M-Meridian</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3162,6 +3369,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_def">
              <property name="geometry">
@@ -3276,7 +3486,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M05</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_11.jpg</normalon>:/IRProc/M05</iconset>
+               <normalon>:/IRProc/M05-Sel</normalon>:/IRProc/M05</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3290,6 +3500,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type8">
              <property name="geometry">
@@ -3321,7 +3534,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M08</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_14.jpg</normalon>:/IRProc/M08</iconset>
+               <normalon>:/IRProc/M08-Sel</normalon>:/IRProc/M08</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3335,6 +3548,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type1">
              <property name="geometry">
@@ -3364,9 +3580,9 @@ background-image: url(:/IRProc/DataBg3);
               <string>1</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07i.jpg</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07.jpg</normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_07i.jpg</iconset>
+              <iconset resource="IRProc.qrc">
+               <normaloff>:/IRProc/M01</normaloff>
+               <normalon>:/IRProc/M01-Sel</normalon>:/IRProc/M01</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3380,6 +3596,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type2">
              <property name="geometry">
@@ -3411,7 +3630,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M02</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_08.jpg</normalon>:/IRProc/M02</iconset>
+               <normalon>:/IRProc/M02-Sel</normalon>:/IRProc/M02</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3425,6 +3644,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type3">
              <property name="geometry">
@@ -3456,7 +3678,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M03</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_09.jpg</normalon>:/IRProc/M03</iconset>
+               <normalon>:/IRProc/M03-Sel</normalon>:/IRProc/M03</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3470,6 +3692,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type7">
              <property name="geometry">
@@ -3501,7 +3726,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M07</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_13.jpg</normalon>:/IRProc/M07</iconset>
+               <normalon>:/IRProc/M07-Sel</normalon>:/IRProc/M07</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3515,6 +3740,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type4">
              <property name="geometry">
@@ -3546,7 +3774,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M04</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_10.jpg</normalon>:/IRProc/M04</iconset>
+               <normalon>:/IRProc/M04-Sel</normalon>:/IRProc/M04</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3560,6 +3788,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
             <widget class="QToolButton" name="btn_mer_type6">
              <property name="geometry">
@@ -3591,7 +3822,7 @@ background-image: url(:/IRProc/DataBg3);
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/M06</normaloff>
-               <normalon>../../../../../work/实验室/红外扫描/GTT软件操作图/button images/txcl_12.jpg</normalon>:/IRProc/M06</iconset>
+               <normalon>:/IRProc/M06-Sel</normalon>:/IRProc/M06</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -3605,6 +3836,9 @@ background-image: url(:/IRProc/DataBg3);
              <property name="autoExclusive">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_5</string>
+             </attribute>
             </widget>
            </widget>
           </widget>
@@ -5566,8 +5800,8 @@ color: rgb(255, 255, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1442</width>
-     <height>26</height>
+     <width>1540</width>
+     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -5692,4 +5926,11 @@ color: rgb(255, 255, 255);
   <include location="../../../QTIRScan/IRScan/IRScan/IRScan.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_5"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>

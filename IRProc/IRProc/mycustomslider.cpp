@@ -8,36 +8,36 @@ MyCustomSlider::MyCustomSlider(QWidget *parent) :QSlider(parent)
 {
 
 
-	m_displayLabel = new QLabel(this);
-	m_displayLabel->setFixedSize(QSize(40, 10));
-	m_displayLabel->setStyleSheet("background-color: rgb(18, 59, 101);");
-	//设置游标背景为白色
-//	m_displayLabel->setAutoFillBackground(true);
-	QPalette palette;
-	palette.setColor(QPalette::Background, Qt::white);
-	m_displayLabel->setPalette(palette);
+//	m_displayLabel = new QLabel(this);
+//	m_displayLabel->setFixedSize(QSize(40, 10));
+//	m_displayLabel->setStyleSheet("background-color: rgb(18, 59, 101);");
+//	//设置游标背景为白色
+////	m_displayLabel->setAutoFillBackground(true);
+//	QPalette palette;
+//	palette.setColor(QPalette::Background, Qt::white);
+//	m_displayLabel->setPalette(palette);
+//
+//	m_displayLabel->setAlignment(Qt::AlignCenter);
+//
+//	QFont ft;
+//	ft.setPointSize(6);
+//
+//	m_displayLabel->setFont(ft);
+//	m_displayLabel->setVisible(true);
+//	m_displayLabel->move(0, 0);
+//
+//	m_displayLabel2 = new QLabel(this);
+//	m_displayLabel2->setFixedSize(QSize(40, 10));
+//	m_displayLabel2->setStyleSheet("background-color: rgb(18, 59, 101);");
+//	//设置游标背景为白色
+//	//	m_displayLabel->setAutoFillBackground(true);
+//	m_displayLabel2->setPalette(palette);
+//	m_displayLabel2->setFont(ft);
+//	m_displayLabel2->setAlignment(Qt::AlignCenter);
+//
+//	m_displayLabel2->setVisible(false);
 
-	m_displayLabel->setAlignment(Qt::AlignCenter);
-
-	QFont ft;
-	ft.setPointSize(6);
-
-	m_displayLabel->setFont(ft);
-	m_displayLabel->setVisible(true);
-	m_displayLabel->move(0, 0);
-
-	m_displayLabel2 = new QLabel(this);
-	m_displayLabel2->setFixedSize(QSize(40, 10));
-	m_displayLabel2->setStyleSheet("background-color: rgb(18, 59, 101);");
-	//设置游标背景为白色
-	//	m_displayLabel->setAutoFillBackground(true);
-	m_displayLabel2->setPalette(palette);
-	m_displayLabel2->setFont(ft);
-	m_displayLabel2->setAlignment(Qt::AlignCenter);
-
-	m_displayLabel2->setVisible(false);
-
-
+	g_win_width[g_cur_img] = 12;
 	type = 0;
 }
 
@@ -67,30 +67,30 @@ void MyCustomSlider::mouseReleaseEvent(QMouseEvent *event)
 
 void MyCustomSlider::mouseMoveEvent(QMouseEvent *event)
 {
-	if (type)
-	{
-		m_displayLabel->setText(QString::number(this->value()*1.0 / 100));
-		m_displayLabel->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum())-15, 0);
-		m_displayLabel2->setVisible(true);
-		
-		m_displayLabel2->setText(QString::number(this->value()*1.0 / 100+g_win_width[g_cur_img]));
+	//if (type)
+	//{
+	//	m_displayLabel->setText(QString::number(this->value()*1.0 / 100));
+	//	m_displayLabel->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum())-15, 0);
+	//	m_displayLabel2->setVisible(true);
+	//	
+	//	m_displayLabel2->setText(QString::number(this->value()*1.0 / 100+g_win_width[g_cur_img]));
 
-		m_displayLabel2->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum())+15, 0);
-	}
-	else
-	{
-		m_displayLabel->setText(QString::number(this->value()));
+	//	m_displayLabel2->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum())+15, 0);
+	//}
+	//else
+	//{
+	//	m_displayLabel->setText(QString::number(this->value()));
 
-		m_displayLabel->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum()), 0);
+	//	m_displayLabel->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum()), 0);
 
-	}
+	//}
 
 	QSlider::mouseMoveEvent(event);
 }
 
 void MyCustomSlider::keyPressEvent(QKeyEvent *event)
 {
-	QWidget::keyPressEvent(event);
+	/*QWidget::keyPressEvent(event);
 	if (type == 1)
 	{
 		if (event->key() == Qt::Key_Up)
@@ -111,13 +111,13 @@ void MyCustomSlider::keyPressEvent(QKeyEvent *event)
 		m_displayLabel2->setText(QString::number(this->value()*1.0 / 100 + g_win_width[g_cur_img]));
 
 		m_displayLabel2->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum()) + 15, 0);
-	}
+	}*/
 }
 
 void MyCustomSlider::paintEvent(QPaintEvent *ev)
 {
 	QSlider::paintEvent(ev);
-	if (type == 1)
+	/*if (type == 1)
 	{
 		m_displayLabel->setText(QString::number(this->value()*1.0 / 100));
 
@@ -128,6 +128,6 @@ void MyCustomSlider::paintEvent(QPaintEvent *ev)
 		m_displayLabel2->setText(QString::number(this->value()*1.0 / 100 + g_win_width[g_cur_img]));
 
 		m_displayLabel2->move((this->width() - m_displayLabel->width())*this->value() / (this->maximum() - this->minimum()) + 15, 0);
-	}
+	}*/
 
 }
