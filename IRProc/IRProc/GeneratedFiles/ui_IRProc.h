@@ -259,11 +259,11 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_4;
-    QButtonGroup *buttonGroup_3;
-    QButtonGroup *buttonGroup_5;
     QButtonGroup *buttonGroup_2;
+    QButtonGroup *buttonGroup_4;
+    QButtonGroup *buttonGroup;
+    QButtonGroup *buttonGroup_5;
+    QButtonGroup *buttonGroup_3;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -1945,13 +1945,21 @@ public:
         stackedWidget_2->addWidget(showpageData);
         showpageImg = new QWidget();
         showpageImg->setObjectName(QStringLiteral("showpageImg"));
+        showpageImg->setStyleSheet(QLatin1String("QPushButton{\n"
+"\n"
+"	color: rgb(0, 0, 0);\n"
+"	background-color: rgba(0, 0, 0, 0);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(0, 0, 0,255);\n"
+"}"));
         gridLayout_4 = new QGridLayout(showpageImg);
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
         tabWidget = new QTabWidget(showpageImg);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setMinimumSize(QSize(170, 0));
+        tabWidget->setMinimumSize(QSize(150, 0));
         tabWidget->setMaximumSize(QSize(150, 16777215));
         tabWidget->setStyleSheet(QLatin1String("background-color: rgb(18, 59, 101);\n"
 "QLabel{\n"
@@ -2106,6 +2114,7 @@ public:
         retranslateUi(IRProcClass);
 
         stackedWidget->setCurrentIndex(2);
+        stackedWidget_2->setCurrentIndex(0);
         tabWidget->setCurrentIndex(1);
 
 

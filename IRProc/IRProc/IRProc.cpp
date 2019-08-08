@@ -31,6 +31,9 @@ using namespace std;
 #define BIG_IMG_BASE 20 //显示大图的Label编号基数
 #define THUM_IMG_BASE 30 //显示缩略图的Label编号基数
 #define BIG_TOTAL_NUM 3
+#define BIG_WIDTH 540
+#define BIG_HEIGHT 720
+
 
 int g_flagShowBigImg = 0;//显示大图还是小图的标志： 1-大图；0-小图
 int g_picNum = 0;//读取的图像总数
@@ -248,6 +251,8 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_data_in, SIGNAL(clicked()), this, SLOT(dataIn()));
 	connect(ui.cbox_smooth, SIGNAL(currentIndexChanged(int)), this, SLOT(setFilter(int)));
 
+	connect(ui.tableWidget, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(btnAnalyze()));
+
 
 
 	ui.slider_mer_ratio->setMinimum(0);
@@ -395,7 +400,12 @@ void IRProc::tagSel()
 	{
 		g_sel_tag[g_cur_img] = tagIndex;
 	}
-	else
+	else if (tagIndex == -1)
+	{
+		m_msg = QString::fromLocal8Bit("请直接点击删除\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+	}
+	else 
 	{
 		m_msg = QString::fromLocal8Bit("编号不正确\n");
 		QMessageBox::information(NULL, "Title", m_msg);
@@ -892,6 +902,49 @@ void IRProc::changeMerPose()
 	QString text = tb->text();
 	
 	g_mer_pose[g_cur_img] = text;
+
+
+	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender[g_cur_img];
+	QDir dir;
+
+	if (!dir.exists(merFilePath))
+	{
+		bool res = dir.mkpath(g_dataFolder);
+		//		qDebug() << "新建目录是否成功" << res;
+	}
+
+	merFilePath = merFilePath + "/" + g_mer_pose[g_cur_img] + ".jpg";
+	if (merFilePath.isEmpty())
+	{
+		QMessageBox msg(QMessageBox::Information, tr("Information"), merFilePath + " does not exist!");
+
+		msg.exec();
+		return;
+	}
+	merFilePath = QDir::toNativeSeparators(merFilePath);
+	char*  path;
+	QByteArray t = merFilePath.toLatin1(); // must
+	path = t.data();
+
+
+	Mat timg = imread(path);
+	if (timg.empty())
+	{
+		QMessageBox msg(QMessageBox::Information, tr("Information"), merFilePath + " does not exist!");
+
+		msg.exec();
+		return;
+	}
+
+	cvtColor(timg, timg, CV_BGR2RGB);
+	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
+
+	g_mer_ratio[g_cur_img] = 0.2;
+	g_mer_hratio[g_cur_img] = g_mer_vratio[g_cur_img] = 1;
+	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+
+	updateImage();
 
 }
 void IRProc::changeMerType()
@@ -1737,8 +1790,6 @@ void IRProc::thumClicked()
 void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 {
 
-
-
 	if (g_flagShowBigImg)
 	{
 		if (g_bigNum == 0) return;
@@ -1750,8 +1801,18 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 			if (g_img_show_flag[r])
 			{
 				MyLabel *lb = new MyLabel;
-				lb->setMaximumSize(480, 640);
-				lb->setMinimumSize(480, 640);
+				//lb->setMaximumSize(480, 640);
+				//lb->setMinimumSize(480, 640);
+				if (g_bigNum <= 2)
+				{
+					lb->setMaximumSize(BIG_WIDTH+60, BIG_HEIGHT+80);
+					lb->setMinimumSize(BIG_WIDTH+60, BIG_HEIGHT+80);
+				}
+				else
+				{
+					lb->setMaximumSize(BIG_WIDTH, BIG_HEIGHT);
+					lb->setMinimumSize(BIG_WIDTH, BIG_HEIGHT);
+				}
 				lb->setText(QString::number(r));
 				lb->setObjectName(QString::number(r + BIG_IMG_BASE));
 				lb->setFrameShape(QFrame::Box);
@@ -1766,10 +1827,11 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 
 				bt->setText(QString::number(r));
 				ui.gridLayout_6->addWidget(bt, 0, i, Qt::AlignRight | Qt::AlignTop);
-				bt->setMinimumSize(32, 32);
-				bt->setMaximumSize(32, 32);
+				bt->setMinimumSize(16, 16);
+				bt->setMaximumSize(16, 16);
 				bt->setObjectName(QString::number(r));
-				bt->setStyleSheet(QLatin1String("color:rgb(255,255,255)"));
+				//bt->setStyleSheet(QLatin1String("color:rgb(0,0,0);border:2px"));
+				
 				connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
 			}
 		}
@@ -1844,10 +1906,12 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 
 					bt->setText(QString::number(x *imagePerRow + y));
 					ui.gridLayout_2->addWidget(bt, x, y, Qt::AlignRight | Qt::AlignTop);
-					bt->setMinimumSize(32, 32);
-					bt->setMaximumSize(32, 32);
+					bt->setMinimumSize(16, 16);
+					bt->setMaximumSize(16, 16);
 					bt->setObjectName("bt" + QString::number(x * imagePerRow + y));
-					bt->setStyleSheet(QLatin1String("color:rgb(255,255,255)"));
+					//bt->setStyleSheet(QLatin1String("color:rgb(255,255,255);backgroud-color:rgb(0,0,0,0);border-width:2px;border-type:solid;"));
+					/*bt->setFlat(true);
+					bt->setAttribute(Qt::WA_TranslucentBackground);*/
 					connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
 				}
 

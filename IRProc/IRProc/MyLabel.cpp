@@ -493,15 +493,15 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	
 	QString strText = QString::number(g_ratio[cur_img], 10, 2);
 	painter.drawText(Paint.x() + 10, Paint.y() + 10, strText);
-	painter.drawText(Paint.x() + 10, Paint.y() + 25, m_ID);
-	painter.drawText(Paint.x() + 10, Paint.y() + 40, m_name);
-	painter.drawText(Paint.x() + 10, Paint.y() + 55, m_gender);
-	painter.drawText(Paint.x() + 10, Paint.y() + 65, m_age);
-	painter.drawText(Paint.x() + 10, Paint.y() + 80, m_scanID);
+	painter.drawText(Paint.x() + 10, Paint.y() + 25, QString::fromLocal8Bit("姓名：")+m_name);
+	painter.drawText(Paint.x() + 10, Paint.y() + 40, QString::fromLocal8Bit("姓别：")+m_gender);
+	painter.drawText(Paint.x() + 10, Paint.y() + 55, QString::fromLocal8Bit("年龄：") + m_age);
+	painter.drawText(Paint.x() + 10, Paint.y() + 70, QString::fromLocal8Bit("身份证号：") + m_ID);
+	painter.drawText(Paint.x() + 10, Paint.y() + 85, QString::fromLocal8Bit("扫描编号：") + m_scanID);
 
-	painter.drawText(Paint.x() + 10, Paint.y() + 100, "p1:" + QString::number(p1.x()) + " " + QString::number(p1.y()));
-	painter.drawText(Paint.x() + 10, Paint.y() + 120, "p2:" + QString::number(p2.x()) + " " + QString::number(p2.y()));
-	painter.drawText(Paint.x() + 10, Paint.y() + 140,  QString::number(dx) + " " + QString::number(dy));
+	//painter.drawText(Paint.x() + 10, Paint.y() + 100, "p1:" + QString::number(p1.x()) + " " + QString::number(p1.y()));
+	//painter.drawText(Paint.x() + 10, Paint.y() + 120, "p2:" + QString::number(p2.x()) + " " + QString::number(p2.y()));
+	//painter.drawText(Paint.x() + 10, Paint.y() + 140,  QString::number(dx) + " " + QString::number(dy));
 
 	if (g_flag_showTemper&&g_mouse_mode==6)
 	{
