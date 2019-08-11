@@ -259,10 +259,10 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QButtonGroup *buttonGroup_2;
-    QButtonGroup *buttonGroup_4;
-    QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_5;
+    QButtonGroup *buttonGroup;
+    QButtonGroup *buttonGroup_4;
+    QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_3;
 
     void setupUi(QMainWindow *IRProcClass)

@@ -121,16 +121,11 @@ public:
 
 	void wheelEvent(QWheelEvent*event); //这个是鼠标上下滚轮的时候会调用
 
-	//void mousePressEvent(QMouseEvent *event);//鼠标点击事件，实现放大缩小
-
-	//void mouseRelease(QMouseEvent *event);
-
-	//void calPar(Mat &T, Shape &s);//统计最大最小等
 	double calTR(Mat &img);//计算图像均方差
 
 	void showThum();//显示缩略图
 
-//	void draw_shape(Mat& img, Shape allshape[], int shape_no);//显示标签
+	void updateMer();//更新融合图
 
 	int m_mx, m_my;
 
