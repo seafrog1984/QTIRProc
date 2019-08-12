@@ -37,7 +37,7 @@ public:
 	void updateData();
 	void addData(int index, QString cardID, QString scanID, QString RegTime);
 
-	void keyPressEvent(QKeyEvent *event);
+	virtual void keyPressEvent(QKeyEvent *event);
 
 private:
 	Ui::IRProcClass ui;
@@ -126,6 +126,8 @@ public:
 	void showThum();//显示缩略图
 
 	void updateMer();//更新融合图
+
+	void resetShape(int cur_img);//重置选框
 
 	int m_mx, m_my;
 

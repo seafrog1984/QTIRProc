@@ -261,9 +261,9 @@ public:
     QToolBar *toolBar;
     QButtonGroup *buttonGroup_5;
     QButtonGroup *buttonGroup;
+    QButtonGroup *buttonGroup_3;
     QButtonGroup *buttonGroup_4;
     QButtonGroup *buttonGroup_2;
-    QButtonGroup *buttonGroup_3;
 
     void setupUi(QMainWindow *IRProcClass)
     {

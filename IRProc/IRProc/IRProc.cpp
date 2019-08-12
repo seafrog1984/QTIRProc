@@ -83,7 +83,7 @@ int g_remember_flag;//记住密码标志
 int g_upAll_flag=1;//同步断层标志
 
 QString g_merge_path;
-QString g_mer_gender[IMGE_TOTAL_NUM];//融合图性别
+QString g_mer_gender;//融合图性别
 QString g_mer_pose[IMGE_TOTAL_NUM];// 融合图姿势
 QString g_mer_type[IMGE_TOTAL_NUM];//融合图类别
 double g_mer_ratio[IMGE_TOTAL_NUM] = { 0 };//融合度
@@ -356,6 +356,20 @@ IRProc::IRProc(QWidget *parent)
 
 void IRProc::keyPressEvent(QKeyEvent *event)
 {
+
+	if (event->key() == Qt::Key_Backspace)
+	{
+		QWidget *currentitem;
+		currentitem = QApplication::focusWidget();
+		if (currentitem->inherits("QLineEdit"))
+		{
+			QLineEdit *le = (QLineEdit *)currentitem;
+			le->setText("");
+		}
+
+	}
+
+
 	double step = 0.01;
 	if (event->modifiers() == Qt::ControlModifier)
 	{
@@ -394,6 +408,8 @@ void IRProc::keyPressEvent(QKeyEvent *event)
 	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
 	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
 
+
+	QWidget::keyPressEvent(event);
 }
 
 void IRProc::tagSel()
@@ -896,7 +912,7 @@ void IRProc::changeMerGender()
 	QToolButton  *tb = (QToolButton*)this->sender();
 	QString text = tb->text();
 
-	g_mer_gender[g_cur_img] = text;
+	g_mer_gender= text;
 
 }
 void IRProc::changeMerPose()
@@ -908,7 +924,7 @@ void IRProc::changeMerPose()
 	g_mer_pose[g_cur_img] = text;
 
 
-	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender[g_cur_img];
+	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender;
 	QDir dir;
 
 	if (!dir.exists(merFilePath))
@@ -967,7 +983,7 @@ void IRProc::changeMerType()
 	g_mer_type[g_cur_img] = text;//1-人体；2-穴位；3-8？
 
 
-	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender[g_cur_img];
+	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender;
 	QDir dir;
 
 	if (!dir.exists(merFilePath))
@@ -1566,6 +1582,29 @@ void IRProc::imgChange()
 
 }
 
+void IRProc::resetShape(int cur_img)
+{
+	for (int i = 0; i < COMMENT_PER_IMAGE; i++)
+	{
+		allshape[cur_img][i].comment = "None";
+		allshape[cur_img][i].del_flag = false;
+		allshape[cur_img][i].shape_type = 0;
+		allshape[cur_img][i].lt_x = 0;
+		allshape[cur_img][i].lt_y = 0;
+		allshape[cur_img][i].rb_x = 0;
+		allshape[cur_img][i].rb_y = 0;
+		allshape[cur_img][i].t_aver = 0;
+		allshape[cur_img][i].t_max = 0;
+		allshape[cur_img][i].t_min = 0;
+		allshape[cur_img][i].t_msd = 0;
+	}
+
+	g_shape_no[cur_img] = 0;
+
+}
+
+
+
 void IRProc::btnAnalyze()
 {
 
@@ -1619,10 +1658,13 @@ void IRProc::btnAnalyze()
 	if (g_gender == QString::fromLocal8Bit("男"))
 	{
 		ui.btn_male->setChecked(true);
+		g_mer_gender = "Male";
+
 	}
 	else
 	{
 		ui.btn_female->setChecked(true);
+		g_mer_gender = "Female";
 	}
 
 	g_regTime = ui.tableWidget->item(row, 7)->text();
@@ -1754,9 +1796,11 @@ void IRProc::btnAnalyze()
 		g_img_show_flag[g_picNum] = 1;
 
 		g_mer_hratio[g_picNum] = g_mer_vratio[g_picNum] = 1;
-		g_mer_gender[g_picNum] = g_gender;
 		g_mer_pose[g_picNum] = "Front";
 		g_mer_type[g_picNum] = "1";
+
+		resetShape(g_picNum);
+
 	}
 
 	changeLabel(g_picNum, IMAGE_PER_ROW);
@@ -2023,7 +2067,7 @@ void IRProc::upInfo()
 		break;
 	}
 
-	if (g_mer_gender[g_cur_img] == QString::fromLocal8Bit("男"))
+	if (g_mer_gender== "Male")
 	{
 		ui.btn_male->setChecked(true);
 	}
