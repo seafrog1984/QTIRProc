@@ -42,7 +42,7 @@ int g_cur_img = 0;//当前操作的图像下标
 
 int g_bigNum = 0;//大图的数量，最大为3
 int g_big_show[BIG_TOTAL_NUM] = { 0 };//显示的大图数量
-int g_bigIndex[3] = { 0 };//存储大图的原始下标
+int g_bigIndex[3] = { -1,-1,-1};//存储大图的原始下标
 int g_curBig = 0;//当前大图的下标
 
 double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
@@ -1865,6 +1865,7 @@ void IRProc::thumClicked()
 {
 	changeLabel(g_picNum, IMAGE_PER_ROW);
 	showImage(g_picNum);
+
 }
 
 
@@ -2003,29 +2004,7 @@ void IRProc::changeLabel(int totalNum, int imagePerRow)//调整显示窗口数
 		}
 
 		ui.stackedWidget_21->setCurrentWidget(ui.widget2);
-		//count = 0;
-		//for (int x = 0; x < rows; x++)
-		//{
-		//	for (int y = 0; y < imagePerRow; y++)
-		//	{
-		//		if (g_img_show_flag[x * imagePerRow + y])
-		//		{
-		//			QPushButton *bt = new QPushButton;
-		//			//lb->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-		//			bt->setText(QString::number(x *imagePerRow + y));
-		//			ui.gridLayout_2->addWidget(bt, x, y, Qt::AlignRight | Qt::AlignTop);
-		//			bt->setMinimumSize(32, 32);
-		//			bt->setMaximumSize(32, 32);
-		//			bt->setObjectName("bt" + QString::number(x * imagePerRow + y));
-		//			bt->setStyleSheet(QLatin1String("color:rgb(255,255,255)"));
-		//			connect(bt, SIGNAL(clicked()), this, SLOT(imgChange()));
-		//		}
-		//		count++;
-		//		if (count >= totalNum) break;
-		//	}
-		//	if (count >= totalNum) break;
-		//}
 	}
 }
 

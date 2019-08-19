@@ -88,7 +88,7 @@ public:
 
     void retranslateUi(QWidget *CrossDlg)
     {
-        CrossDlg->setWindowTitle(QApplication::translate("CrossDlg", "CrossDlg", 0));
+        CrossDlg->setWindowTitle(QApplication::translate("CrossDlg", "\344\272\244\345\217\211\347\272\277\345\210\206\346\236\220", 0));
         label_2->setText(QString());
         label_3->setText(QString());
         label->setText(QString());

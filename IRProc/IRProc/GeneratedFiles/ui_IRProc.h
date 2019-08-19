@@ -259,11 +259,11 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QButtonGroup *buttonGroup_5;
     QButtonGroup *buttonGroup;
+    QButtonGroup *buttonGroup_5;
+    QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_3;
     QButtonGroup *buttonGroup_4;
-    QButtonGroup *buttonGroup_2;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -807,12 +807,12 @@ public:
         slider_mer_ratio2->setOrientation(Qt::Horizontal);
         label_20 = new QLabel(groupBox_8);
         label_20->setObjectName(QStringLiteral("label_20"));
-        label_20->setGeometry(QRect(20, 22, 16, 65));
+        label_20->setGeometry(QRect(25, 22, 16, 65));
         label_20->setStyleSheet(QStringLiteral(""));
         label_20->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_21 = new QLabel(groupBox_8);
         label_21->setObjectName(QStringLiteral("label_21"));
-        label_21->setGeometry(QRect(35, 20, 16, 50));
+        label_21->setGeometry(QRect(42, 20, 16, 50));
         label_21->setStyleSheet(QStringLiteral(""));
         label_21->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_44 = new QLabel(groupBox_8);
@@ -1790,6 +1790,7 @@ public:
         label_4->setGeometry(QRect(90, 60, 75, 20));
         label_4->setMinimumSize(QSize(75, 20));
         label_4->setMaximumSize(QSize(75, 20));
+        label_4->setTextInteractionFlags(Qt::NoTextInteraction);
         btn_set_auth = new QToolButton(groupBox);
         btn_set_auth->setObjectName(QStringLiteral("btn_set_auth"));
         btn_set_auth->setGeometry(QRect(200, 20, 32, 32));
@@ -2115,7 +2116,7 @@ public:
 
         stackedWidget->setCurrentIndex(2);
         stackedWidget_2->setCurrentIndex(0);
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(IRProcClass);
@@ -2329,9 +2330,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         userAreaBt->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
-#ifndef QT_NO_STATUSTIP
-        userAreaBt->setStatusTip(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
-#endif // QT_NO_STATUSTIP
 #ifndef QT_NO_WHATSTHIS
         userAreaBt->setWhatsThis(QString());
 #endif // QT_NO_WHATSTHIS
@@ -2359,9 +2357,6 @@ public:
 "\346\225\260", 0));
         label_41->setText(QApplication::translate("IRProcClass", "\347\263\273\347\273\237\345\217\202\346\225\260", 0));
         btn_sys_par->setText(QApplication::translate("IRProcClass", "\347\263\273\347\273\237\345\217\202\346\225\260", 0));
-#ifndef QT_NO_TOOLTIP
-        stackedWidget_2->setToolTip(QApplication::translate("IRProcClass", "\347\224\250\346\210\267\345\214\272\346\234\200\345\244\247\345\214\226", 0));
-#endif // QT_NO_TOOLTIP
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("IRProcClass", "\345\272\217\345\217\267", 0));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);

@@ -66,7 +66,7 @@ public:
 
     void retranslateUi(QWidget *LogDlg)
     {
-        LogDlg->setWindowTitle(QApplication::translate("LogDlg", "IRProc-Log", 0));
+        LogDlg->setWindowTitle(QApplication::translate("LogDlg", "\347\224\250\346\210\267\347\231\273\345\275\225", 0));
         label->setText(QApplication::translate("LogDlg", "\347\224\250\346\210\267\345\220\215\357\274\232", 0));
         btn_log->setText(QApplication::translate("LogDlg", "\347\231\273\345\275\225", 0));
         label_2->setText(QApplication::translate("LogDlg", "\345\257\206\347\240\201\357\274\232", 0));

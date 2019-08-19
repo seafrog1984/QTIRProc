@@ -44,6 +44,16 @@ void ThumLabel::mousePressEvent(QMouseEvent *ev)
 
 	if (g_flagShowBigImg)
 	{
+		for (int i = 0; i < 3; i++)
+		{
+			if (g_bigIndex[i] == g_cur_img&&g_img_show_flag[i] == 1)
+			{
+				QString m_msg = QString::fromLocal8Bit("图像已打开，请选择其他图像\n");
+				QMessageBox::information(NULL, "Title", m_msg);
+				return;
+			}
+		}
+
 		g_curBig = (g_curBig + 1) % 3;
 		g_bigIndex[g_curBig] = g_cur_img;
 

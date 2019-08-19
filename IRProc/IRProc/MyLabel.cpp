@@ -204,9 +204,6 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 	setStyleSheet("border-width: 2px;border-style: solid;border-color: rgb(255, 0, 0);");
 
 
-
-//	QMessageBox::information(NULL, "Title", QString::number(cur_img));
-
 	switch (g_mouse_mode)
 	{
 	case 6:
@@ -235,10 +232,7 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  allshape[cur_img][g_sel_tag[cur_img]].del_flag = true;
 				  g_sel_tag[cur_img] = 0;
 				  draw_shape(g_shape_no[cur_img]);
-
-
 			  }
-
 	}
 	break;
 	case 0:
@@ -256,7 +250,7 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 				  m_flag_press = 0;
 				  if (g_size_index>0)
 					  g_size_index--;
-				  g_ratio[cur_img] = g_size_change[g_size_index];;
+				  g_ratio[cur_img] = g_size_change[g_size_index];
 				  //if (g_ratio[cur_img] < 1) g_ratio[cur_img] = 1;
 			  }
 			  update();
@@ -308,30 +302,10 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 		update();
 	}
 		break;
-	//default:
-	//	if (event->button() == Qt::RightButton)
-	//	{
-	//		m_action = 5;
-	//		m_flag_press = 0;
-	//		int rx, ry;
-
-	//		this->calRealCor(p1, rx, ry);
-	//		for (int i = 0; i < g_shape_no[cur_img]; i++)
-	//		{
-	//			if (rx >= allshape[cur_img][i].lt_x&&rx <= allshape[cur_img][i].rb_x&&ry >= allshape[cur_img][i].lt_y&&ry <= allshape[cur_img][i].rb_y)
-	//			{
-	//				allshape[cur_img][i].del_flag = true;
-	//				break;
-	//			}
-	//		}
-	//		draw_shape(g_shape_no[cur_img]);
-
-	//	}
 
 		update();
 
 	}
-//	m_action = g_mouse_mode;
 
 	emit upInfo();
 }

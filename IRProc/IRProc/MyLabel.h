@@ -41,7 +41,7 @@ public:
 	void setOffset(QPoint offset);
 	void calPar(int cur_shape_no);//统计最大最小等
 	void calRealCor(QPoint pt, int &rx,int &ry);//计算鼠标位置在原始图像中的实际坐标
-	void draw_shape(int shape_no);
+	void draw_shape(int shape_no);//原始图画框
 	int getCurImgIndex(); //获取当前图像下标
 	QPoint offset;              //一次的图片偏移值
 	QPoint Alloffset;           //总偏移
