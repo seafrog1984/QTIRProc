@@ -528,14 +528,16 @@ void MyLabel::draw_shape(int shape_no)
 		case 1:
 			{
 				  rectangle(g_img[cur_img], Point(x - 1, y - 1), Point(x + 1, y + 1), penColor, CV_FILLED, 8, 0);
-				  sprintf(label, "[%02d]%.2lf", i+1, allshape[cur_img][i].t_max);
+				 // sprintf(label, "[%02d]%.2lf", i+1, allshape[cur_img][i].t_max);
+				  sprintf(label, "[%02d]", i + 1);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 2:
 			{
 				  rectangle(g_img[cur_img], Point(allshape[cur_img][i].lt_x, allshape[cur_img][i].lt_y), Point(allshape[cur_img][i].rb_x, allshape[cur_img][i].rb_y), penColor, 1, 8, 0);
-				  sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				 // sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				  sprintf(label, "[%02d]", i + 1);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
@@ -543,14 +545,16 @@ void MyLabel::draw_shape(int shape_no)
 			{
 				  int radius = (allshape[cur_img][i].rb_x - allshape[cur_img][i].lt_x)/2;
 				  circle(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), radius, penColor, 1, 8, 0);
-				  sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				  //sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				  sprintf(label, "[%02d]", i + 1);
 				  text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;
 		case 4:
 			{
-				  ellipse(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), Size(abs(allshape[cur_img][i].lt_x - allshape[cur_img][i].rb_x) / 2, abs(allshape[cur_img][i].lt_y - allshape[cur_img][i].rb_y) / 2), 0, 0, 360, penColor, 1, 8, 0);
-				sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				ellipse(g_img[cur_img], Point((allshape[cur_img][i].lt_x + allshape[cur_img][i].rb_x) / 2, (allshape[cur_img][i].lt_y + allshape[cur_img][i].rb_y) / 2), Size(abs(allshape[cur_img][i].lt_x - allshape[cur_img][i].rb_x) / 2, abs(allshape[cur_img][i].lt_y - allshape[cur_img][i].rb_y) / 2), 0, 0, 360, penColor, 1, 8, 0);
+				//sprintf(label, "[%02d]%.2lf,%.2lf,%.2lf,%.2f", i + 1, allshape[cur_img][i].t_max, allshape[cur_img][i].t_min, allshape[cur_img][i].t_aver, allshape[cur_img][i].t_msd);
+				sprintf(label, "[%02d]", i + 1);
 				text.putText(g_img[cur_img], label, Point(x + 4, y + 4), Scalar(0, 0, 0));
 			}
 			break;

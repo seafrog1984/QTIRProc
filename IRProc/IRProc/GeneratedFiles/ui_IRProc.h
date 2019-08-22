@@ -242,6 +242,7 @@ public:
     QLabel *label_18;
     QLineEdit *max_max;
     QLabel *label_19;
+    QTableWidget *tagWidget;
     QWidget *pageImgThum;
     QGridLayout *gridLayout_5;
     QListWidget *listWidget_date;
@@ -260,10 +261,10 @@ public:
     QStatusBar *statusBar;
     QToolBar *toolBar;
     QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_5;
-    QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_3;
+    QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_4;
+    QButtonGroup *buttonGroup_5;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -2001,6 +2002,35 @@ public:
         label_19->setObjectName(QStringLiteral("label_19"));
         label_19->setGeometry(QRect(10, 120, 55, 16));
         label_19->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        tagWidget = new QTableWidget(pageDataCal);
+        if (tagWidget->columnCount() < 5)
+            tagWidget->setColumnCount(5);
+        QFont font1;
+        font1.setPointSize(8);
+        QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
+        __qtablewidgetitem12->setFont(font1);
+        tagWidget->setHorizontalHeaderItem(0, __qtablewidgetitem12);
+        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
+        __qtablewidgetitem13->setFont(font1);
+        tagWidget->setHorizontalHeaderItem(1, __qtablewidgetitem13);
+        QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
+        __qtablewidgetitem14->setFont(font1);
+        tagWidget->setHorizontalHeaderItem(2, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
+        __qtablewidgetitem15->setFont(font1);
+        tagWidget->setHorizontalHeaderItem(3, __qtablewidgetitem15);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        __qtablewidgetitem16->setFont(font1);
+        tagWidget->setHorizontalHeaderItem(4, __qtablewidgetitem16);
+        tagWidget->setObjectName(QStringLiteral("tagWidget"));
+        tagWidget->setGeometry(QRect(2, 190, 146, 351));
+        tagWidget->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        tagWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
+        tagWidget->horizontalHeader()->setCascadingSectionResizes(true);
+        tagWidget->horizontalHeader()->setDefaultSectionSize(28);
+        tagWidget->horizontalHeader()->setMinimumSectionSize(25);
+        tagWidget->horizontalHeader()->setStretchLastSection(false);
+        tagWidget->verticalHeader()->setVisible(false);
         tabWidget->addTab(pageDataCal, QString());
         pageImgThum = new QWidget();
         pageImgThum->setObjectName(QStringLiteral("pageImgThum"));
@@ -2387,6 +2417,16 @@ public:
         label_18->setText(QApplication::translate("IRProcClass", "min-TR", 0));
         max_max->setText(QString());
         label_19->setText(QApplication::translate("IRProcClass", "max-max", 0));
+        QTableWidgetItem *___qtablewidgetitem12 = tagWidget->horizontalHeaderItem(0);
+        ___qtablewidgetitem12->setText(QApplication::translate("IRProcClass", "NO", 0));
+        QTableWidgetItem *___qtablewidgetitem13 = tagWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem13->setText(QApplication::translate("IRProcClass", "max", 0));
+        QTableWidgetItem *___qtablewidgetitem14 = tagWidget->horizontalHeaderItem(2);
+        ___qtablewidgetitem14->setText(QApplication::translate("IRProcClass", "min", 0));
+        QTableWidgetItem *___qtablewidgetitem15 = tagWidget->horizontalHeaderItem(3);
+        ___qtablewidgetitem15->setText(QApplication::translate("IRProcClass", "avr", 0));
+        QTableWidgetItem *___qtablewidgetitem16 = tagWidget->horizontalHeaderItem(4);
+        ___qtablewidgetitem16->setText(QApplication::translate("IRProcClass", "msd", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageDataCal), QApplication::translate("IRProcClass", "\346\225\260\346\215\256\346\265\213\351\207\217", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageImgThum), QApplication::translate("IRProcClass", "\347\274\251\347\225\245\345\233\276", 0));
         btn_show_func->setText(QApplication::translate("IRProcClass", "...", 0));

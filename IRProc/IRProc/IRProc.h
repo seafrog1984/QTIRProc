@@ -129,6 +129,8 @@ public:
 
 	void resetShape(int cur_img);//重置选框
 
+	void updateTag();//更新选框信息
+
 	int m_mx, m_my;
 
 	SettingDlg *dlg;

@@ -88,6 +88,8 @@ QString g_mer_pose[IMGE_TOTAL_NUM];// 融合图姿势
 QString g_mer_type[IMGE_TOTAL_NUM];//融合图类别
 double g_mer_ratio[IMGE_TOTAL_NUM] = { 0 };//融合度
 double g_mer_hratio[IMGE_TOTAL_NUM];//融合图水平放大倍数
+int g_mer_flag[IMGE_TOTAL_NUM] = { 0 };//融合图打开标志
+
 int g_offset_x[IMGE_TOTAL_NUM];//水平位移
 double g_mer_vratio[IMGE_TOTAL_NUM];//融合图垂直放大倍数
 int g_offset_y[IMGE_TOTAL_NUM];//垂直位移
@@ -145,6 +147,16 @@ IRProc::IRProc(QWidget *parent)
 	ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//设置单击选择一行
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);	//设置每行内容不可编辑
 	ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);	//设置只能选择一行，不能选择多行
+
+	ui.tagWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:rgb(21,85,141);color:rgb(255,255,255);}"); //设置表头背景色
+	ui.tagWidget->horizontalHeader()->setSectionsClickable(false);
+	//ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui.tagWidget->horizontalHeader()->setVisible(true);
+	ui.tagWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	ui.tagWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//设置单击选择一行
+//	ui.tagWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);	//设置每行内容不可编辑
+	ui.tagWidget->setSelectionMode(QAbstractItemView::SingleSelection);	//设置只能选择一行，不能选择多行
+
 
 
 	//setWindowTitle(tr("Main Window"));
@@ -354,6 +366,30 @@ IRProc::IRProc(QWidget *parent)
 
 }
 
+
+void IRProc::updateTag()
+{
+	ui.tagWidget->setRowCount(0);
+
+	int index = 0;
+
+	for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+	{
+		if (allshape[g_cur_img][i].del_flag == 0)
+		{
+			ui.tagWidget->insertRow(index);
+			ui.tagWidget->setItem(index, 0, new QTableWidgetItem(QString::number(i+1)));
+			ui.tagWidget->setItem(index, 1, new QTableWidgetItem(QString::number(allshape[g_cur_img][i].t_max)));
+			ui.tagWidget->setItem(index, 2, new QTableWidgetItem(QString::number(allshape[g_cur_img][i].t_min)));
+			ui.tagWidget->setItem(index, 3, new QTableWidgetItem(QString::number(allshape[g_cur_img][i].t_aver,'g',4)));
+			ui.tagWidget->setItem(index, 4, new QTableWidgetItem(QString::number(allshape[g_cur_img][i].t_msd, 'g', 4)));
+			index++;
+		}
+
+	}
+}
+
+
 void IRProc::keyPressEvent(QKeyEvent *event)
 {
 
@@ -445,10 +481,13 @@ void IRProc::tagDel()
 	}
 	else if (tagIndex==-1)
 	{
-		for (int i = 0; i < g_shape_no[g_cur_img]; i++)
-		{
-			allshape[g_cur_img][i].del_flag = true;
-		}
+		g_shape_no[g_cur_img] = 0;
+		g_sel_tag[g_cur_img] = 0;
+		ui.tag_index->setText("0");
+		//for (int i = 0; i < g_shape_no[g_cur_img]; i++)
+		//{
+		//	allshape[g_cur_img][i].del_flag = true;
+		//}
 
 	}
 	else
@@ -914,6 +953,59 @@ void IRProc::changeMerGender()
 
 	g_mer_gender= text;
 
+	QString merFilePath = g_merge_path + g_mer_type[g_cur_img] + "/" + g_mer_gender;
+	QDir dir;
+
+	if (!dir.exists(merFilePath))
+	{
+		bool res = dir.mkpath(g_dataFolder);
+		//		qDebug() << "新建目录是否成功" << res;
+	}
+
+	merFilePath = merFilePath + "/" + g_mer_pose[g_cur_img] + ".jpg";
+	if (merFilePath.isEmpty())
+	{
+		QMessageBox msg(QMessageBox::Information, tr("Information"), merFilePath + " does not exist!");
+
+		msg.exec();
+		return;
+	}
+	merFilePath = QDir::toNativeSeparators(merFilePath);
+	char*  path;
+	QByteArray t = merFilePath.toLatin1(); // must
+	path = t.data();
+
+
+	Mat timg = imread(path);
+	if (timg.empty())
+	{
+		QMessageBox msg(QMessageBox::Information, tr("Information"), merFilePath + " does not exist!");
+
+		msg.exec();
+		return;
+	}
+
+
+
+	cvtColor(timg, timg, CV_BGR2RGB);
+	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
+	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
+
+	g_mer_ratio[g_cur_img] = 0.2;
+	g_mer_hratio[g_cur_img] = g_mer_vratio[g_cur_img] = 1;
+	g_offset_x[g_cur_img] = g_offset_y[g_cur_img] = 0;
+	g_mer_flag[g_cur_img] = 1;
+
+	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
+
+	updateImage();
+
+	ui.slider_mer_ratio->setValue(g_mer_ratio[g_cur_img] * 100);
+	ui.slider_mer_ratio2->setValue(g_mer_ratio[g_cur_img] * 100);
+
+	ui.mer_cur_ratio->setText(QString::number(g_mer_ratio[g_cur_img] * 100));
+	ui.mer_cur_ratio2->setText(QString::number(g_mer_ratio[g_cur_img] * 100));
+
 }
 void IRProc::changeMerPose()
 {
@@ -956,6 +1048,8 @@ void IRProc::changeMerPose()
 		return;
 	}
 
+	
+
 	cvtColor(timg, timg, CV_BGR2RGB);
 	cv::resize(timg, g_mer_src[g_cur_img], Size(IMAGE_HEIGHT, IMAGE_WIDTH), 0, 0);
 	g_mer_src[g_cur_img].copyTo(g_mer[g_cur_img]);
@@ -963,10 +1057,17 @@ void IRProc::changeMerPose()
 	g_mer_ratio[g_cur_img] = 0.2;
 	g_mer_hratio[g_cur_img] = g_mer_vratio[g_cur_img] = 1;
 	g_offset_x[g_cur_img] = g_offset_y[g_cur_img] = 0;
+	g_mer_flag[g_cur_img] = 1;
 
 	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	updateImage();
+
+	ui.slider_mer_ratio->setValue(g_mer_ratio[g_cur_img] * 100);
+	ui.slider_mer_ratio2->setValue(g_mer_ratio[g_cur_img] * 100);
+
+	ui.mer_cur_ratio->setText(QString::number(g_mer_ratio[g_cur_img] * 100));
+	ui.mer_cur_ratio2->setText(QString::number(g_mer_ratio[g_cur_img] * 100));
 
 }
 void IRProc::changeMerType()
@@ -1022,6 +1123,8 @@ void IRProc::changeMerType()
 	g_mer_ratio[g_cur_img] = 0.2;
 	g_mer_hratio[g_cur_img] = g_mer_vratio[g_cur_img] = 1;
 	g_offset_x[g_cur_img] = g_offset_y[g_cur_img] = 0;
+	g_mer_flag[g_cur_img] = 1;
+
 	//	g_img[g_cur_img] = g_img[g_cur_img] * (1 - g_mer_ratio) + g_mer * g_mer_ratio;
 
 	updateImage();
@@ -1110,108 +1213,179 @@ void IRProc::updateMer()
 
 void IRProc::btnMerWid()
 {
-	g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] + MER_RATIO_STEP;
+	if (g_mer_flag[g_cur_img])
+	{
+		g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] + MER_RATIO_STEP;
 
-	updateMer();
-	updateImage();
+		updateMer();
+		updateImage();
+	}
+	else
+	{
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
+	}
 
 }
 void IRProc::btnMerNar()
 {
-	
+	if (g_mer_flag[g_cur_img])
+	{
+		if (g_mer_hratio[g_cur_img] - 0.5 > 0.1)
+			g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] - MER_RATIO_STEP;
+		else
+			g_mer_hratio[g_cur_img] = 0.5;
 
-	if (g_mer_hratio[g_cur_img] - 0.5 > 0.1)
-		g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] - MER_RATIO_STEP;
+		updateMer();
+		updateImage();
+	}
 	else
-		g_mer_hratio[g_cur_img] = 0.5;
-
-	updateMer();
-	updateImage();
+	{
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
+	}
+	
 }
 void IRProc::btnMerHigher()
 {
-
-	g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] + MER_RATIO_STEP;
-	updateMer();
-	updateImage();
+	if (g_mer_flag[g_cur_img])
+	{
+		g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] + MER_RATIO_STEP;
+		updateMer();
+		updateImage();
+	}
+	else
+	{
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
+	}
 
 }
 void IRProc::btnMerLower()
 {
-	
-	
-	if (g_mer_vratio[g_cur_img] - 0.5 > 0.1)
-		g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] - MER_RATIO_STEP;
-	else
-		g_mer_vratio[g_cur_img] = 0.5;
+	if (g_mer_flag[g_cur_img])
+	{
+		if (g_mer_vratio[g_cur_img] - 0.5 > 0.1)
+			g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] - MER_RATIO_STEP;
+		else
+			g_mer_vratio[g_cur_img] = 0.5;
 
-	updateMer();
-	updateImage();
+		updateMer();
+		updateImage();
+
+	}
+	else
+	{
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
+	}
 
 }
 void IRProc::btnMerLeft()
 {
-	if (g_mer_hratio[g_cur_img] > 1)
+	if (g_mer_flag[g_cur_img])
 	{
-		g_offset_x[g_cur_img] += 20;
-		
+		if (g_mer_hratio[g_cur_img] > 1)
+		{
+			g_offset_x[g_cur_img] += 20;
+
+		}
+		else
+		{
+			g_offset_x[g_cur_img] -= 20;
+		}
+		updateMer();
+
+		updateImage();
 	}
 	else
 	{
-		g_offset_x[g_cur_img] -= 20;
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
 	}
-	updateMer();
-
-	updateImage();
-
 
 }
 void IRProc::btnMerRight()
 {
-	if (g_mer_hratio[g_cur_img] > 1)
+	if (g_mer_flag[g_cur_img])
 	{
-		g_offset_x[g_cur_img] -= 20;
-		
+		if (g_mer_hratio[g_cur_img] > 1)
+		{
+			g_offset_x[g_cur_img] -= 20;
+
+		}
+		else
+		{
+			g_offset_x[g_cur_img] += 20;
+		}
+		updateMer();
+
+		updateImage();
 	}
 	else
 	{
-		g_offset_x[g_cur_img] += 20;
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
 	}
-	updateMer();
-
-	updateImage();
-
 }
 void IRProc::btnMerUp()
 {
-	if (g_mer_vratio[g_cur_img] > 1)
+	if (g_mer_flag[g_cur_img])
 	{
-		g_offset_y[g_cur_img] += 20;
-	
+		if (g_mer_vratio[g_cur_img] > 1)
+		{
+			g_offset_y[g_cur_img] += 20;
+
+		}
+		else
+		{
+			g_offset_y[g_cur_img] -= 20;
+		}
+		updateMer();
+		updateImage();
 	}
 	else
 	{
-		g_offset_y[g_cur_img] -= 20;
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
 	}
-	updateMer();
-	updateImage();
+
+	
 	
 
 
 }
 void IRProc::btnMerDown()
 {
-	if (g_mer_vratio[g_cur_img] > 1)
+	if (g_mer_flag[g_cur_img])
 	{
-		g_offset_y[g_cur_img] -= 20;
+		if (g_mer_vratio[g_cur_img] > 1)
+		{
+			g_offset_y[g_cur_img] -= 20;
+
+		}
+		else
+		{
+			g_offset_y[g_cur_img] += 20;
+		}
+		updateMer();
+		updateImage();
 
 	}
 	else
 	{
-		g_offset_y[g_cur_img] += 20;
+		m_msg = QString::fromLocal8Bit("请先打开融合图像\n");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
 	}
-	updateMer();
-	updateImage();
+	
 	
 }
 
@@ -1821,7 +1995,7 @@ void IRProc::showThum()
 
 	int imgRow = 2;
 
-	int rows = (g_picNum - 1) / imgRow + 1;
+	int rows = (IMGE_TOTAL_NUM - 1) / imgRow + 1;
 
 	int count = 0;
 	for (int x = 0; x < rows; x++)
@@ -1829,7 +2003,7 @@ void IRProc::showThum()
 		for (int y = 0; y < imgRow; y++)
 		{
 			ThumLabel *lb = new ThumLabel;
-			lb->setText(QString::number(x * imgRow + y));
+			//lb->setText(QString::number(x * imgRow + y));
 			lb->setObjectName(QString::number(x * imgRow + y + THUM_IMG_BASE));
 			lb->setFrameShape(QFrame::Box);
 
@@ -1840,9 +2014,10 @@ void IRProc::showThum()
 
 			connect(lb, SIGNAL(thumClicked()), this, SLOT(thumClicked()));
 			count++;
-			if (count >= g_picNum) break;
+			if (count > g_picNum) lb->setDisabled(true);
+			if (count >= IMGE_TOTAL_NUM) break;
 		}
-		if (count >= g_picNum) break;
+		if (count >= IMGE_TOTAL_NUM) break;
 	}
 
 	for (int i = 0; i < g_picNum; i++)
@@ -2088,6 +2263,17 @@ void IRProc::upInfo()
 	if (bt != NULL)
 		bt2->setChecked(true);
 
+	updateTag();
+
+	if (g_shape_no[g_cur_img] == 0)
+	{
+		ui.max_TR->setText(QString::number(0));
+		ui.min_TR->setText(QString::number(0));
+		ui.av_TR->setText(QString::number(0));
+		ui.max_max->setText(QString::number(0));
+
+	}
+
 }
 
 void IRProc::calData()
@@ -2096,7 +2282,7 @@ void IRProc::calData()
 	ui.max_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max - g_TR[g_cur_img],10,4));
 	ui.min_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_min - g_TR[g_cur_img], 10, 4));
 	ui.av_TR->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_aver - g_TR[g_cur_img], 10, 4));
-	if (g_shape_no[g_cur_img] == 0)
+	if (g_shape_no[g_cur_img] == 1)
 	{
 		ui.max_max->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max, 10, 4));
 	}
@@ -2105,7 +2291,7 @@ void IRProc::calData()
 		ui.max_max->setText(QString::number(allshape[g_cur_img][g_sel_tag[g_cur_img]].t_max - allshape[g_cur_img][g_sel_tag[g_cur_img] - 1].t_max, 10, 4));
 	}
 
-
+	updateTag();
 }
 
 void IRProc::showImage(int pic_num)
