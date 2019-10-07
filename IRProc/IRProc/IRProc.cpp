@@ -34,6 +34,8 @@ using namespace std;
 #define BIG_WIDTH 540
 #define BIG_HEIGHT 720
 #define MER_RATIO_STEP 0.2
+#define MER_STEP 1
+
 
 
 int g_flagShowBigImg = 0;//显示大图还是小图的标志： 1-大图；0-小图
@@ -46,6 +48,7 @@ int g_bigIndex[3] = { -1,-1,-1};//存储大图的原始下标
 int g_curBig = 0;//当前大图的下标
 
 double g_ratio[IMGE_TOTAL_NUM];//图像放大倍数
+int g_size_index[IMGE_TOTAL_NUM] = { 0 };
 int g_img_show_flag[IMGE_TOTAL_NUM] = { 0 };//图像显示标志
 
 unsigned short *g_pData[IMGE_TOTAL_NUM];//原始数据
@@ -1291,12 +1294,12 @@ void IRProc::btnMerLeft()
 	{
 		if (g_mer_hratio[g_cur_img] > 1)
 		{
-			g_offset_x[g_cur_img] += 20;
+			g_offset_x[g_cur_img] += MER_STEP;
 
 		}
 		else
 		{
-			g_offset_x[g_cur_img] -= 20;
+			g_offset_x[g_cur_img] -= MER_STEP;
 		}
 		updateMer();
 
@@ -1316,12 +1319,12 @@ void IRProc::btnMerRight()
 	{
 		if (g_mer_hratio[g_cur_img] > 1)
 		{
-			g_offset_x[g_cur_img] -= 20;
+			g_offset_x[g_cur_img] -= MER_STEP;
 
 		}
 		else
 		{
-			g_offset_x[g_cur_img] += 20;
+			g_offset_x[g_cur_img] += MER_STEP;
 		}
 		updateMer();
 
@@ -1340,12 +1343,12 @@ void IRProc::btnMerUp()
 	{
 		if (g_mer_vratio[g_cur_img] > 1)
 		{
-			g_offset_y[g_cur_img] += 20;
+			g_offset_y[g_cur_img] += MER_STEP;
 
 		}
 		else
 		{
-			g_offset_y[g_cur_img] -= 20;
+			g_offset_y[g_cur_img] -= MER_STEP;
 		}
 		updateMer();
 		updateImage();
@@ -1357,10 +1360,6 @@ void IRProc::btnMerUp()
 		return;
 	}
 
-	
-	
-
-
 }
 void IRProc::btnMerDown()
 {
@@ -1368,12 +1367,12 @@ void IRProc::btnMerDown()
 	{
 		if (g_mer_vratio[g_cur_img] > 1)
 		{
-			g_offset_y[g_cur_img] -= 20;
+			g_offset_y[g_cur_img] -= MER_STEP;
 
 		}
 		else
 		{
-			g_offset_y[g_cur_img] += 20;
+			g_offset_y[g_cur_img] += MER_STEP;
 		}
 		updateMer();
 		updateImage();
@@ -1852,7 +1851,7 @@ void IRProc::btnAnalyze()
 
 	map<string, string> mapUserInfoResp;
 
-	int ret = m_cli.get_png_id(g_scanID.toStdString(), mapUserInfoResp);
+	int ret = m_cli.get_info(g_scanID.toStdString(), mapUserInfoResp);
 	if (-1 == ret)
 	{
 		m_msg = QString::fromLocal8Bit("获取用户信息失败\n");
@@ -1867,6 +1866,15 @@ void IRProc::btnAnalyze()
 	}
 	else
 	{
+		std::map<std::string, std::string>::iterator it = mapUserInfoResp.begin();
+
+		it = mapUserInfoResp.begin();
+		QString rectmp;
+		it++;
+		rectmp = QString::fromLocal8Bit(it->second.c_str());
+		g_ID = rectmp;//证件号
+
+
 		if (mapUserInfoResp.end() != mapUserInfoResp.find("pic"))
 		{
 			vecPngIDResp.clear();

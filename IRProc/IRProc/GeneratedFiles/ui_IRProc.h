@@ -260,10 +260,10 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_3;
     QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_4;
+    QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_5;
 
     void setupUi(QMainWindow *IRProcClass)
@@ -1038,7 +1038,7 @@ public:
         btn_mer_left->setIconSize(QSize(32, 32));
         btn_mer_right = new QToolButton(groupBox_3);
         btn_mer_right->setObjectName(QStringLiteral("btn_mer_right"));
-        btn_mer_right->setGeometry(QRect(115, 15, 32, 32));
+        btn_mer_right->setGeometry(QRect(120, 15, 32, 32));
         btn_mer_right->setMinimumSize(QSize(32, 32));
         btn_mer_right->setMaximumSize(QSize(32, 32));
         btn_mer_right->setStyleSheet(QStringLiteral(""));
@@ -1068,7 +1068,7 @@ public:
         btn_mer_down->setIconSize(QSize(32, 32));
         btn_mer_wid = new QToolButton(groupBox_3);
         btn_mer_wid->setObjectName(QStringLiteral("btn_mer_wid"));
-        btn_mer_wid->setGeometry(QRect(250, 15, 32, 32));
+        btn_mer_wid->setGeometry(QRect(251, 15, 32, 32));
         btn_mer_wid->setMinimumSize(QSize(32, 32));
         btn_mer_wid->setMaximumSize(QSize(32, 32));
         btn_mer_wid->setStyleSheet(QStringLiteral(""));
@@ -2246,13 +2246,21 @@ public:
         btn_save_measure->setText(QApplication::translate("IRProcClass", "\344\277\235\345\255\230\346\265\213\351\207\217", 0));
         groupBox_3->setTitle(QString());
         btn_mer_left->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_left->setShortcut(QApplication::translate("IRProcClass", "Left", 0));
         btn_mer_right->setText(QApplication::translate("IRProcClass", "\345\217\263 \347\247\273", 0));
+        btn_mer_right->setShortcut(QApplication::translate("IRProcClass", "Right", 0));
         btn_mer_up->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_up->setShortcut(QApplication::translate("IRProcClass", "Up", 0));
         btn_mer_down->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_down->setShortcut(QApplication::translate("IRProcClass", "Down", 0));
         btn_mer_wid->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_wid->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Right", 0));
         btn_mer_nar->setText(QApplication::translate("IRProcClass", "\345\217\263 \347\247\273", 0));
+        btn_mer_nar->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Left", 0));
         btn_mer_higher->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_higher->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Up", 0));
         btn_mer_lower->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_mer_lower->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Down", 0));
         label_2->setText(QApplication::translate("IRProcClass", "\345\267\246\347\247\273", 0));
         label_11->setText(QApplication::translate("IRProcClass", "\345\217\263\347\247\273", 0));
         label_12->setText(QApplication::translate("IRProcClass", "\344\270\212\347\247\273", 0));

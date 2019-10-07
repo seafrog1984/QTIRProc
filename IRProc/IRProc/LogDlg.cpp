@@ -92,9 +92,9 @@ void LogDlg::log()
 
 	if (m_cli.init(g_ip.toStdString(), atoi(g_port.toStdString().c_str())))
 	{
-		m_msg = QString::fromLocal8Bit("连接成功");
+	/*	m_msg = QString::fromLocal8Bit("连接成功");
 
-		QMessageBox::information(NULL, "Title", m_msg);
+		QMessageBox::information(NULL, "Title", m_msg);*/
 	}
 	else
 	{
@@ -174,7 +174,7 @@ void LogDlg::log()
 		if (pt.p1 || pt.p3)
 		{
 			g_log_flag = 1;
-			QMessageBox::information(NULL, "Title", m_msg);
+	//		QMessageBox::information(NULL, "Title", m_msg);
 
 		}
 		else

@@ -2213,11 +2213,14 @@ border:0px;
                <height>32</height>
               </size>
              </property>
+             <property name="shortcut">
+              <string>Left</string>
+             </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_right">
              <property name="geometry">
               <rect>
-               <x>115</x>
+               <x>120</x>
                <y>15</y>
                <width>32</width>
                <height>32</height>
@@ -2250,6 +2253,9 @@ border:0px;
                <width>32</width>
                <height>32</height>
               </size>
+             </property>
+             <property name="shortcut">
+              <string>Right</string>
              </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_up">
@@ -2289,6 +2295,9 @@ border:0px;
                <height>32</height>
               </size>
              </property>
+             <property name="shortcut">
+              <string>Up</string>
+             </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_down">
              <property name="geometry">
@@ -2327,11 +2336,14 @@ border:0px;
                <height>32</height>
               </size>
              </property>
+             <property name="shortcut">
+              <string>Down</string>
+             </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_wid">
              <property name="geometry">
               <rect>
-               <x>250</x>
+               <x>251</x>
                <y>15</y>
                <width>32</width>
                <height>32</height>
@@ -2364,6 +2376,9 @@ border:0px;
                <width>32</width>
                <height>32</height>
               </size>
+             </property>
+             <property name="shortcut">
+              <string>Ctrl+Right</string>
              </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_nar">
@@ -2403,6 +2418,9 @@ border:0px;
                <height>32</height>
               </size>
              </property>
+             <property name="shortcut">
+              <string>Ctrl+Left</string>
+             </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_higher">
              <property name="geometry">
@@ -2440,6 +2458,9 @@ border:0px;
                <width>32</width>
                <height>32</height>
               </size>
+             </property>
+             <property name="shortcut">
+              <string>Ctrl+Up</string>
              </property>
             </widget>
             <widget class="QToolButton" name="btn_mer_lower">
@@ -2484,6 +2505,9 @@ border:0px;
                <width>32</width>
                <height>32</height>
               </size>
+             </property>
+             <property name="shortcut">
+              <string>Ctrl+Down</string>
              </property>
             </widget>
             <widget class="QLabel" name="label_2">
@@ -6018,10 +6042,10 @@ color: rgb(255, 255, 255);
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_5"/>
  </buttongroups>
 </ui>

@@ -52,7 +52,7 @@ extern QString g_scanID;
 extern QString g_cardID;
 
 double g_size_change[11] = {1, 1.2, 1.5, 1.9, 2.4, 3.0, 3.8, 4.7, 5.9, 7.3, 9.2 };
-int g_size_index = 0;
+extern int g_size_index[IMGE_TOTAL_NUM];
 
 int g_move_flag = 0;
 
@@ -239,18 +239,18 @@ void MyLabel::mousePressEvent(QMouseEvent *event)
 	{// 如果是鼠标左键按下
 			  if (event->button() == Qt::LeftButton)
 			  {
-				  if (g_size_index<10)
-					  g_size_index++;
-				  g_ratio[cur_img]=g_size_change[g_size_index];
+				  if (g_size_index[cur_img]<10)
+					  g_size_index[cur_img]++;
+				  g_ratio[cur_img] = g_size_change[g_size_index[cur_img]];
 				  //if (g_ratio[cur_img] > 3) g_ratio[cur_img] = 3;
 			  }
 			  // 如果是鼠标右键按下
 			  else if (event->button() == Qt::RightButton)
 			  {
 				  m_flag_press = 0;
-				  if (g_size_index>0)
-					  g_size_index--;
-				  g_ratio[cur_img] = g_size_change[g_size_index];
+				  if (g_size_index[cur_img]>0)
+					  g_size_index[cur_img]--;
+				  g_ratio[cur_img] = g_size_change[g_size_index[cur_img]];
 				  //if (g_ratio[cur_img] < 1) g_ratio[cur_img] = 1;
 			  }
 			  update();
