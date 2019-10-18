@@ -127,6 +127,7 @@ void LogDlg::log()
 		m_msg.append(m_cli.get_msg().c_str());
 		m_cli.close();
 		QMessageBox::information(NULL, "Title", m_msg);
+		return;
 	}
 	else
 	{
@@ -196,6 +197,7 @@ void LogDlg::log()
 		{
 			m_msg.append(QString::fromLocal8Bit("没有权限"));
 			QMessageBox::information(NULL, "Title", m_msg);
+			return;
 		}
 
 	}
