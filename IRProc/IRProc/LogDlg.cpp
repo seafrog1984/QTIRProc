@@ -5,11 +5,14 @@
 #include "./incl/client.h"
 #include <QMessageBox>
 
+
 QString g_ip;
 QString g_port;
 QString g_uport;
 extern float g_step;
 extern int g_remember_flag;
+
+extern int g_code[7];
 
 QString g_user = "admin";
 QString g_passwd = "test@1234";
@@ -21,7 +24,15 @@ QString m_msg;
 
 using namespace std;
 
+void decode(string& c, int a[]){
 
+	for (int i = 0, j = 0; c[j]; j++, i = (i + 1) % 7){
+
+		c[j] -= a[i];
+
+		if (c[j] < 32) c[j] += 90;
+	}
+}
 
 
 LogDlg::LogDlg(QWidget *parent)
@@ -40,13 +51,19 @@ LogDlg::LogDlg(QWidget *parent)
 	}
 
 	string str1, str2, str3, str4, str5, str6;
-
-
+	
 	fin >> str1 >> str2 >> str3>>str4>>str5>>str6>>g_remember_flag;
+
+
+	decode(str6, g_code);
+
+
 	g_ip = QString::fromStdString(str1);
 	g_port = QString::fromStdString(str2);
 	g_uport = QString::fromStdString(str3);
 	g_step = QString::fromStdString(str4).toFloat();
+
+
 
 	if (g_remember_flag)
 	{
@@ -83,12 +100,10 @@ LogDlg::~LogDlg()
 {
 }
 
-
 void LogDlg::log()
 {
 
-	g_user = ui.lineEdit_user->text();
-	g_passwd = ui.lineEdit_pw->text();
+
 
 	if (m_cli.init(g_ip.toStdString(), atoi(g_port.toStdString().c_str())))
 	{

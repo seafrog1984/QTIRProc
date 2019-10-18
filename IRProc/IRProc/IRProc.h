@@ -10,6 +10,7 @@
 #include "RegDlg.h"
 #include "CrossDlg.h"
 #include "ThumLabel.h"
+#include <QProgressDialog>
 
 struct shape{
 	bool del_flag;
@@ -132,6 +133,8 @@ public:
 	void updateTag();//更新选框信息
 
 	int m_mx, m_my;
+
+	QProgressDialog *progressDialog;
 
 	SettingDlg *dlg;
 	SetAuthDlg *adlg;

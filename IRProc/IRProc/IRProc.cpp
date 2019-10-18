@@ -12,7 +12,7 @@
 #include <imgProcDll.h>
 #include <CvxText.h>
 #include <QTimer>
-#include <QProgressDialog>
+
 
 #include "IRProc.h"
 #include "MyLabel.h"
@@ -33,10 +33,11 @@ using namespace std;
 #define BIG_TOTAL_NUM 3
 #define BIG_WIDTH 540
 #define BIG_HEIGHT 720
-#define MER_RATIO_STEP 0.2
+#define MER_RATIO_STEP 0.01//需测试
 #define MER_STEP 1
 
 
+int g_show_progress = 1;//显示进度条标志，首次读取数据时显示
 
 int g_flagShowBigImg = 0;//显示大图还是小图的标志： 1-大图；0-小图
 int g_picNum = 0;//读取的图像总数
@@ -122,7 +123,7 @@ QString g_regTime = "2019-07-25 10:51";
 
 QString g_dataFolder;//数据导出目录
 
-int g_pageSize = 20;
+int g_pageSize = 25;
 int g_maxPage = 2;
 int g_curPage = 1;
 
@@ -1827,6 +1828,7 @@ void IRProc::btnAnalyze()
 	g_age = ui.tableWidget->item(row, 6)->text();
 	g_name = ui.tableWidget->item(row, 3)->text();
 	g_gender = ui.tableWidget->item(row, 4)->text();
+	g_ID = ui.tableWidget->item(row, 5)->text();
 
 	if (g_gender == QString::fromLocal8Bit("男"))
 	{
@@ -1866,13 +1868,13 @@ void IRProc::btnAnalyze()
 	}
 	else
 	{
-		std::map<std::string, std::string>::iterator it = mapUserInfoResp.begin();
+		//std::map<std::string, std::string>::iterator it = mapUserInfoResp.begin();
 
-		it = mapUserInfoResp.begin();
-		QString rectmp;
-		it++;
-		rectmp = QString::fromLocal8Bit(it->second.c_str());
-		g_ID = rectmp;//证件号
+		//it = mapUserInfoResp.begin();
+		//QString rectmp;
+		//it++;
+		//rectmp = QString::fromLocal8Bit(it->second.c_str());
+		//g_ID = rectmp;//证件号
 
 
 		if (mapUserInfoResp.end() != mapUserInfoResp.find("pic"))
@@ -2669,6 +2671,7 @@ void IRProc::addData(int index, QString cardID, QString scanID, QString RegTime)
 
 		ui.tableWidget->setItem(index, 3, new QTableWidgetItem(g_name));
 		ui.tableWidget->setItem(index, 4, new QTableWidgetItem(g_gender));
+		ui.tableWidget->setItem(index, 5, new QTableWidgetItem(g_ID));
 		ui.tableWidget->setItem(index, 6, new QTableWidgetItem(g_age));
 
 		if (mapUserInfoResp.end() != mapUserInfoResp.find("pic"))
@@ -2797,28 +2800,31 @@ void IRProc::updateData()
 
 	std::string sData;
 
+	if (g_show_progress)
+	{
+		progressDialog = new QProgressDialog(this);
 
-	Qt::WindowFlags flags = Qt::Dialog;
-	flags |= Qt::WindowCloseButtonHint;
+		Qt::WindowFlags flags = Qt::Dialog;
+		flags |= Qt::WindowCloseButtonHint;
 
-	QProgressDialog *progressDialog = new QProgressDialog(this);
-	progressDialog->setWindowFlags(flags);
+		progressDialog->setWindowFlags(flags);
 
-	QLabel *lb = new QLabel;
-	lb->setStyleSheet("color:rgb(255,255,255)");
-	QPushButton *bt = new QPushButton;
-	bt->setStyleSheet("color:rgb(255,255,255)");
+		QLabel *lb = new QLabel;
+		lb->setStyleSheet("color:rgb(255,255,255)");
+		QPushButton *bt = new QPushButton;
+		bt->setStyleSheet("color:rgb(255,255,255)");
 
-	progressDialog->setLabel(lb);
-	progressDialog->setLabelText(QString::fromLocal8Bit("数据载入中..."));
-	progressDialog->setCancelButton(bt);
-	progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+		progressDialog->setLabel(lb);
+		progressDialog->setLabelText(QString::fromLocal8Bit("数据载入中..."));
+		progressDialog->setCancelButton(bt);
+		progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
 
-	progressDialog->setWindowModality(Qt::WindowModal);
-	progressDialog->setMinimumDuration(5);
-	progressDialog->setWindowTitle(QString::fromLocal8Bit("数据载入中..."));
+		progressDialog->setWindowModality(Qt::WindowModal);
+		progressDialog->setMinimumDuration(5);
+		progressDialog->setWindowTitle(QString::fromLocal8Bit("数据载入中..."));
 
-
+	}	
+	
 
 	int iRet = m_cli.get_listdata(sParams, sData);
 
@@ -2833,9 +2839,12 @@ void IRProc::updateData()
 		QString temp = lst[0].section('&', 0, 0);
 		int dataNum = temp.section('=', -1, -1).toInt();
 
-		int num = dataNum;
+		int num = dataNum<g_pageSize?dataNum:g_pageSize;
 
-		progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+		if (g_show_progress)
+		{
+			progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+		}
 
 		g_maxPage = (dataNum - 1) / g_pageSize + 1;
 
@@ -2847,9 +2856,12 @@ void IRProc::updateData()
 			//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
 
 			addData(i, lst[i].section(',', 0, 0), lst[i].section(',', 1, 1), lst[i].section(',', -1, -1));
-			progressDialog->setValue(i + 1);
-			if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
-				return;
+			if (g_show_progress)
+			{
+				progressDialog->setValue(i + 1);
+				if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
+					return;
+			}
 		}
 
 	}
@@ -2861,6 +2873,12 @@ void IRProc::updateData()
 		m_cli.close();
 		conDataBase();
 	}
+
+	if (g_show_progress)
+	{
+		g_show_progress = 0;
+	}
+
 }
 
 void IRProc::btn_showAll()
@@ -3163,6 +3181,7 @@ void IRProc::btn_change()
 	g_age = ui.tableWidget->item(row, 6)->text();
 	g_name = ui.tableWidget->item(row, 3)->text();
 	g_gender = ui.tableWidget->item(row, 4)->text();
+	g_ID = ui.tableWidget->item(row, 5)->text();
 
 	g_reg_flag = 0;
 

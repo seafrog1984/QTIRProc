@@ -3,6 +3,9 @@
 #include <QWidget>
 #include "ui_LogDlg.h"
 
+
+
+
 class LogDlg : public QWidget
 {
 	Q_OBJECT
