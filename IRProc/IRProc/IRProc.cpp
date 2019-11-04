@@ -1236,7 +1236,7 @@ void IRProc::btnMerNar()
 {
 	if (g_mer_flag[g_cur_img])
 	{
-		if (g_mer_hratio[g_cur_img] - 0.5 > 0.1)
+		if (g_mer_hratio[g_cur_img] - 0.01 > 0.01)
 			g_mer_hratio[g_cur_img] = g_mer_hratio[g_cur_img] - MER_RATIO_STEP;
 		else
 			g_mer_hratio[g_cur_img] = 0.5;
@@ -1272,7 +1272,7 @@ void IRProc::btnMerLower()
 {
 	if (g_mer_flag[g_cur_img])
 	{
-		if (g_mer_vratio[g_cur_img] - 0.5 > 0.1)
+		if (g_mer_vratio[g_cur_img] - 0.01 > 0.01)
 			g_mer_vratio[g_cur_img] = g_mer_vratio[g_cur_img] - MER_RATIO_STEP;
 		else
 			g_mer_vratio[g_cur_img] = 0.5;
@@ -2787,6 +2787,10 @@ void IRProc::conDataBase()
 void IRProc::updateData()
 {
 
+	QDateTime current_time = QDateTime::currentDateTime();
+	QString start_time = current_time.toString("yyyy-MM-dd"); //
+	QString end_time = current_time.addDays(1).toString("yyyy-MM-dd"); //
+
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";
 	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
@@ -2794,37 +2798,15 @@ void IRProc::updateData()
 	//mapParams["name"] = "张三";
 	//mapParams["cardid"] = "CARD100000000001";
 	//mapParams["scanid"] = "SCAN001";
-	//mapParams["begin"] = "2018-12-01 00:00:00";
-	//mapParams["end"] = "2019-12-01 00:00:00";
+	mapParams["begin"] = start_time.toStdString();
+	mapParams["end"] = end_time.toStdString();
+
 	std::string sParams = map_join(mapParams, '&', '=');
 
 	std::string sData;
 
-	if (g_show_progress)
-	{
-		progressDialog = new QProgressDialog(this);
 
-		Qt::WindowFlags flags = Qt::Dialog;
-		flags |= Qt::WindowCloseButtonHint;
 
-		progressDialog->setWindowFlags(flags);
-
-		QLabel *lb = new QLabel;
-		lb->setStyleSheet("color:rgb(255,255,255)");
-		QPushButton *bt = new QPushButton;
-		bt->setStyleSheet("color:rgb(255,255,255)");
-
-		progressDialog->setLabel(lb);
-		progressDialog->setLabelText(QString::fromLocal8Bit("数据载入中..."));
-		progressDialog->setCancelButton(bt);
-		progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
-
-		progressDialog->setWindowModality(Qt::WindowModal);
-		progressDialog->setMinimumDuration(5);
-		progressDialog->setWindowTitle(QString::fromLocal8Bit("数据载入中..."));
-
-	}	
-	
 
 	int iRet = m_cli.get_listdata(sParams, sData);
 
@@ -2839,29 +2821,58 @@ void IRProc::updateData()
 		QString temp = lst[0].section('&', 0, 0);
 		int dataNum = temp.section('=', -1, -1).toInt();
 
-		int num = dataNum<g_pageSize?dataNum:g_pageSize;
+		int num = dataNum<g_pageSize ? dataNum : g_pageSize;
 
-		if (g_show_progress)
+		if (num>0)
 		{
-			progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
-		}
-
-		g_maxPage = (dataNum - 1) / g_pageSize + 1;
-
-
-		lst[0] = lst[0].section('=', -1, -1);
-		ui.tableWidget->setRowCount(lst.size());
-		for (int i = 0; i != lst.size(); ++i)
-		{
-			//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
-
-			addData(i, lst[i].section(',', 0, 0), lst[i].section(',', 1, 1), lst[i].section(',', -1, -1));
 			if (g_show_progress)
 			{
-				progressDialog->setValue(i + 1);
-				if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
-					return;
+				progressDialog = new QProgressDialog(this);
+
+				Qt::WindowFlags flags = Qt::Dialog;
+				flags |= Qt::WindowCloseButtonHint;
+
+				progressDialog->setWindowFlags(flags);
+
+				QLabel *lb = new QLabel;
+				lb->setStyleSheet("color:rgb(255,255,255)");
+				QPushButton *bt = new QPushButton;
+				bt->setStyleSheet("color:rgb(255,255,255)");
+
+				progressDialog->setLabel(lb);
+				progressDialog->setLabelText(QString::fromLocal8Bit("数据载入中..."));
+				progressDialog->setCancelButton(bt);
+				progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+
+				progressDialog->setWindowModality(Qt::WindowModal);
+				progressDialog->setMinimumDuration(5);
+				progressDialog->setWindowTitle(QString::fromLocal8Bit("数据载入中..."));
+				progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+
 			}
+
+
+			g_maxPage = (dataNum - 1) / g_pageSize + 1;
+
+
+			lst[0] = lst[0].section('=', -1, -1);
+			ui.tableWidget->setRowCount(lst.size());
+			for (int i = 0; i != lst.size(); ++i)
+			{
+				//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
+
+				addData(i, lst[i].section(',', 0, 0), lst[i].section(',', 1, 1), lst[i].section(',', -1, -1));
+				if (g_show_progress)
+				{
+					progressDialog->setValue(i + 1);
+					if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
+						return;
+				}
+			}
+		}
+		else
+		{
+			ui.tableWidget->setRowCount(0);
 		}
 
 	}
