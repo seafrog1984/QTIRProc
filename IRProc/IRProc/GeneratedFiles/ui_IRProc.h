@@ -232,6 +232,20 @@ public:
     QTableWidget *tableWidget;
     QWidget *showpageImg;
     QGridLayout *gridLayout_4;
+    QToolButton *toolButton_shift_down;
+    QStackedWidget *stackedWidget_21;
+    QWidget *widget2;
+    QGridLayout *gridLayout;
+    QGridLayout *gridLayout_2;
+    QWidget *pageBigImg;
+    QGridLayout *gridLayout_7;
+    QGridLayout *gridLayout_6;
+    QToolButton *toolButton_ctrl_down;
+    QToolButton *toolButton_ctrl_up;
+    QToolButton *toolButton_down;
+    QToolButton *toolBarExpandBt;
+    QToolButton *toolButton_up;
+    QToolButton *btn_show_func;
     QTabWidget *tabWidget;
     QWidget *pageDataCal;
     QLabel *label_7;
@@ -245,26 +259,18 @@ public:
     QTableWidget *tagWidget;
     QWidget *pageImgThum;
     QGridLayout *gridLayout_5;
+    QGridLayout *gridLayout_3;
     QListWidget *listWidget_date;
     QComboBox *comboBox_user;
-    QGridLayout *gridLayout_3;
-    QToolButton *btn_show_func;
-    QStackedWidget *stackedWidget_21;
-    QWidget *widget2;
-    QGridLayout *gridLayout;
-    QGridLayout *gridLayout_2;
-    QWidget *pageBigImg;
-    QGridLayout *gridLayout_7;
-    QGridLayout *gridLayout_6;
-    QToolButton *toolBarExpandBt;
+    QToolButton *toolButton_shift_up;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
     QButtonGroup *buttonGroup_4;
     QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_5;
     QButtonGroup *buttonGroup_2;
     QButtonGroup *buttonGroup_3;
+    QButtonGroup *buttonGroup_5;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -1959,6 +1965,86 @@ public:
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        toolButton_shift_down = new QToolButton(showpageImg);
+        toolButton_shift_down->setObjectName(QStringLiteral("toolButton_shift_down"));
+        toolButton_shift_down->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolButton_shift_down, 1, 2, 1, 1);
+
+        stackedWidget_21 = new QStackedWidget(showpageImg);
+        stackedWidget_21->setObjectName(QStringLiteral("stackedWidget_21"));
+        stackedWidget_21->setMinimumSize(QSize(400, 300));
+        widget2 = new QWidget();
+        widget2->setObjectName(QStringLiteral("widget2"));
+        widget2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
+        gridLayout = new QGridLayout(widget2);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+
+        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
+
+        stackedWidget_21->addWidget(widget2);
+        pageBigImg = new QWidget();
+        pageBigImg->setObjectName(QStringLiteral("pageBigImg"));
+        gridLayout_7 = new QGridLayout(pageBigImg);
+        gridLayout_7->setSpacing(6);
+        gridLayout_7->setContentsMargins(11, 11, 11, 11);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        gridLayout_6 = new QGridLayout();
+        gridLayout_6->setSpacing(6);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+
+        gridLayout_7->addLayout(gridLayout_6, 0, 0, 1, 1);
+
+        stackedWidget_21->addWidget(pageBigImg);
+
+        gridLayout_4->addWidget(stackedWidget_21, 0, 0, 1, 1);
+
+        toolButton_ctrl_down = new QToolButton(showpageImg);
+        toolButton_ctrl_down->setObjectName(QStringLiteral("toolButton_ctrl_down"));
+        toolButton_ctrl_down->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolButton_ctrl_down, 1, 4, 1, 1);
+
+        toolButton_ctrl_up = new QToolButton(showpageImg);
+        toolButton_ctrl_up->setObjectName(QStringLiteral("toolButton_ctrl_up"));
+        toolButton_ctrl_up->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolButton_ctrl_up, 1, 3, 1, 1);
+
+        toolButton_down = new QToolButton(showpageImg);
+        toolButton_down->setObjectName(QStringLiteral("toolButton_down"));
+        toolButton_down->setMaximumSize(QSize(1, 1));
+        toolButton_down->setIconSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolButton_down, 0, 5, 1, 1, Qt::AlignVCenter);
+
+        toolBarExpandBt = new QToolButton(showpageImg);
+        toolBarExpandBt->setObjectName(QStringLiteral("toolBarExpandBt"));
+        toolBarExpandBt->setMinimumSize(QSize(1, 1));
+        toolBarExpandBt->setMaximumSize(QSize(1, 1));
+        toolBarExpandBt->setStyleSheet(QStringLiteral(""));
+        toolBarExpandBt->setIconSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolBarExpandBt, 0, 6, 1, 1, Qt::AlignVCenter);
+
+        toolButton_up = new QToolButton(showpageImg);
+        toolButton_up->setObjectName(QStringLiteral("toolButton_up"));
+        toolButton_up->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(toolButton_up, 0, 4, 1, 1);
+
+        btn_show_func = new QToolButton(showpageImg);
+        btn_show_func->setObjectName(QStringLiteral("btn_show_func"));
+        btn_show_func->setMinimumSize(QSize(1, 1));
+        btn_show_func->setMaximumSize(QSize(1, 1));
+
+        gridLayout_4->addWidget(btn_show_func, 0, 7, 1, 1);
+
         tabWidget = new QTabWidget(showpageImg);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setMinimumSize(QSize(150, 0));
@@ -2038,9 +2124,15 @@ public:
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+
+        gridLayout_5->addLayout(gridLayout_3, 2, 0, 2, 2);
+
         listWidget_date = new QListWidget(pageImgThum);
         listWidget_date->setObjectName(QStringLiteral("listWidget_date"));
-        listWidget_date->setMinimumSize(QSize(0, 50));
+        listWidget_date->setMinimumSize(QSize(0, 80));
         listWidget_date->setMaximumSize(QSize(16777215, 50));
         listWidget_date->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
         listWidget_date->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -2053,64 +2145,15 @@ public:
 
         gridLayout_5->addWidget(comboBox_user, 0, 0, 1, 1);
 
-        gridLayout_3 = new QGridLayout();
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-
-        gridLayout_5->addLayout(gridLayout_3, 2, 0, 2, 2);
-
         tabWidget->addTab(pageImgThum, QString());
 
-        gridLayout_4->addWidget(tabWidget, 0, 3, 1, 1);
+        gridLayout_4->addWidget(tabWidget, 0, 8, 1, 1);
 
-        btn_show_func = new QToolButton(showpageImg);
-        btn_show_func->setObjectName(QStringLiteral("btn_show_func"));
-        btn_show_func->setMinimumSize(QSize(1, 1));
-        btn_show_func->setMaximumSize(QSize(1, 1));
+        toolButton_shift_up = new QToolButton(showpageImg);
+        toolButton_shift_up->setObjectName(QStringLiteral("toolButton_shift_up"));
+        toolButton_shift_up->setMaximumSize(QSize(1, 1));
 
-        gridLayout_4->addWidget(btn_show_func, 0, 2, 1, 1);
-
-        stackedWidget_21 = new QStackedWidget(showpageImg);
-        stackedWidget_21->setObjectName(QStringLiteral("stackedWidget_21"));
-        stackedWidget_21->setMinimumSize(QSize(400, 300));
-        widget2 = new QWidget();
-        widget2->setObjectName(QStringLiteral("widget2"));
-        widget2->setStyleSheet(QStringLiteral("color: rgb(255, 255, 255);"));
-        gridLayout = new QGridLayout(widget2);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-
-        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
-
-        stackedWidget_21->addWidget(widget2);
-        pageBigImg = new QWidget();
-        pageBigImg->setObjectName(QStringLiteral("pageBigImg"));
-        gridLayout_7 = new QGridLayout(pageBigImg);
-        gridLayout_7->setSpacing(6);
-        gridLayout_7->setContentsMargins(11, 11, 11, 11);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        gridLayout_6 = new QGridLayout();
-        gridLayout_6->setSpacing(6);
-        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
-
-        gridLayout_7->addLayout(gridLayout_6, 0, 0, 1, 1);
-
-        stackedWidget_21->addWidget(pageBigImg);
-
-        gridLayout_4->addWidget(stackedWidget_21, 0, 0, 1, 1);
-
-        toolBarExpandBt = new QToolButton(showpageImg);
-        toolBarExpandBt->setObjectName(QStringLiteral("toolBarExpandBt"));
-        toolBarExpandBt->setMinimumSize(QSize(1, 1));
-        toolBarExpandBt->setMaximumSize(QSize(1, 1));
-        toolBarExpandBt->setStyleSheet(QStringLiteral(""));
-        toolBarExpandBt->setIconSize(QSize(1, 1));
-
-        gridLayout_4->addWidget(toolBarExpandBt, 0, 1, 1, 1);
+        gridLayout_4->addWidget(toolButton_shift_up, 1, 1, 1, 1);
 
         stackedWidget_2->addWidget(showpageImg);
 
@@ -2146,7 +2189,7 @@ public:
 
         stackedWidget->setCurrentIndex(2);
         stackedWidget_2->setCurrentIndex(0);
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(IRProcClass);
@@ -2154,7 +2197,7 @@ public:
 
     void retranslateUi(QMainWindow *IRProcClass)
     {
-        IRProcClass->setWindowTitle(QApplication::translate("IRProcClass", "GTT3.0", 0));
+        IRProcClass->setWindowTitle(QApplication::translate("IRProcClass", "GTT1.0-Proc", 0));
         imgProcAct->setText(QApplication::translate("IRProcClass", "\345\233\276\345\203\217\345\244\204\347\220\206", 0));
 #ifndef QT_NO_TOOLTIP
         imgProcAct->setToolTip(QApplication::translate("IRProcClass", "\345\233\276\345\203\217\345\244\204\347\220\206", 0));
@@ -2419,6 +2462,29 @@ public:
         ___qtablewidgetitem10->setText(QApplication::translate("IRProcClass", "\346\211\253\346\217\217\346\254\241\346\225\260", 0));
         QTableWidgetItem *___qtablewidgetitem11 = tableWidget->horizontalHeaderItem(11);
         ___qtablewidgetitem11->setText(QApplication::translate("IRProcClass", "\345\214\273\351\231\242\345\220\215\347\247\260", 0));
+        toolButton_shift_down->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_shift_down->setShortcut(QApplication::translate("IRProcClass", "Shift+Down", 0));
+        toolButton_ctrl_down->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_ctrl_down->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Down", 0));
+        toolButton_ctrl_up->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_ctrl_up->setShortcut(QApplication::translate("IRProcClass", "Ctrl+Up", 0));
+        toolButton_down->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_down->setShortcut(QApplication::translate("IRProcClass", "Down", 0));
+#ifndef QT_NO_TOOLTIP
+        toolBarExpandBt->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_STATUSTIP
+        toolBarExpandBt->setStatusTip(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+#endif // QT_NO_STATUSTIP
+#ifndef QT_NO_WHATSTHIS
+        toolBarExpandBt->setWhatsThis(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+#endif // QT_NO_WHATSTHIS
+        toolBarExpandBt->setText(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
+        toolBarExpandBt->setShortcut(QApplication::translate("IRProcClass", "Ctrl+E", 0));
+        toolButton_up->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_up->setShortcut(QApplication::translate("IRProcClass", "Up", 0));
+        btn_show_func->setText(QApplication::translate("IRProcClass", "...", 0));
+        btn_show_func->setShortcut(QApplication::translate("IRProcClass", "Ctrl+F", 0));
         label_7->setText(QApplication::translate("IRProcClass", "max-TR", 0));
         label_8->setText(QApplication::translate("IRProcClass", "av-TR", 0));
         min_TR->setText(QString());
@@ -2437,19 +2503,8 @@ public:
         ___qtablewidgetitem16->setText(QApplication::translate("IRProcClass", "msd", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageDataCal), QApplication::translate("IRProcClass", "\346\225\260\346\215\256\346\265\213\351\207\217", 0));
         tabWidget->setTabText(tabWidget->indexOf(pageImgThum), QApplication::translate("IRProcClass", "\347\274\251\347\225\245\345\233\276", 0));
-        btn_show_func->setText(QApplication::translate("IRProcClass", "...", 0));
-        btn_show_func->setShortcut(QApplication::translate("IRProcClass", "Ctrl+F", 0));
-#ifndef QT_NO_TOOLTIP
-        toolBarExpandBt->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_STATUSTIP
-        toolBarExpandBt->setStatusTip(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-#endif // QT_NO_STATUSTIP
-#ifndef QT_NO_WHATSTHIS
-        toolBarExpandBt->setWhatsThis(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-#endif // QT_NO_WHATSTHIS
-        toolBarExpandBt->setText(QApplication::translate("IRProcClass", "\345\261\225\345\274\200\346\211\200\346\234\211\345\267\245\345\205\267\346\240\217", 0));
-        toolBarExpandBt->setShortcut(QApplication::translate("IRProcClass", "Ctrl+E", 0));
+        toolButton_shift_up->setText(QApplication::translate("IRProcClass", "...", 0));
+        toolButton_shift_up->setShortcut(QApplication::translate("IRProcClass", "Shift+Up", 0));
         toolBar->setWindowTitle(QApplication::translate("IRProcClass", "toolBar", 0));
     } // retranslateUi
 

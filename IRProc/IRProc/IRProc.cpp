@@ -142,6 +142,7 @@ IRProc::IRProc(QWidget *parent)
 {
 	ui.setupUi(this);
 
+	this->installEventFilter(this);
 
 	ui.tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:rgb(21,85,141);color:rgb(255,255,255);}"); //设置表头背景色
 	ui.tableWidget->horizontalHeader()->setSectionsClickable(false);
@@ -161,6 +162,8 @@ IRProc::IRProc(QWidget *parent)
 //	ui.tagWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);	//设置每行内容不可编辑
 	ui.tagWidget->setSelectionMode(QAbstractItemView::SingleSelection);	//设置只能选择一行，不能选择多行
 
+	ui.dateEdit_start->setCalendarPopup(true);
+	ui.dateEdit_end->setCalendarPopup(true);
 
 
 	//setWindowTitle(tr("Main Window"));
@@ -196,7 +199,12 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.update_all, SIGNAL(clicked()), this, SLOT(setUpAll()));
 	connect(ui.btn_sel_tag, SIGNAL(clicked()), this, SLOT(tagSel()));
 	connect(ui.btn_del_tag, SIGNAL(clicked()), this, SLOT(tagDel()));
-
+	connect(ui.toolButton_up, SIGNAL(clicked()), this, SLOT(keyUp()));
+	connect(ui.toolButton_down, SIGNAL(clicked()), this, SLOT(keyDown()));
+	connect(ui.toolButton_ctrl_up, SIGNAL(clicked()), this, SLOT(keyCtrlUp()));
+	connect(ui.toolButton_ctrl_down, SIGNAL(clicked()), this, SLOT(keyCtrlDown()));
+	connect(ui.toolButton_shift_up, SIGNAL(clicked()), this, SLOT(keyShiftUp()));
+	connect(ui.toolButton_shift_down, SIGNAL(clicked()), this, SLOT(keyShiftDown()));
 
 	ui.btn_sel->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
 
@@ -357,7 +365,7 @@ IRProc::IRProc(QWidget *parent)
 	timer->start(1000); //每隔1000ms发送timeout的信号
 	connect(timer, SIGNAL(timeout()), this, SLOT(time_update()));
 
-	this->grabKeyboard();//捕获键盘事件
+//	this->grabKeyboard();//捕获键盘事件
 	
 	// 检查目录是否存在，若不存在则新建
 
@@ -368,6 +376,76 @@ IRProc::IRProc(QWidget *parent)
 	}
 
 
+}
+
+void IRProc::keyUpdate()
+{
+	if (g_upAll_flag)
+	{
+		for (int i = 0; i < g_picNum; i++)
+		{
+			g_bot[i] = g_bot[g_cur_img];
+		}
+	}
+
+	updateImage();
+
+	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
+	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
+
+	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
+	ui.slider_bot->update();
+
+	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
+}
+
+void IRProc::keyUp()
+{
+
+	double step = 0.01;
+	g_bot[g_cur_img] += step;
+	keyUpdate();
+	
+}
+
+void IRProc::keyDown()
+{
+	double step = 0.01;
+	g_bot[g_cur_img] -= step;
+	keyUpdate();
+}
+
+void IRProc::keyCtrlUp()
+{
+
+	double step = 0.1;
+	g_bot[g_cur_img] += step;
+	keyUpdate();
+
+}
+
+void IRProc::keyCtrlDown()
+{
+	double step = 0.1;
+	g_bot[g_cur_img] -= step;
+	keyUpdate();
+}
+
+void IRProc::keyShiftUp()
+{
+
+	double step = 0.05;
+	g_bot[g_cur_img] += step;
+	keyUpdate();
+
+}
+
+void IRProc::keyShiftDown()
+{
+	double step = 0.05;
+	g_bot[g_cur_img] -= step;
+	keyUpdate();
 }
 
 
@@ -393,64 +471,110 @@ void IRProc::updateTag()
 	}
 }
 
+//bool IRProc::eventFilter(QObject *object, QEvent *e)
+//{
+//	if (e->type() == QEvent::KeyPress)
+//	{
+//		QKeyEvent *event = static_cast<QKeyEvent *>(e);
+//		double step = 0.01;
+//		if (event->modifiers() == Qt::ControlModifier)
+//		{
+//			step = 0.1;
+//		}
+//		else if (event->modifiers() == Qt::ShiftModifier)
+//		{
+//			step = 0.05;
+//		}
+//
+//		if (event->key() == Qt::Key_Up)
+//		{
+//			g_bot[g_cur_img] += step;
+//		}
+//		else if (event->key() == Qt::Key_Down)
+//		{
+//			g_bot[g_cur_img] -= step;
+//		}
+//
+//		if (g_upAll_flag)
+//		{
+//			for (int i = 0; i < g_picNum; i++)
+//			{
+//				g_bot[i] = g_bot[g_cur_img];
+//			}
+//		}
+//
+//		updateImage();
+//
+//		ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
+//		/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
+//
+//		ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
+//		ui.slider_bot->update();
+//
+//		ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+//		ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
+//
+//	}
+//	return QWidget::eventFilter(object, e);
+//}
 
-void IRProc::keyPressEvent(QKeyEvent *event)
-{
-
-	if (event->key() == Qt::Key_Backspace)
-	{
-		QWidget *currentitem;
-		currentitem = QApplication::focusWidget();
-		if (currentitem->inherits("QLineEdit"))
-		{
-			QLineEdit *le = (QLineEdit *)currentitem;
-			le->setText("");
-		}
-
-	}
-
-
-	double step = 0.01;
-	if (event->modifiers() == Qt::ControlModifier)
-	{
-		step = 0.1;
-	}
-	else if (event->modifiers() == Qt::ShiftModifier)
-	{
-		step = 0.05;
-	}
-
-	if (event->key() == Qt::Key_Up)
-	{
-		g_bot[g_cur_img] += step;
-	}
-	else if (event->key() == Qt::Key_Down)
-	{
-		g_bot[g_cur_img] -= step;
-	}
-
-	if (g_upAll_flag)
-	{
-		for (int i = 0; i < g_picNum; i++)
-		{
-			g_bot[i] = g_bot[g_cur_img];
-		}
-	}
-
-	updateImage();
-
-	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
-	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
-
-	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
-	ui.slider_bot->update();
-
-	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
-	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
-
-
-	QWidget::keyPressEvent(event);
-}
+//void IRProc::keyPressEvent(QKeyEvent *event)
+//{
+//
+//	if (event->key() == Qt::Key_Backspace)
+//	{
+//		QWidget *currentitem;
+//		currentitem = QApplication::focusWidget();
+//		if (currentitem->inherits("QLineEdit"))
+//		{
+//			QLineEdit *le = (QLineEdit *)currentitem;
+//			le->setText("");
+//		}
+//
+//	}
+//
+//
+//	double step = 0.01;
+//	if (event->modifiers() == Qt::ControlModifier)
+//	{
+//		step = 0.1;
+//	}
+//	else if (event->modifiers() == Qt::ShiftModifier)
+//	{
+//		step = 0.05;
+//	}
+//
+//	if (event->key() == Qt::Key_Up)
+//	{
+//		g_bot[g_cur_img] += step;
+//	}
+//	else if (event->key() == Qt::Key_Down)
+//	{
+//		g_bot[g_cur_img] -= step;
+//	}
+//
+//	if (g_upAll_flag)
+//	{
+//		for (int i = 0; i < g_picNum; i++)
+//		{
+//			g_bot[i] = g_bot[g_cur_img];
+//		}
+//	}
+//
+//	updateImage();
+//
+//	ui.slider_bot->setValue(g_bot[g_cur_img] * 100);
+//	/*ui.slider_bot->m_displayLabel->setText(QString::number(g_bot));
+//
+//	ui.slider_bot->m_displayLabel->move((ui.slider_bot->width() - ui.slider_bot->m_displayLabel->width())*g_bot / 50, 0);*/
+//	ui.slider_bot->update();
+//
+//	ui.tmper_low->setText(QString::number(g_bot[g_cur_img]));
+//	ui.temper_high->setText(QString::number(g_bot[g_cur_img] + g_win_width[g_cur_img]));
+//
+//
+//	QWidget::keyPressEvent(event);
+//}
 
 void IRProc::tagSel()
 {
@@ -1791,25 +1915,7 @@ void IRProc::btnAnalyze()
 	//char*  path;
 	//QByteArray t = filename.toLatin1(); // must
 	//path = t.data();
-	Qt::WindowFlags flags = Qt::Dialog;
-	flags |= Qt::WindowCloseButtonHint;
 
-	QProgressDialog *progressDialog = new QProgressDialog(this); 
-	progressDialog->setWindowFlags(flags);
-
-	QLabel *lb = new QLabel;
-	lb->setStyleSheet("color:rgb(255,255,255)");
-	QPushButton *bt = new QPushButton;
-	bt->setStyleSheet("color:rgb(255,255,255)");
-
-	progressDialog->setLabel(lb);
-	progressDialog->setLabelText(QString::fromLocal8Bit("图像载入中..."));
-	progressDialog->setCancelButton(bt);
-	progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
-
-	progressDialog->setWindowModality(Qt::WindowModal);
-	progressDialog->setMinimumDuration(5);
-	progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
 
 
 
@@ -1895,6 +2001,27 @@ void IRProc::btnAnalyze()
 	else
 	{
 
+		Qt::WindowFlags flags = Qt::Dialog;
+		flags |= Qt::WindowCloseButtonHint;
+
+		QProgressDialog *progressDialog = new QProgressDialog(this);
+		progressDialog->setWindowFlags(flags);
+
+		QLabel *lb = new QLabel;
+		lb->setStyleSheet("color:rgb(255,255,255)");
+		QPushButton *bt = new QPushButton;
+		bt->setStyleSheet("color:rgb(255,255,255)");
+
+		progressDialog->setLabel(lb);
+		progressDialog->setLabelText(QString::fromLocal8Bit("图像载入中..."));
+		progressDialog->setCancelButton(bt);
+		progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+
+		progressDialog->setWindowModality(Qt::WindowModal);
+		progressDialog->setMinimumDuration(5);
+		progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
+
+
 		unsigned short sPicData[PIC_SIZE]; // = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
 
 		pic_count = (int)vecPngIDResp.size();
@@ -1920,6 +2047,7 @@ void IRProc::btnAnalyze()
 				QMessageBox::information(NULL, "Title", m_msg);
 				m_cli.close();
 				conDataBase();
+				progressDialog->close();
 				return;
 				break;
 			}
@@ -2790,6 +2918,9 @@ void IRProc::updateData()
 	QDateTime current_time = QDateTime::currentDateTime();
 	QString start_time = current_time.toString("yyyy-MM-dd"); //
 	QString end_time = current_time.addDays(1).toString("yyyy-MM-dd"); //
+
+	ui.dateEdit_start->setDateTime(current_time);
+	ui.dateEdit_end->setDateTime(current_time.addDays(1));
 
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";

@@ -37,8 +37,10 @@ public:
 	void conDataBase();//连接数据库
 	void updateData();
 	void addData(int index, QString cardID, QString scanID, QString RegTime);
+	void keyUpdate();
 
-	virtual void keyPressEvent(QKeyEvent *event);
+	//virtual void keyPressEvent(QKeyEvent *event);
+//	bool eventFilter(QObject *, QEvent *);
 
 private:
 	Ui::IRProcClass ui;
@@ -48,6 +50,7 @@ private:
 	void dataManage();//数据管理
 	void sysSetting();//系统设置
 	virtual void resizeEvent(QResizeEvent * event);
+
 
 public slots:
 
@@ -80,6 +83,12 @@ public slots:
 	void setUpAll();//同步断层
 	void tagSel();//选择标签
 	void tagDel();//删除标签
+	void keyUp();//键盘断层up
+	void keyDown();//键盘断层down
+	void keyCtrlUp();//键盘断层ctrl+up
+	void keyCtrlDown();//键盘断层ctrl+down
+	void keyShiftUp();//键盘断层shift+up
+	void keyShiftDown();//键盘断层shift+down
 
 	
 
