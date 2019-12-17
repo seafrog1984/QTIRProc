@@ -480,6 +480,7 @@ void MyLabel::paintEvent(QPaintEvent *ev)
 	if (g_flag_showTemper&&g_mouse_mode==6)
 	{
 		QString strTemper = QString::number(m_temper);
+	//	QString strTemper = QString::number(p2.x()) + ',' + QString::number(p2.y())+':'+ QString::number(m_temper);
 		painter.drawText(p2.x(), p2.y(), strTemper);
 	}
 
@@ -628,11 +629,11 @@ void MyLabel::calPar(int cur_shape_no)
 			}
 		}
 
-		srand(time(NULL));
-		int t = rand() % 100;
-		if (topvalue <= 0) topvalue = 32.8+1.0*t/100;
-		if (bottomvalue <= 0) bottomvalue = 29.3+1.0*t / 100;
-		if (aver <= 0 || aver >= 50) aver = 30.84 + 1.0*t / 100;
+		//srand(time(NULL));
+		//int t = rand() % 100;
+		//if (topvalue <= 0) topvalue = 32.8+1.0*t/100;
+		//if (bottomvalue <= 0) bottomvalue = 29.3+1.0*t / 100;
+		//if (aver <= 0 || aver >= 50) aver = 30.84 + 1.0*t / 100;
 
 
 		allshape[cur_img][cur_shape_no].t_max = topvalue;;
