@@ -89,7 +89,8 @@ public slots:
 	void keyCtrlDown();//键盘断层ctrl+down
 	void keyShiftUp();//键盘断层shift+up
 	void keyShiftDown();//键盘断层shift+down
-
+	void nameChanged(int);//缩略图切换人名
+	void scanChanged(QListWidgetItem*);//缩略图切换扫描号
 	
 
 	void btnMerDef();//自定义融合图
@@ -142,6 +143,10 @@ public:
 	void updateTag();//更新选框信息
 
 	int m_mx, m_my;
+
+	int m_user_index;
+	QString m_user[2];
+	QString m_scan[2];
 
 	QProgressDialog *progressDialog;
 

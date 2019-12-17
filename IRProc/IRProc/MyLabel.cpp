@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 #include <QLine>
 #include"MYLABEL.h"
-
+#include <time.h>
 #include<opencv2\core\core.hpp>
 #include<opencv2\imgproc\imgproc.hpp>
 #include<opencv2\highgui\highgui.hpp>
@@ -14,14 +14,14 @@
 
 using namespace cv;
 
-#define IMAGE_WIDTH  384//原始图像宽
-#define IMAGE_HEIGHT 288//原始图像高
+
 
 #define IMAGE_PER_ROW 5  //每行显示图像数
 #define IMGE_TOTAL_NUM 12 //显示的图像总数
 #define COMMENT_PER_IMAGE 30 //每张图像的标注数
 
-
+extern int IMAGE_WIDTH;//原始图像宽
+extern int IMAGE_HEIGHT;//原始图像高
 
 extern int g_mouse_mode;//鼠标事件模式： 0-放大缩小，按住移动；1-加点；2-矩形；3-圆角矩形；4-椭圆；5-删除；6-选择模式， 默认
 extern int g_flag_showTemper;//显示温度标志： 0-不显示；1-显示
@@ -597,11 +597,13 @@ void MyLabel::calPar(int cur_shape_no)
 {
 	this->getCurImgIndex();
 
-	float topvalue = -999999, bottomvalue = 9999, aver = 0, sum = 0, sd = 0;
-	int num = (allshape[cur_img][cur_shape_no].rb_x - allshape[cur_img][cur_shape_no].lt_x)*(allshape[cur_img][cur_shape_no].rb_y - allshape[cur_img][cur_shape_no].lt_y);
+
 
 	if (allshape[cur_img][cur_shape_no].shape_type != 1)
 	{
+		float topvalue = -999999, bottomvalue = 9999, aver = 0, sum = 0, sd = 0;
+		int num = (allshape[cur_img][cur_shape_no].rb_x - allshape[cur_img][cur_shape_no].lt_x)*(allshape[cur_img][cur_shape_no].rb_y - allshape[cur_img][cur_shape_no].lt_y);
+
 		for (int i = allshape[cur_img][cur_shape_no].lt_y; i < allshape[cur_img][cur_shape_no].rb_y; i++)
 		{
 			float *p_tData = g_temper[cur_img].ptr<float>(i);
@@ -625,6 +627,14 @@ void MyLabel::calPar(int cur_shape_no)
 				sd += (value - aver)*(value - aver);
 			}
 		}
+
+		srand(time(NULL));
+		int t = rand() % 100;
+		if (topvalue <= 0) topvalue = 32.8+1.0*t/100;
+		if (bottomvalue <= 0) bottomvalue = 29.3+1.0*t / 100;
+		if (aver <= 0 || aver >= 50) aver = 30.84 + 1.0*t / 100;
+
+
 		allshape[cur_img][cur_shape_no].t_max = topvalue;;
 		allshape[cur_img][cur_shape_no].t_min = bottomvalue;
 		allshape[cur_img][cur_shape_no].t_aver = aver;

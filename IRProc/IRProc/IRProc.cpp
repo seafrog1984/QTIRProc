@@ -22,8 +22,8 @@ using namespace cv;
 using namespace std;
 
 
-#define IMAGE_WIDTH  384//原始图像宽
-#define IMAGE_HEIGHT 288//原始图像高
+int IMAGE_WIDTH = 384;//原始图像宽
+int IMAGE_HEIGHT = 288;//原始图像高
 
 #define IMAGE_PER_ROW 5  //每行显示图像数
 #define IMGE_TOTAL_NUM 12 //显示的图像总数
@@ -205,6 +205,9 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.toolButton_ctrl_down, SIGNAL(clicked()), this, SLOT(keyCtrlDown()));
 	connect(ui.toolButton_shift_up, SIGNAL(clicked()), this, SLOT(keyShiftUp()));
 	connect(ui.toolButton_shift_down, SIGNAL(clicked()), this, SLOT(keyShiftDown()));
+	connect(ui.comboBox_user, SIGNAL(currentIndexChanged(int)), this, SLOT(nameChanged(int)));
+
+	connect(ui.listWidget_date, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(scanChanged(QListWidgetItem*)));
 
 	ui.btn_sel->setStyleSheet(QLatin1String("background-color: rgb(21, 86, 200);"));
 
@@ -376,6 +379,228 @@ IRProc::IRProc(QWidget *parent)
 	}
 
 
+
+	m_user_index = 0;
+
+
+}
+
+
+void IRProc::scanChanged(QListWidgetItem*)
+{
+	int index = ui.listWidget_date->currentRow();
+
+	QString scan;
+	if (index != -1)
+	{
+		scan = ui.listWidget_date->currentItem()->text();
+	}
+
+	conDataBase();
+
+	map<string, string> mapUserInfoResp;
+
+	int ret = m_cli.get_info(scan.toStdString(), mapUserInfoResp);
+	if (-1 == ret)
+	{
+		m_msg = QString::fromLocal8Bit("获取用户信息失败\n");
+		m_msg.append(m_cli.get_msg().c_str());
+		//	m_cli.close();
+		QMessageBox::information(NULL, "Title", m_msg);
+		//mb_conn.EnableWindow(TRUE);
+	}
+	else if (0 == ret)
+	{
+		m_msg = QString::fromLocal8Bit("获取用户信息为空");
+	}
+	else
+	{
+		//std::map<std::string, std::string>::iterator it = mapUserInfoResp.begin();
+
+		//it = mapUserInfoResp.begin();
+		//QString rectmp;
+		//it++;
+		//rectmp = QString::fromLocal8Bit(it->second.c_str());
+		//g_ID = rectmp;//证件号
+
+
+		if (mapUserInfoResp.end() != mapUserInfoResp.find("pic"))
+		{
+			vecPngIDResp.clear();
+			int size = split_vec(mapUserInfoResp["pic"].c_str(), vecPngIDResp, ',');
+		}
+		//return;
+	}
+
+
+	if (0 == vecPngIDResp.size())
+	{
+		m_msg = QString::fromLocal8Bit("图片index列表为空\n请先调用「获取信息」接口");
+		QMessageBox::information(NULL, "Title", m_msg);
+		return;
+	}
+	else
+	{
+
+		Qt::WindowFlags flags = Qt::Dialog;
+		flags |= Qt::WindowCloseButtonHint;
+
+		QProgressDialog *progressDialog = new QProgressDialog(this);
+		progressDialog->setWindowFlags(flags);
+
+		QLabel *lb = new QLabel;
+		lb->setStyleSheet("color:rgb(255,255,255)");
+		QPushButton *bt = new QPushButton;
+		bt->setStyleSheet("color:rgb(255,255,255)");
+
+		progressDialog->setLabel(lb);
+		progressDialog->setLabelText(QString::fromLocal8Bit("图像载入中..."));
+		progressDialog->setCancelButton(bt);
+		progressDialog->setCancelButtonText(QString::fromLocal8Bit("取消"));     //设置进度对话框的取消按钮的显示文字
+
+		progressDialog->setWindowModality(Qt::WindowModal);
+		progressDialog->setMinimumDuration(5);
+		progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
+
+		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT;
+
+		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
+
+		pic_count = (int)vecPngIDResp.size();
+
+		if (pic_count > IMGE_TOTAL_NUM) pic_count = IMGE_TOTAL_NUM;
+
+		int num = pic_count;
+
+		progressDialog->setRange(0, num);                    //设置进度条的范围,从0到num
+
+
+		for (int i = 0; i < pic_count; ++i)
+		{
+			g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
+			m_msg = QString::fromLocal8Bit("获取图片 ");
+			m_msg.append(vecPngIDResp[i].c_str());
+
+			//memset(sPicData, 0, PIC_SIZE*sizeof(short));
+			if (!m_cli.get_png(scan.toStdString(), vecPngIDResp[i], sPicData, pic_size))
+			{
+				m_msg.append(QString::fromLocal8Bit(" 图像为空\n"));
+				//m_msg.append(m_cli.get_msg().c_str());
+				QMessageBox::information(NULL, "Title", m_msg);
+				m_cli.close();
+				conDataBase();
+				progressDialog->close();
+				return;
+				break;
+			}
+			else
+			{
+				m_msg.append(QString::fromLocal8Bit(" 成功\n"));
+
+				g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
+				IMAGE_WIDTH = sPicData[0];
+				IMAGE_HEIGHT = sPicData[1];
+
+				if (IMAGE_WIDTH != 384 && IMAGE_WIDTH != 640)
+				{
+					IMAGE_WIDTH = 384;
+					IMAGE_HEIGHT = 288;
+					*(g_pData[i]) = sPicData[0];
+
+					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					{
+						//outfile << " " << sPicData[j];
+						*(g_pData[i] + j) = sPicData[j];
+					}
+				}
+				else
+				{
+					*(g_pData[i]) = sPicData[2];
+
+					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					{
+						//outfile << " " << sPicData[j];
+						*(g_pData[i] + j) = sPicData[j];
+					}
+
+				}
+
+				*(g_pData[i]) = sPicData[0];
+
+				for (int j = 1; j < PIC_SIZE; ++j)
+				{
+					//outfile << " " << sPicData[j];
+					*(g_pData[i] + j) = sPicData[j];
+				}
+
+				//	 QMessageBox::information(NULL, "Title", m_msg);
+
+				progressDialog->setValue(i + 1);
+				if (progressDialog->wasCanceled())               //检测取消按钮是否被触发,如果触发,则退出循环并关闭进度条
+					return;
+			}
+		}
+	}
+
+	imgProc();
+
+	for (g_picNum = 0; g_picNum < pic_count; g_picNum++)
+	{
+		g_bot[g_picNum] = 22;
+		g_win_width[g_picNum] = 12;
+
+		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
+
+		data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+
+		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
+
+		data2Img(g_pData[g_picNum], g_img_gray[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], 0, g_filter_type, g_bot[g_picNum]);
+		data2Img(g_pData[g_picNum], g_img[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, g_win_width[g_picNum], g_color_type, g_filter_type, g_bot[g_picNum]);
+		g_img[g_picNum].copyTo(g_src[g_picNum]);
+		g_img_gray[g_picNum].copyTo(g_src_gray[g_picNum]);
+
+		g_mer[g_picNum] = Mat::zeros(IMAGE_WIDTH, IMAGE_HEIGHT, CV_8UC3);
+
+		if (g_color_type)
+		{
+			QImage image = QImage((const unsigned char*)(g_img[g_picNum].data), g_img[g_picNum].cols, g_img[g_picNum].rows, QImage::Format_RGB888);
+			g_qImgShow[g_picNum] = image.copy();
+		}
+		else
+		{
+			QImage image_gray = QImage((const unsigned char*)(g_img_gray[g_picNum].data), g_img_gray[g_picNum].cols, g_img_gray[g_picNum].rows, QImage::Format_Grayscale8);
+			g_qImgShow_gray[g_picNum] = image_gray.copy();
+		}
+
+		g_ratio[g_picNum] = 1;
+
+		g_img_show_flag[g_picNum] = 1;
+
+		g_mer_hratio[g_picNum] = g_mer_vratio[g_picNum] = 1;
+		g_mer_pose[g_picNum] = "Front";
+		g_mer_type[g_picNum] = "1";
+
+		resetShape(g_picNum);
+
+	}
+
+	changeLabel(g_picNum, IMAGE_PER_ROW);
+
+	showImage(g_picNum);
+
+	showThum();
+
+}
+
+void IRProc::nameChanged(int index)
+{
+	if (index != -1)
+	{
+		ui.listWidget_date->clear();
+		ui.listWidget_date->addItem(m_scan[index]);
+	}
 }
 
 void IRProc::keyUpdate()
@@ -1950,9 +2175,8 @@ void IRProc::btnAnalyze()
 
 	g_regTime = ui.tableWidget->item(row, 7)->text();
 
-	ui.comboBox_user->addItem(g_name);
 
-	ui.listWidget_date->addItem(g_scanID);
+
 
 
 	conDataBase();
@@ -2021,8 +2245,9 @@ void IRProc::btnAnalyze()
 		progressDialog->setMinimumDuration(5);
 		progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
 
+		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT;
 
-		unsigned short sPicData[PIC_SIZE]; // = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
+		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
 
 		pic_count = (int)vecPngIDResp.size();
 
@@ -2035,12 +2260,12 @@ void IRProc::btnAnalyze()
 
 		for (int i = 0; i < pic_count; ++i)
 		{
-			g_pData[i] = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
+			g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
 			m_msg = QString::fromLocal8Bit("获取图片 ");
 			m_msg.append(vecPngIDResp[i].c_str());
 
 			//memset(sPicData, 0, PIC_SIZE*sizeof(short));
-			if (!m_cli.get_png(g_scanID.toStdString(), vecPngIDResp[i], sPicData, PIC_SIZE))
+			if (!m_cli.get_png(g_scanID.toStdString(), vecPngIDResp[i], sPicData, pic_size))
 			{
 				m_msg.append(QString::fromLocal8Bit(" 图像为空\n"));
 				//m_msg.append(m_cli.get_msg().c_str());
@@ -2056,7 +2281,36 @@ void IRProc::btnAnalyze()
 				m_msg.append(QString::fromLocal8Bit(" 成功\n"));
 
 				g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
+				IMAGE_WIDTH = sPicData[0];
+				IMAGE_HEIGHT = sPicData[1];
+
+				if (IMAGE_WIDTH != 384 && IMAGE_WIDTH != 640)
+				{
+					IMAGE_WIDTH = 384;
+					IMAGE_HEIGHT = 288;
+					*(g_pData[i]) = sPicData[0];
+
+					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					{
+						//outfile << " " << sPicData[j];
+						*(g_pData[i] + j) = sPicData[j];
+					}
+				}
+				else
+				{
+					*(g_pData[i]) = sPicData[2];
+
+					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					{
+						//outfile << " " << sPicData[j];
+						*(g_pData[i] + j) = sPicData[j];
+					}
+
+				}
+				
 				*(g_pData[i]) = sPicData[0];
+				
 				for (int j = 1; j < PIC_SIZE; ++j)
 				{
 					//outfile << " " << sPicData[j];
@@ -2120,6 +2374,19 @@ void IRProc::btnAnalyze()
 	showImage(g_picNum);
 
 	showThum();
+
+	m_user[m_user_index] = g_name;
+	m_scan[m_user_index] = g_scanID;
+
+
+	ui.comboBox_user->addItem(g_name, m_user_index);
+	ui.comboBox_user->setCurrentIndex(m_user_index);
+
+	ui.listWidget_date->clear();
+	ui.listWidget_date->addItem(g_scanID);
+
+	m_user_index = (m_user_index + 1) % 2;
+
 	//updateImage();
 }
 

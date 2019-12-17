@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_IRProc_t {
-    QByteArrayData data[65];
-    char stringdata0[692];
+    QByteArrayData data[68];
+    char stringdata0[733];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -65,35 +65,38 @@ QT_MOC_LITERAL(32, 329, 9), // "keyCtrlUp"
 QT_MOC_LITERAL(33, 339, 11), // "keyCtrlDown"
 QT_MOC_LITERAL(34, 351, 10), // "keyShiftUp"
 QT_MOC_LITERAL(35, 362, 12), // "keyShiftDown"
-QT_MOC_LITERAL(36, 375, 9), // "btnMerDef"
-QT_MOC_LITERAL(37, 385, 14), // "sliderMerRatio"
-QT_MOC_LITERAL(38, 400, 15), // "sliderMerRatio2"
-QT_MOC_LITERAL(39, 416, 9), // "btnMerWid"
-QT_MOC_LITERAL(40, 426, 9), // "btnMerNar"
-QT_MOC_LITERAL(41, 436, 12), // "btnMerHigher"
-QT_MOC_LITERAL(42, 449, 11), // "btnMerLower"
-QT_MOC_LITERAL(43, 461, 10), // "btnMerLeft"
-QT_MOC_LITERAL(44, 472, 11), // "btnMerRight"
-QT_MOC_LITERAL(45, 484, 8), // "btnMerUp"
-QT_MOC_LITERAL(46, 493, 10), // "btnMerDown"
-QT_MOC_LITERAL(47, 504, 15), // "changeMerGender"
-QT_MOC_LITERAL(48, 520, 13), // "changeMerPose"
-QT_MOC_LITERAL(49, 534, 13), // "changeMerType"
-QT_MOC_LITERAL(50, 548, 7), // "btn_del"
-QT_MOC_LITERAL(51, 556, 10), // "btn_change"
-QT_MOC_LITERAL(52, 567, 7), // "btn_pre"
-QT_MOC_LITERAL(53, 575, 8), // "btn_next"
-QT_MOC_LITERAL(54, 584, 9), // "btn_start"
-QT_MOC_LITERAL(55, 594, 7), // "btn_end"
-QT_MOC_LITERAL(56, 602, 11), // "btn_dateSel"
-QT_MOC_LITERAL(57, 614, 11), // "btn_nameSel"
-QT_MOC_LITERAL(58, 626, 11), // "btn_showAll"
-QT_MOC_LITERAL(59, 638, 7), // "dataOut"
-QT_MOC_LITERAL(60, 646, 6), // "dataIn"
-QT_MOC_LITERAL(61, 653, 7), // "calData"
-QT_MOC_LITERAL(62, 661, 6), // "upInfo"
-QT_MOC_LITERAL(63, 668, 11), // "time_update"
-QT_MOC_LITERAL(64, 680, 11) // "thumClicked"
+QT_MOC_LITERAL(36, 375, 11), // "nameChanged"
+QT_MOC_LITERAL(37, 387, 11), // "scanChanged"
+QT_MOC_LITERAL(38, 399, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(39, 416, 9), // "btnMerDef"
+QT_MOC_LITERAL(40, 426, 14), // "sliderMerRatio"
+QT_MOC_LITERAL(41, 441, 15), // "sliderMerRatio2"
+QT_MOC_LITERAL(42, 457, 9), // "btnMerWid"
+QT_MOC_LITERAL(43, 467, 9), // "btnMerNar"
+QT_MOC_LITERAL(44, 477, 12), // "btnMerHigher"
+QT_MOC_LITERAL(45, 490, 11), // "btnMerLower"
+QT_MOC_LITERAL(46, 502, 10), // "btnMerLeft"
+QT_MOC_LITERAL(47, 513, 11), // "btnMerRight"
+QT_MOC_LITERAL(48, 525, 8), // "btnMerUp"
+QT_MOC_LITERAL(49, 534, 10), // "btnMerDown"
+QT_MOC_LITERAL(50, 545, 15), // "changeMerGender"
+QT_MOC_LITERAL(51, 561, 13), // "changeMerPose"
+QT_MOC_LITERAL(52, 575, 13), // "changeMerType"
+QT_MOC_LITERAL(53, 589, 7), // "btn_del"
+QT_MOC_LITERAL(54, 597, 10), // "btn_change"
+QT_MOC_LITERAL(55, 608, 7), // "btn_pre"
+QT_MOC_LITERAL(56, 616, 8), // "btn_next"
+QT_MOC_LITERAL(57, 625, 9), // "btn_start"
+QT_MOC_LITERAL(58, 635, 7), // "btn_end"
+QT_MOC_LITERAL(59, 643, 11), // "btn_dateSel"
+QT_MOC_LITERAL(60, 655, 11), // "btn_nameSel"
+QT_MOC_LITERAL(61, 667, 11), // "btn_showAll"
+QT_MOC_LITERAL(62, 679, 7), // "dataOut"
+QT_MOC_LITERAL(63, 687, 6), // "dataIn"
+QT_MOC_LITERAL(64, 694, 7), // "calData"
+QT_MOC_LITERAL(65, 702, 6), // "upInfo"
+QT_MOC_LITERAL(66, 709, 11), // "time_update"
+QT_MOC_LITERAL(67, 721, 11) // "thumClicked"
 
     },
     "IRProc\0userAreaFull\0\0toolBarExpand\0"
@@ -106,7 +109,8 @@ QT_MOC_LITERAL(64, 680, 11) // "thumClicked"
     "btn_zoom\0showTemper\0saveMeasure\0"
     "setUpAll\0tagSel\0tagDel\0keyUp\0keyDown\0"
     "keyCtrlUp\0keyCtrlDown\0keyShiftUp\0"
-    "keyShiftDown\0btnMerDef\0sliderMerRatio\0"
+    "keyShiftDown\0nameChanged\0scanChanged\0"
+    "QListWidgetItem*\0btnMerDef\0sliderMerRatio\0"
     "sliderMerRatio2\0btnMerWid\0btnMerNar\0"
     "btnMerHigher\0btnMerLower\0btnMerLeft\0"
     "btnMerRight\0btnMerUp\0btnMerDown\0"
@@ -125,7 +129,7 @@ static const uint qt_meta_data_IRProc[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      63,   14, // methods
+      65,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -133,69 +137,71 @@ static const uint qt_meta_data_IRProc[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  329,    2, 0x0a /* Public */,
-       3,    0,  330,    2, 0x0a /* Public */,
-       4,    0,  331,    2, 0x0a /* Public */,
-       5,    0,  332,    2, 0x0a /* Public */,
-       6,    0,  333,    2, 0x0a /* Public */,
-       7,    0,  334,    2, 0x0a /* Public */,
-       8,    0,  335,    2, 0x0a /* Public */,
-       9,    0,  336,    2, 0x0a /* Public */,
-      10,    0,  337,    2, 0x0a /* Public */,
-      11,    0,  338,    2, 0x0a /* Public */,
-      12,    0,  339,    2, 0x0a /* Public */,
-      13,    1,  340,    2, 0x0a /* Public */,
-      14,    0,  343,    2, 0x0a /* Public */,
-      15,    0,  344,    2, 0x0a /* Public */,
-      16,    0,  345,    2, 0x0a /* Public */,
-      17,    0,  346,    2, 0x0a /* Public */,
-      18,    0,  347,    2, 0x0a /* Public */,
-      19,    0,  348,    2, 0x0a /* Public */,
-      20,    0,  349,    2, 0x0a /* Public */,
-      21,    0,  350,    2, 0x0a /* Public */,
-      22,    0,  351,    2, 0x0a /* Public */,
-      23,    0,  352,    2, 0x0a /* Public */,
-      24,    0,  353,    2, 0x0a /* Public */,
-      25,    0,  354,    2, 0x0a /* Public */,
-      26,    0,  355,    2, 0x0a /* Public */,
-      27,    0,  356,    2, 0x0a /* Public */,
-      28,    0,  357,    2, 0x0a /* Public */,
-      29,    0,  358,    2, 0x0a /* Public */,
-      30,    0,  359,    2, 0x0a /* Public */,
-      31,    0,  360,    2, 0x0a /* Public */,
-      32,    0,  361,    2, 0x0a /* Public */,
-      33,    0,  362,    2, 0x0a /* Public */,
-      34,    0,  363,    2, 0x0a /* Public */,
-      35,    0,  364,    2, 0x0a /* Public */,
-      36,    0,  365,    2, 0x0a /* Public */,
-      37,    0,  366,    2, 0x0a /* Public */,
-      38,    0,  367,    2, 0x0a /* Public */,
-      39,    0,  368,    2, 0x0a /* Public */,
-      40,    0,  369,    2, 0x0a /* Public */,
-      41,    0,  370,    2, 0x0a /* Public */,
-      42,    0,  371,    2, 0x0a /* Public */,
-      43,    0,  372,    2, 0x0a /* Public */,
-      44,    0,  373,    2, 0x0a /* Public */,
-      45,    0,  374,    2, 0x0a /* Public */,
-      46,    0,  375,    2, 0x0a /* Public */,
-      47,    0,  376,    2, 0x0a /* Public */,
-      48,    0,  377,    2, 0x0a /* Public */,
-      49,    0,  378,    2, 0x0a /* Public */,
-      50,    0,  379,    2, 0x0a /* Public */,
-      51,    0,  380,    2, 0x0a /* Public */,
-      52,    0,  381,    2, 0x0a /* Public */,
-      53,    0,  382,    2, 0x0a /* Public */,
-      54,    0,  383,    2, 0x0a /* Public */,
-      55,    0,  384,    2, 0x0a /* Public */,
-      56,    0,  385,    2, 0x0a /* Public */,
-      57,    0,  386,    2, 0x0a /* Public */,
-      58,    0,  387,    2, 0x0a /* Public */,
-      59,    0,  388,    2, 0x0a /* Public */,
-      60,    0,  389,    2, 0x0a /* Public */,
-      61,    0,  390,    2, 0x0a /* Public */,
-      62,    0,  391,    2, 0x0a /* Public */,
-      63,    0,  392,    2, 0x0a /* Public */,
-      64,    0,  393,    2, 0x0a /* Public */,
+       1,    0,  339,    2, 0x0a /* Public */,
+       3,    0,  340,    2, 0x0a /* Public */,
+       4,    0,  341,    2, 0x0a /* Public */,
+       5,    0,  342,    2, 0x0a /* Public */,
+       6,    0,  343,    2, 0x0a /* Public */,
+       7,    0,  344,    2, 0x0a /* Public */,
+       8,    0,  345,    2, 0x0a /* Public */,
+       9,    0,  346,    2, 0x0a /* Public */,
+      10,    0,  347,    2, 0x0a /* Public */,
+      11,    0,  348,    2, 0x0a /* Public */,
+      12,    0,  349,    2, 0x0a /* Public */,
+      13,    1,  350,    2, 0x0a /* Public */,
+      14,    0,  353,    2, 0x0a /* Public */,
+      15,    0,  354,    2, 0x0a /* Public */,
+      16,    0,  355,    2, 0x0a /* Public */,
+      17,    0,  356,    2, 0x0a /* Public */,
+      18,    0,  357,    2, 0x0a /* Public */,
+      19,    0,  358,    2, 0x0a /* Public */,
+      20,    0,  359,    2, 0x0a /* Public */,
+      21,    0,  360,    2, 0x0a /* Public */,
+      22,    0,  361,    2, 0x0a /* Public */,
+      23,    0,  362,    2, 0x0a /* Public */,
+      24,    0,  363,    2, 0x0a /* Public */,
+      25,    0,  364,    2, 0x0a /* Public */,
+      26,    0,  365,    2, 0x0a /* Public */,
+      27,    0,  366,    2, 0x0a /* Public */,
+      28,    0,  367,    2, 0x0a /* Public */,
+      29,    0,  368,    2, 0x0a /* Public */,
+      30,    0,  369,    2, 0x0a /* Public */,
+      31,    0,  370,    2, 0x0a /* Public */,
+      32,    0,  371,    2, 0x0a /* Public */,
+      33,    0,  372,    2, 0x0a /* Public */,
+      34,    0,  373,    2, 0x0a /* Public */,
+      35,    0,  374,    2, 0x0a /* Public */,
+      36,    1,  375,    2, 0x0a /* Public */,
+      37,    1,  378,    2, 0x0a /* Public */,
+      39,    0,  381,    2, 0x0a /* Public */,
+      40,    0,  382,    2, 0x0a /* Public */,
+      41,    0,  383,    2, 0x0a /* Public */,
+      42,    0,  384,    2, 0x0a /* Public */,
+      43,    0,  385,    2, 0x0a /* Public */,
+      44,    0,  386,    2, 0x0a /* Public */,
+      45,    0,  387,    2, 0x0a /* Public */,
+      46,    0,  388,    2, 0x0a /* Public */,
+      47,    0,  389,    2, 0x0a /* Public */,
+      48,    0,  390,    2, 0x0a /* Public */,
+      49,    0,  391,    2, 0x0a /* Public */,
+      50,    0,  392,    2, 0x0a /* Public */,
+      51,    0,  393,    2, 0x0a /* Public */,
+      52,    0,  394,    2, 0x0a /* Public */,
+      53,    0,  395,    2, 0x0a /* Public */,
+      54,    0,  396,    2, 0x0a /* Public */,
+      55,    0,  397,    2, 0x0a /* Public */,
+      56,    0,  398,    2, 0x0a /* Public */,
+      57,    0,  399,    2, 0x0a /* Public */,
+      58,    0,  400,    2, 0x0a /* Public */,
+      59,    0,  401,    2, 0x0a /* Public */,
+      60,    0,  402,    2, 0x0a /* Public */,
+      61,    0,  403,    2, 0x0a /* Public */,
+      62,    0,  404,    2, 0x0a /* Public */,
+      63,    0,  405,    2, 0x0a /* Public */,
+      64,    0,  406,    2, 0x0a /* Public */,
+      65,    0,  407,    2, 0x0a /* Public */,
+      66,    0,  408,    2, 0x0a /* Public */,
+      67,    0,  409,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -232,6 +238,8 @@ static const uint qt_meta_data_IRProc[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, 0x80000000 | 38,    2,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -305,35 +313,37 @@ void IRProc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 31: _t->keyCtrlDown(); break;
         case 32: _t->keyShiftUp(); break;
         case 33: _t->keyShiftDown(); break;
-        case 34: _t->btnMerDef(); break;
-        case 35: _t->sliderMerRatio(); break;
-        case 36: _t->sliderMerRatio2(); break;
-        case 37: _t->btnMerWid(); break;
-        case 38: _t->btnMerNar(); break;
-        case 39: _t->btnMerHigher(); break;
-        case 40: _t->btnMerLower(); break;
-        case 41: _t->btnMerLeft(); break;
-        case 42: _t->btnMerRight(); break;
-        case 43: _t->btnMerUp(); break;
-        case 44: _t->btnMerDown(); break;
-        case 45: _t->changeMerGender(); break;
-        case 46: _t->changeMerPose(); break;
-        case 47: _t->changeMerType(); break;
-        case 48: _t->btn_del(); break;
-        case 49: _t->btn_change(); break;
-        case 50: _t->btn_pre(); break;
-        case 51: _t->btn_next(); break;
-        case 52: _t->btn_start(); break;
-        case 53: _t->btn_end(); break;
-        case 54: _t->btn_dateSel(); break;
-        case 55: _t->btn_nameSel(); break;
-        case 56: _t->btn_showAll(); break;
-        case 57: _t->dataOut(); break;
-        case 58: _t->dataIn(); break;
-        case 59: _t->calData(); break;
-        case 60: _t->upInfo(); break;
-        case 61: _t->time_update(); break;
-        case 62: _t->thumClicked(); break;
+        case 34: _t->nameChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 35: _t->scanChanged((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 36: _t->btnMerDef(); break;
+        case 37: _t->sliderMerRatio(); break;
+        case 38: _t->sliderMerRatio2(); break;
+        case 39: _t->btnMerWid(); break;
+        case 40: _t->btnMerNar(); break;
+        case 41: _t->btnMerHigher(); break;
+        case 42: _t->btnMerLower(); break;
+        case 43: _t->btnMerLeft(); break;
+        case 44: _t->btnMerRight(); break;
+        case 45: _t->btnMerUp(); break;
+        case 46: _t->btnMerDown(); break;
+        case 47: _t->changeMerGender(); break;
+        case 48: _t->changeMerPose(); break;
+        case 49: _t->changeMerType(); break;
+        case 50: _t->btn_del(); break;
+        case 51: _t->btn_change(); break;
+        case 52: _t->btn_pre(); break;
+        case 53: _t->btn_next(); break;
+        case 54: _t->btn_start(); break;
+        case 55: _t->btn_end(); break;
+        case 56: _t->btn_dateSel(); break;
+        case 57: _t->btn_nameSel(); break;
+        case 58: _t->btn_showAll(); break;
+        case 59: _t->dataOut(); break;
+        case 60: _t->dataIn(); break;
+        case 61: _t->calData(); break;
+        case 62: _t->upInfo(); break;
+        case 63: _t->time_update(); break;
+        case 64: _t->thumClicked(); break;
         default: ;
         }
     }
@@ -364,13 +374,13 @@ int IRProc::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 63)
+        if (_id < 65)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 63;
+        _id -= 65;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 63)
+        if (_id < 65)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 63;
+        _id -= 65;
     }
     return _id;
 }
