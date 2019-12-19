@@ -8,7 +8,7 @@
 #include "../utils/string/string_utils.h"
 
 
-#define  PIC_SIZE  384*288
+#define  PIC_SIZE  640*480+2
 #define  MAX_DATA  1024*10
 
 using namespace std;

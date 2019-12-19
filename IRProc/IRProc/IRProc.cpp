@@ -22,8 +22,8 @@ using namespace cv;
 using namespace std;
 
 
-int IMAGE_WIDTH = 384;//原始图像宽
-int IMAGE_HEIGHT = 288;//原始图像高
+int IMAGE_WIDTH = 640;//原始图像宽
+int IMAGE_HEIGHT = 480;//原始图像高
 
 #define IMAGE_PER_ROW 5  //每行显示图像数
 #define IMGE_TOTAL_NUM 12 //显示的图像总数
@@ -2245,7 +2245,10 @@ void IRProc::btnAnalyze()
 		progressDialog->setMinimumDuration(5);
 		progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
 
-		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT;
+
+
+
+		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT+2;
 
 		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
 
@@ -2260,7 +2263,7 @@ void IRProc::btnAnalyze()
 
 		for (int i = 0; i < pic_count; ++i)
 		{
-			g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
+		//	g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
 			m_msg = QString::fromLocal8Bit("获取图片 ");
 			m_msg.append(vecPngIDResp[i].c_str());
 
@@ -2280,8 +2283,6 @@ void IRProc::btnAnalyze()
 			{
 				m_msg.append(QString::fromLocal8Bit(" 成功\n"));
 
-				g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
-
 				IMAGE_WIDTH = sPicData[0];
 				IMAGE_HEIGHT = sPicData[1];
 
@@ -2289,6 +2290,9 @@ void IRProc::btnAnalyze()
 				{
 					IMAGE_WIDTH = 384;
 					IMAGE_HEIGHT = 288;
+
+					g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
 					*(g_pData[i]) = sPicData[0];
 
 					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
@@ -2299,23 +2303,25 @@ void IRProc::btnAnalyze()
 				}
 				else
 				{
+					g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
 					*(g_pData[i]) = sPicData[2];
 
-					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					for (int j = 3; j < IMAGE_WIDTH*IMAGE_HEIGHT+2; ++j)
 					{
 						//outfile << " " << sPicData[j];
-						*(g_pData[i] + j) = sPicData[j];
+						*(g_pData[i] + j-2) = sPicData[j];
 					}
 
 				}
 				
-				*(g_pData[i]) = sPicData[0];
-				
-				for (int j = 1; j < PIC_SIZE; ++j)
-				{
-					//outfile << " " << sPicData[j];
-					*(g_pData[i] + j) = sPicData[j];
-				}
+				//*(g_pData[i]) = sPicData[0];
+				//
+				//for (int j = 1; j < PIC_SIZE; ++j)
+				//{
+				//	//outfile << " " << sPicData[j];
+				//	*(g_pData[i] + j) = sPicData[j];
+				//}
 
 				//	 QMessageBox::information(NULL, "Title", m_msg);
 
