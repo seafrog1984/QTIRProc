@@ -381,6 +381,10 @@ IRProc::IRProc(QWidget *parent)
 
 
 	m_user_index = 0;
+	m_user[0] = "";
+	m_user[1] = "";
+	m_scan[0] = "";
+	m_scan[1] = "";
 
 
 }
@@ -462,7 +466,7 @@ void IRProc::scanChanged(QListWidgetItem*)
 		progressDialog->setMinimumDuration(5);
 		progressDialog->setWindowTitle(QString::fromLocal8Bit("图像载入中..."));
 
-		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT;
+		int pic_size = 640 * 480 + 2;
 
 		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
 
@@ -477,7 +481,7 @@ void IRProc::scanChanged(QListWidgetItem*)
 
 		for (int i = 0; i < pic_count; ++i)
 		{
-			g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
+			//	g_pData[i] = (unsigned short*)malloc(pic_size * sizeof(short));
 			m_msg = QString::fromLocal8Bit("获取图片 ");
 			m_msg.append(vecPngIDResp[i].c_str());
 
@@ -497,8 +501,6 @@ void IRProc::scanChanged(QListWidgetItem*)
 			{
 				m_msg.append(QString::fromLocal8Bit(" 成功\n"));
 
-				g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
-
 				IMAGE_WIDTH = sPicData[0];
 				IMAGE_HEIGHT = sPicData[1];
 
@@ -506,6 +508,9 @@ void IRProc::scanChanged(QListWidgetItem*)
 				{
 					IMAGE_WIDTH = 384;
 					IMAGE_HEIGHT = 288;
+
+					g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
 					*(g_pData[i]) = sPicData[0];
 
 					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
@@ -516,23 +521,25 @@ void IRProc::scanChanged(QListWidgetItem*)
 				}
 				else
 				{
+					g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
+
 					*(g_pData[i]) = sPicData[2];
 
-					for (int j = 1; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
+					for (int j = 3; j < IMAGE_WIDTH*IMAGE_HEIGHT + 2; ++j)
 					{
 						//outfile << " " << sPicData[j];
-						*(g_pData[i] + j) = sPicData[j];
+						*(g_pData[i] + j - 2) = sPicData[j];
 					}
 
 				}
 
-				*(g_pData[i]) = sPicData[0];
-
-				for (int j = 1; j < PIC_SIZE; ++j)
-				{
-					//outfile << " " << sPicData[j];
-					*(g_pData[i] + j) = sPicData[j];
-				}
+				//*(g_pData[i]) = sPicData[0];
+				//
+				//for (int j = 1; j < PIC_SIZE; ++j)
+				//{
+				//	//outfile << " " << sPicData[j];
+				//	*(g_pData[i] + j) = sPicData[j];
+				//}
 
 				//	 QMessageBox::information(NULL, "Title", m_msg);
 
@@ -2248,7 +2255,7 @@ void IRProc::btnAnalyze()
 
 
 
-		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT+2;
+		int pic_size = 640*480+2;
 
 		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
 
@@ -2381,11 +2388,15 @@ void IRProc::btnAnalyze()
 
 	showThum();
 
+
 	m_user[m_user_index] = g_name;
 	m_scan[m_user_index] = g_scanID;
 
+	ui.comboBox_user->clear();
 
-	ui.comboBox_user->addItem(g_name, m_user_index);
+	ui.comboBox_user->addItem(m_user[0], 0);
+	ui.comboBox_user->addItem(m_user[1], 1);
+
 	ui.comboBox_user->setCurrentIndex(m_user_index);
 
 	ui.listWidget_date->clear();

@@ -799,7 +799,9 @@ bool _client_t::get_png(const std::string &scan_id, const std::string &png_id, u
 		return false;
 	}
 
-	char resp[MAX_DATA + PIC_SIZE * 2] = { 0 };
+//	char resp[MAX_DATA + PIC_SIZE * 2] = { 0 };
+	char *resp = (char*)malloc(MAX_DATA + pic_len*2);
+
 	int ret = recv_resp(resp);
 	if (0 > ret)
 	{
@@ -826,6 +828,7 @@ bool _client_t::get_png(const std::string &scan_id, const std::string &png_id, u
 		pic[i] = *((unsigned short*)(&resp[pos] + i * sizeof(unsigned short)));
 	}
 
+	free(resp);
 	return true;
 }
 
