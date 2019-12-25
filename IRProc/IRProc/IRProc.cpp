@@ -135,6 +135,12 @@ double g_cur_max=0;
 double g_cur_min = 0;
 double g_cur_mean = 0;
 
+int g_sel_mode = 0;//筛选模式：0-初始化，1-按时间，2-按名字，3-全部显示
+
+
+float inputEmiss=1;		//输入辐射率
+float inputReflect=20;		//输入反射温度
+float inputDis=2;			//输入距离
 
 
 IRProc::IRProc(QWidget *parent)
@@ -179,6 +185,8 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.userAreaBt, SIGNAL(clicked()), this, SLOT(userAreaFull()));
 	connect(ui.toolBarExpandBt, SIGNAL(clicked()), this, SLOT(toolBarExpand()));
 	connect(ui.btn_set_auth, SIGNAL(clicked()), this, SLOT(sysSettingOp()));
+	connect(ui.btn_cam_par, SIGNAL(clicked()), this, SLOT(btn_camPar()));
+
 
 	//图像分析
 	connect(ui.btn_colorType_change, SIGNAL(clicked()), this, SLOT(colorTypeChange()));
@@ -280,6 +288,10 @@ IRProc::IRProc(QWidget *parent)
 	connect(ui.btn_show_all, SIGNAL(clicked()), this, SLOT(btn_showAll()));
 	connect(ui.btn_data_out, SIGNAL(clicked()), this, SLOT(dataOut()));
 	connect(ui.btn_data_in, SIGNAL(clicked()), this, SLOT(dataIn()));
+	connect(ui.radioButton_week, SIGNAL(clicked()), this, SLOT(radio_week()));
+	connect(ui.radioButton_month, SIGNAL(clicked()), this, SLOT(radio_month()));
+	connect(ui.radioButton_year, SIGNAL(clicked()), this, SLOT(radio_year()));
+
 	connect(ui.cbox_smooth, SIGNAL(currentIndexChanged(int)), this, SLOT(setFilter(int)));
 
 	connect(ui.tableWidget, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(btnAnalyze()));
@@ -387,6 +399,31 @@ IRProc::IRProc(QWidget *parent)
 	m_scan[1] = "";
 
 
+}
+
+
+void IRProc::radio_week()
+{
+	QDateTime current_time = QDateTime::currentDateTime();
+
+	ui.dateEdit_start->setDateTime(current_time.addDays(-6));
+	ui.dateEdit_end->setDateTime(current_time.addDays(1));
+}
+
+void IRProc::radio_month()
+{
+	QDateTime current_time = QDateTime::currentDateTime();
+
+	ui.dateEdit_start->setDateTime(current_time.addMonths(-1));
+	ui.dateEdit_end->setDateTime(current_time.addDays(1));
+}
+
+void IRProc::radio_year()
+{
+	QDateTime current_time = QDateTime::currentDateTime();
+
+	ui.dateEdit_start->setDateTime(current_time.addYears(-1));
+	ui.dateEdit_end->setDateTime(current_time.addDays(1));
 }
 
 
@@ -559,7 +596,8 @@ void IRProc::scanChanged(QListWidgetItem*)
 
 		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
 
-		data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+	//	data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+		data2TemperCorrect(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100, inputEmiss, inputReflect, inputDis);
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
@@ -1090,7 +1128,8 @@ void IRProc::dataIn()
 	{
 		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
 
-		data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+		//data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+		data2TemperCorrect(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100, inputEmiss, inputReflect, inputDis);
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
@@ -2348,7 +2387,8 @@ void IRProc::btnAnalyze()
 
 		g_temper[g_picNum].create(IMAGE_WIDTH, IMAGE_HEIGHT, CV_32FC1);
 
-		data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+		//data2Temper(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100);
+		data2TemperCorrect(g_pData[g_picNum], g_temper[g_picNum], IMAGE_HEIGHT, IMAGE_WIDTH, 100, inputEmiss, inputReflect, inputDis);
 
 		g_TR[g_picNum] = calTR(g_temper[g_picNum]);
 
@@ -3015,6 +3055,13 @@ void IRProc::btn_sysPar()
 	dlg->show();
 }
 
+void IRProc::btn_camPar()
+{
+	camdlg = new CamParDlg;
+
+	camdlg->show();
+}
+
 
 void IRProc::addData(int index, QString cardID, QString scanID, QString RegTime)
 {
@@ -3199,23 +3246,57 @@ void IRProc::conDataBase()
 void IRProc::updateData()
 {
 
-	QDateTime current_time = QDateTime::currentDateTime();
-	QString start_time = current_time.toString("yyyy-MM-dd"); //
-	QString end_time = current_time.addDays(1).toString("yyyy-MM-dd"); //
-
-	ui.dateEdit_start->setDateTime(current_time);
-	ui.dateEdit_end->setDateTime(current_time.addDays(1));
-
 	std::map <std::string, std::string> mapParams;
-	mapParams["data_type"] = "4";
-	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
-	mapParams["page_num"] = QString::number(g_curPage).toStdString();
-	//mapParams["name"] = "张三";
-	//mapParams["cardid"] = "CARD100000000001";
-	//mapParams["scanid"] = "SCAN001";
-	mapParams["begin"] = start_time.toStdString();
-	mapParams["end"] = end_time.toStdString();
 
+	if (g_sel_mode == 0)
+	{
+		QDateTime current_time = QDateTime::currentDateTime();
+		QString start_time = current_time.toString("yyyy-MM-dd"); //
+		QString end_time = current_time.addDays(1).toString("yyyy-MM-dd"); //
+
+		ui.dateEdit_start->setDateTime(current_time);
+		ui.dateEdit_end->setDateTime(current_time.addDays(1));
+
+
+		mapParams["data_type"] = "4";
+		mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		mapParams["page_num"] = QString::number(g_curPage).toStdString();
+		//mapParams["name"] = "张三";
+		//mapParams["cardid"] = "CARD100000000001";
+		//mapParams["scanid"] = "SCAN001";
+		mapParams["begin"] = start_time.toStdString();
+		mapParams["end"] = end_time.toStdString();
+	}
+	else if (g_sel_mode == 1)
+	{
+		mapParams["data_type"] = "4";
+		mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		mapParams["page_num"] = QString::number(g_curPage).toStdString();
+		//mapParams["name"] = "张三";
+		//mapParams["cardid"] = "CARD100000000001";
+		//mapParams["scanid"] = "SCAN001";
+		mapParams["begin"] = ui.dateEdit_start->text().toStdString();
+		mapParams["end"] = ui.dateEdit_end->text().toStdString();
+	}
+	else if (g_sel_mode == 2)
+	{
+		mapParams["data_type"] = "3";
+		//mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		//mapParams["page_num"] = QString::number(g_curPage).toStdString();
+		if (ui.lineEdit_name->text() != "")
+			mapParams["name"] = ui.lineEdit_name->text().toLocal8Bit();
+		//mapParams["cardid"] = "CARD100000000001";
+		if (ui.lineEdit_scanID->text() != "")
+			mapParams["cardid"] = ui.lineEdit_scanID->text().toStdString();
+		mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		mapParams["page_num"] = QString::number(g_curPage).toStdString();
+	}
+	else
+	{
+		mapParams["data_type"] = "4";
+		mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		mapParams["page_num"] = QString::number(g_curPage).toStdString();
+	}
 	std::string sParams = map_join(mapParams, '&', '=');
 
 	std::string sData;
@@ -3224,6 +3305,7 @@ void IRProc::updateData()
 
 
 	int iRet = m_cli.get_listdata(sParams, sData);
+	m_msg = "";
 
 	if (0 < iRet)
 	{
@@ -3309,6 +3391,9 @@ void IRProc::updateData()
 
 void IRProc::btn_showAll()
 {
+	g_pageSize = ui.lineEdit_page_size->text().toInt();
+	g_sel_mode = 3;
+
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";
 	//mapParams["page_size"] = QString::number(g_pageSize).toStdString();
@@ -3322,8 +3407,9 @@ void IRProc::btn_showAll()
 	std::string sParams = map_join(mapParams, '&', '=');
 
 	std::string sData;
-	;
+
 	int iRet = m_cli.get_listdata(sParams, sData);
+	m_msg = "";
 
 	if (0 < iRet)
 	{
@@ -3333,15 +3419,20 @@ void IRProc::btn_showAll()
 		QList<QString> lst;
 		lst = m_msg.split(';');
 
-		QString temp = lst[0].section('&', 0, 0);
-		int dataNum = temp.section('=', -1, -1).toInt();
+		//	QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), m_msg);
+		//QString temp = lst[0].section('&', 3, 3);
+		//int dataNum = temp.section('=', -1, -1).toInt();
+
+		int dataNum = lst.size();
+
 
 		g_maxPage = (dataNum - 1) / g_pageSize + 1;
-
+		g_curPage = 1;
+		ui.lineEdit_cur_page->setText(QString::number(g_curPage));
 
 		lst[0] = lst[0].section('=', -1, -1);
-		ui.tableWidget->setRowCount(lst.size());
-		for (int i = 0; i != lst.size(); ++i)
+		ui.tableWidget->setRowCount(dataNum<g_pageSize ? dataNum : g_pageSize);
+		for (int i = 0; i != (dataNum<g_pageSize ? dataNum : g_pageSize); ++i)
 		{
 			//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
 
@@ -3380,6 +3471,8 @@ void IRProc::btn_nameSel()
 	;
 
 	int iRet1 = m_cli.get_listdata(sParams, sData);
+	m_msg = "";
+
 	if (0 < iRet1)
 	{
 		//m_msg = "结果:\n";
@@ -3486,10 +3579,13 @@ void IRProc::btn_nameSel()
 
 void IRProc::btn_dateSel()
 {
+	g_pageSize = ui.lineEdit_page_size->text().toInt();
+
+	g_sel_mode = 1;
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";
-	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
-	mapParams["page_num"] = QString::number(g_curPage).toStdString();
+	//	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+	//	mapParams["page_num"] = QString::number(g_curPage).toStdString();
 	//mapParams["name"] = "张三";
 	//mapParams["cardid"] = "CARD100000000001";
 	//mapParams["scanid"] = "SCAN001";
@@ -3498,8 +3594,9 @@ void IRProc::btn_dateSel()
 	std::string sParams = map_join(mapParams, '&', '=');
 
 	std::string sData;
-	;
+
 	int iRet = m_cli.get_listdata(sParams, sData);
+	m_msg = "";
 
 	if (0 < iRet)
 	{
@@ -3509,11 +3606,17 @@ void IRProc::btn_dateSel()
 		QList<QString> lst;
 		lst = m_msg.split(';');
 
+		//	QMessageBox::information(NULL, "Title", m_msg);
+
 		QString temp = lst[0].section('&', 0, 0);
 		int dataNum = temp.section('=', -1, -1).toInt();
+		//	int dataNum = lst.size() - 1;
+
 
 		g_maxPage = (dataNum - 1) / g_pageSize + 1;
 
+		g_curPage = 1;
+		ui.lineEdit_cur_page->setText(QString::number(g_curPage));
 
 		lst[0] = lst[0].section('=', -1, -1);
 		if (dataNum == 0)
@@ -3523,8 +3626,8 @@ void IRProc::btn_dateSel()
 			return;
 		}
 
-		ui.tableWidget->setRowCount(lst.size());
-		for (int i = 0; i != dataNum; ++i)
+		ui.tableWidget->setRowCount(dataNum<g_pageSize ? dataNum : g_pageSize);
+		for (int i = 0; i != (dataNum<g_pageSize ? dataNum : g_pageSize); ++i)
 		{
 			//		QMessageBox::information(NULL, "Title", lst[i].section(',',1,1));
 
@@ -3572,7 +3675,7 @@ void IRProc::btn_pre()
 	g_curPage--;
 	if (g_curPage < 1) g_curPage = 1;
 	ui.lineEdit_cur_page->setText(QString::number(g_curPage));
-	g_pageSize = ui.lineEdit_page_size->text().toInt();
+//	g_pageSize = ui.lineEdit_page_size->text().toInt();
 
 	updateData();
 

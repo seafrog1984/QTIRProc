@@ -22,6 +22,11 @@ client_t m_cli;
 int g_log_flag = 0;
 QString m_msg;
 
+
+extern float inputEmiss;		//输入辐射率
+extern float inputReflect;		//输入反射温度
+extern float inputDis;			//输入距离
+
 using namespace std;
 
 void decode(string& c, int a[]){
@@ -79,7 +84,19 @@ LogDlg::LogDlg(QWidget *parent)
 
 	fin.close();
 
-	// TODO:  在此添加额外的初始化
+	ifstream fin2("camPar.ini");
+
+	if (fin2.fail())
+	{
+		QMessageBox::information(NULL, "Title", "No file!");
+		exit(-1);
+	}
+
+	fin2 >> inputEmiss >> inputReflect >> inputDis;
+
+	fin2.close();
+
+
 
 	//m_ip = "10.70.77.81";
 	//m_ip="192.168.31.157";

@@ -26,6 +26,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
@@ -190,9 +191,9 @@ public:
     QLabel *label_3;
     QDateEdit *dateEdit_end;
     QToolButton *btn_date_sel;
-    QCheckBox *checkBox_10;
-    QCheckBox *checkBox_11;
-    QCheckBox *checkBox_12;
+    QRadioButton *radioButton_week;
+    QRadioButton *radioButton_year;
+    QRadioButton *radioButton_month;
     QLabel *label_28;
     QLabel *label_29;
     QGroupBox *groupBox_13;
@@ -226,6 +227,8 @@ public:
     QLabel *label_48;
     QLabel *label_41;
     QToolButton *btn_sys_par;
+    QToolButton *btn_cam_par;
+    QLabel *label_50;
     QStackedWidget *stackedWidget_2;
     QWidget *showpageData;
     QHBoxLayout *horizontalLayout_3;
@@ -266,11 +269,11 @@ public:
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
+    QButtonGroup *buttonGroup_3;
     QButtonGroup *buttonGroup_4;
     QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_2;
-    QButtonGroup *buttonGroup_3;
     QButtonGroup *buttonGroup_5;
+    QButtonGroup *buttonGroup_2;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -1498,7 +1501,7 @@ public:
 "border-image: url(:/IRProc/Pro-Rect1);\n"
 "background-color: rgb(12,40,70);\n"
 "}\n"
-"QCheckBox{\n"
+"QRadioButton{\n"
 "background-color: rgb(18, 59, 101);\n"
 "}"));
         groupBox_10 = new QGroupBox(pageData);
@@ -1669,18 +1672,18 @@ public:
         btn_date_sel->setIcon(icon57);
         btn_date_sel->setIconSize(QSize(24, 24));
         btn_date_sel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        checkBox_10 = new QCheckBox(groupBox_12);
-        checkBox_10->setObjectName(QStringLiteral("checkBox_10"));
-        checkBox_10->setGeometry(QRect(285, 20, 71, 16));
-        checkBox_10->setStyleSheet(QStringLiteral(""));
-        checkBox_11 = new QCheckBox(groupBox_12);
-        checkBox_11->setObjectName(QStringLiteral("checkBox_11"));
-        checkBox_11->setGeometry(QRect(350, 20, 51, 16));
-        checkBox_11->setStyleSheet(QStringLiteral(""));
-        checkBox_12 = new QCheckBox(groupBox_12);
-        checkBox_12->setObjectName(QStringLiteral("checkBox_12"));
-        checkBox_12->setGeometry(QRect(285, 50, 71, 16));
-        checkBox_12->setStyleSheet(QStringLiteral(""));
+        radioButton_week = new QRadioButton(groupBox_12);
+        radioButton_week->setObjectName(QStringLiteral("radioButton_week"));
+        radioButton_week->setGeometry(QRect(285, 20, 71, 16));
+        radioButton_week->setStyleSheet(QStringLiteral(""));
+        radioButton_year = new QRadioButton(groupBox_12);
+        radioButton_year->setObjectName(QStringLiteral("radioButton_year"));
+        radioButton_year->setGeometry(QRect(350, 20, 51, 16));
+        radioButton_year->setStyleSheet(QStringLiteral(""));
+        radioButton_month = new QRadioButton(groupBox_12);
+        radioButton_month->setObjectName(QStringLiteral("radioButton_month"));
+        radioButton_month->setGeometry(QRect(285, 50, 71, 16));
+        radioButton_month->setStyleSheet(QStringLiteral(""));
         label_28 = new QLabel(groupBox_12);
         label_28->setObjectName(QStringLiteral("label_28"));
         label_28->setGeometry(QRect(25, 15, 16, 60));
@@ -1862,7 +1865,7 @@ public:
         label_40->setGeometry(QRect(25, 30, 20, 41));
         groupBox_16 = new QGroupBox(pageSetting);
         groupBox_16->setObjectName(QStringLiteral("groupBox_16"));
-        groupBox_16->setGeometry(QRect(770, 0, 200, 90));
+        groupBox_16->setGeometry(QRect(770, 0, 241, 90));
         groupBox_16->setMinimumSize(QSize(0, 90));
         groupBox_16->setMaximumSize(QSize(16777215, 90));
         groupBox_16->setStyleSheet(QStringLiteral(""));
@@ -1883,6 +1886,17 @@ public:
         QIcon icon61;
         icon61.addFile(QStringLiteral(":/IRProc/SysPara"), QSize(), QIcon::Normal, QIcon::Off);
         btn_sys_par->setIcon(icon61);
+        btn_cam_par = new QToolButton(groupBox_16);
+        btn_cam_par->setObjectName(QStringLiteral("btn_cam_par"));
+        btn_cam_par->setGeometry(QRect(180, 30, 37, 18));
+        QIcon icon62;
+        icon62.addFile(QStringLiteral(":/IRProc/Sys-Correct"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_cam_par->setIcon(icon62);
+        label_50 = new QLabel(groupBox_16);
+        label_50->setObjectName(QStringLiteral("label_50"));
+        label_50->setGeometry(QRect(175, 60, 60, 20));
+        label_50->setMinimumSize(QSize(60, 20));
+        label_50->setMaximumSize(QSize(50, 20));
         stackedWidget->addWidget(pageSetting);
 
         verticalLayout->addWidget(stackedWidget);
@@ -2382,9 +2396,9 @@ public:
         label->setText(QApplication::translate("IRProcClass", "\350\265\267\345\247\213\357\274\232", 0));
         label_3->setText(QApplication::translate("IRProcClass", "\347\273\223\346\235\237\357\274\232", 0));
         btn_date_sel->setText(QApplication::translate("IRProcClass", "\347\255\233\351\200\211", 0));
-        checkBox_10->setText(QApplication::translate("IRProcClass", "\344\270\200\346\230\237\346\234\237", 0));
-        checkBox_11->setText(QApplication::translate("IRProcClass", "\344\270\200\345\271\264", 0));
-        checkBox_12->setText(QApplication::translate("IRProcClass", "\344\270\200\344\270\252\346\234\210", 0));
+        radioButton_week->setText(QApplication::translate("IRProcClass", "\344\270\200\346\230\237\346\234\237", 0));
+        radioButton_year->setText(QApplication::translate("IRProcClass", "\344\270\200\345\271\264", 0));
+        radioButton_month->setText(QApplication::translate("IRProcClass", "\344\270\200\344\270\252\346\234\210", 0));
         label_28->setText(QApplication::translate("IRProcClass", "\346\214\211\n"
 "\346\227\245\n"
 "\346\234\237", 0));
@@ -2438,6 +2452,8 @@ public:
 "\346\225\260", 0));
         label_41->setText(QApplication::translate("IRProcClass", "\347\263\273\347\273\237\345\217\202\346\225\260", 0));
         btn_sys_par->setText(QApplication::translate("IRProcClass", "\347\263\273\347\273\237\345\217\202\346\225\260", 0));
+        btn_cam_par->setText(QApplication::translate("IRProcClass", "...", 0));
+        label_50->setText(QApplication::translate("IRProcClass", "\346\270\251\345\272\246\344\277\256\346\255\243", 0));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("IRProcClass", "\345\272\217\345\217\267", 0));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);

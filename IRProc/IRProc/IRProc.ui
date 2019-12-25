@@ -3883,7 +3883,7 @@ QLineEdit{
 border-image: url(:/IRProc/Pro-Rect1);
 background-color: rgb(12,40,70);
 }
-QCheckBox{
+QRadioButton{
 background-color: rgb(18, 59, 101);
 }</string>
            </property>
@@ -4517,7 +4517,7 @@ border-image: url(:/IRProc/Pro-Rect1);</string>
               <enum>Qt::ToolButtonTextUnderIcon</enum>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_10">
+            <widget class="QRadioButton" name="radioButton_week">
              <property name="geometry">
               <rect>
                <x>285</x>
@@ -4533,7 +4533,7 @@ border-image: url(:/IRProc/Pro-Rect1);</string>
               <string>一星期</string>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_11">
+            <widget class="QRadioButton" name="radioButton_year">
              <property name="geometry">
               <rect>
                <x>350</x>
@@ -4549,7 +4549,7 @@ border-image: url(:/IRProc/Pro-Rect1);</string>
               <string>一年</string>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_12">
+            <widget class="QRadioButton" name="radioButton_month">
              <property name="geometry">
               <rect>
                <x>285</x>
@@ -5280,7 +5280,7 @@ border:0px;
              <rect>
               <x>770</x>
               <y>0</y>
-              <width>200</width>
+              <width>241</width>
               <height>90</height>
              </rect>
             </property>
@@ -5372,6 +5372,48 @@ border:0px;
              <property name="icon">
               <iconset resource="IRProc.qrc">
                <normaloff>:/IRProc/SysPara</normaloff>:/IRProc/SysPara</iconset>
+             </property>
+            </widget>
+            <widget class="QToolButton" name="btn_cam_par">
+             <property name="geometry">
+              <rect>
+               <x>180</x>
+               <y>30</y>
+               <width>37</width>
+               <height>18</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="IRProc.qrc">
+               <normaloff>:/IRProc/Sys-Correct</normaloff>:/IRProc/Sys-Correct</iconset>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_50">
+             <property name="geometry">
+              <rect>
+               <x>175</x>
+               <y>60</y>
+               <width>60</width>
+               <height>20</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>温度修正</string>
              </property>
             </widget>
            </widget>
@@ -6144,10 +6186,10 @@ color: rgb(255, 255, 255);
  </resources>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_5"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

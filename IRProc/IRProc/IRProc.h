@@ -10,6 +10,7 @@
 #include "RegDlg.h"
 #include "CrossDlg.h"
 #include "ThumLabel.h"
+#include "CamParDlg.h"
 #include <QProgressDialog>
 
 struct shape{
@@ -60,6 +61,7 @@ public slots:
 	void customize();//系统设置-定制
 	void btn_sysPar();//系统参数设置
 	void btn_show_func();//显示功能区
+	void btn_camPar();//温度修正参数设置
 
 	void imgChange();//图像右上角按钮
 	void btnAnalyze();//打开图像，转到分析页面
@@ -118,6 +120,9 @@ public slots:
 	void btn_dateSel();
 	void btn_nameSel();
 	void btn_showAll();
+	void radio_week();
+	void radio_month();
+	void radio_year();
 	void dataOut();//数据导出
 	void dataIn();//数据导入
 
@@ -154,6 +159,7 @@ public:
 	SetAuthDlg *adlg;
 	RegDlg *rdlg;
 	CrossDlg *cdlg;
+	CamParDlg *camdlg;
 
 	QString m_msg;
 

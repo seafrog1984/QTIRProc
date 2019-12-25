@@ -99,5 +99,6 @@
         <file alias="MRight-sel">Resources/mergeRight-sel.png</file>
         <file alias="M-Human-Sel">Resources/merge-human-sel.png</file>
         <file alias="M-Meridian-Sel">Resources/merge-meridian-sel.png</file>
+        <file alias="Sys-Correct">Resources/Sys-Correction.png</file>
     </qresource>
 </RCC>
