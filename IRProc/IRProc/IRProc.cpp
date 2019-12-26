@@ -3281,8 +3281,8 @@ void IRProc::updateData()
 	else if (g_sel_mode == 2)
 	{
 		mapParams["data_type"] = "3";
-		//mapParams["page_size"] = QString::number(g_pageSize).toStdString();
-		//mapParams["page_num"] = QString::number(g_curPage).toStdString();
+		mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+		mapParams["page_num"] = QString::number(g_curPage).toStdString();
 		if (ui.lineEdit_name->text() != "")
 			mapParams["name"] = ui.lineEdit_name->text().toLocal8Bit();
 		//mapParams["cardid"] = "CARD100000000001";
@@ -3396,7 +3396,7 @@ void IRProc::btn_showAll()
 
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";
-	//mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
 	//mapParams["page_num"] = QString::number(g_curPage).toStdString();
 
 	//mapParams["name"] = ui.lineEdit_name->text().toStdString();
@@ -3584,8 +3584,8 @@ void IRProc::btn_dateSel()
 	g_sel_mode = 1;
 	std::map <std::string, std::string> mapParams;
 	mapParams["data_type"] = "4";
-	//	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
-	//	mapParams["page_num"] = QString::number(g_curPage).toStdString();
+	mapParams["page_size"] = QString::number(g_pageSize).toStdString();
+	//mapParams["page_num"] = QString::number(g_curPage).toStdString();
 	//mapParams["name"] = "ÕÅÈý";
 	//mapParams["cardid"] = "CARD100000000001";
 	//mapParams["scanid"] = "SCAN001";
@@ -3606,7 +3606,7 @@ void IRProc::btn_dateSel()
 		QList<QString> lst;
 		lst = m_msg.split(';');
 
-		//	QMessageBox::information(NULL, "Title", m_msg);
+	//	QMessageBox::information(NULL, "Title", m_msg);
 
 		QString temp = lst[0].section('&', 0, 0);
 		int dataNum = temp.section('=', -1, -1).toInt();
