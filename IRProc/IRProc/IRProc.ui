@@ -544,7 +544,7 @@ background-image: url(:/IRProc/Txcl-bg);
               <string notr="true">background-color: rgb(18, 59, 101);</string>
              </property>
              <property name="text">
-              <string>同步断层</string>
+              <string>同步温窗</string>
              </property>
             </widget>
             <widget class="QCheckBox" name="show_temper">
@@ -1194,7 +1194,7 @@ color: rgb(0, 0, 0);</string>
               </rect>
              </property>
              <property name="text">
-              <string>断层调整</string>
+              <string>温窗调整</string>
              </property>
             </widget>
             <widget class="QLabel" name="label_42">
@@ -6187,9 +6187,9 @@ color: rgb(255, 255, 255);
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_5"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>

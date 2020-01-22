@@ -125,14 +125,14 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>40</x>
      <y>190</y>
-     <width>54</width>
+     <width>80</width>
      <height>12</height>
     </rect>
    </property>
    <property name="text">
-    <string>断层步长：</string>
+    <string>温窗调整步长：</string>
    </property>
   </widget>
  </widget>

@@ -78,7 +78,7 @@ public:
 "color: rgb(0, 0, 0);"));
         label_5 = new QLabel(SettingDlg);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(60, 190, 54, 12));
+        label_5->setGeometry(QRect(40, 190, 80, 12));
 
         retranslateUi(SettingDlg);
 
@@ -92,7 +92,7 @@ public:
         label_3->setText(QApplication::translate("SettingDlg", "\346\225\260\346\215\256\347\253\257\345\217\243:", 0));
         btn_set_Par->setText(QApplication::translate("SettingDlg", "\344\277\256\346\224\271", 0));
         label_4->setText(QApplication::translate("SettingDlg", "\347\224\250\346\210\267\347\253\257\345\217\243\357\274\232", 0));
-        label_5->setText(QApplication::translate("SettingDlg", "\346\226\255\345\261\202\346\255\245\351\225\277\357\274\232", 0));
+        label_5->setText(QApplication::translate("SettingDlg", "\346\270\251\347\252\227\350\260\203\346\225\264\346\255\245\351\225\277\357\274\232", 0));
     } // retranslateUi
 
 };

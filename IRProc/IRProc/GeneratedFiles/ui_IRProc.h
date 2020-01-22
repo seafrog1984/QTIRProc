@@ -270,10 +270,10 @@ public:
     QStatusBar *statusBar;
     QToolBar *toolBar;
     QButtonGroup *buttonGroup_3;
-    QButtonGroup *buttonGroup_4;
-    QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_5;
+    QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_2;
+    QButtonGroup *buttonGroup_4;
 
     void setupUi(QMainWindow *IRProcClass)
     {
@@ -2252,7 +2252,7 @@ public:
         btn_colorType_change->setText(QApplication::translate("IRProcClass", "...", 0));
         btn_smaller->setText(QApplication::translate("IRProcClass", "...", 0));
         btn_sel->setText(QApplication::translate("IRProcClass", "\351\200\211\346\213\251", 0));
-        update_all->setText(QApplication::translate("IRProcClass", "\345\220\214\346\255\245\346\226\255\345\261\202", 0));
+        update_all->setText(QApplication::translate("IRProcClass", "\345\220\214\346\255\245\346\270\251\347\252\227", 0));
         show_temper->setText(QApplication::translate("IRProcClass", "\346\230\276\347\244\272\346\270\251\345\272\246", 0));
         groupBox_15->setTitle(QString());
         label_22->setText(QApplication::translate("IRProcClass", "\345\233\276\n"
@@ -2265,7 +2265,7 @@ public:
         btn_win_w12->setText(QApplication::translate("IRProcClass", "12", 0));
         btn_win_w10->setText(QApplication::translate("IRProcClass", "10", 0));
         btn_win_w8->setText(QApplication::translate("IRProcClass", "08", 0));
-        label_9->setText(QApplication::translate("IRProcClass", "\346\226\255\345\261\202\350\260\203\346\225\264", 0));
+        label_9->setText(QApplication::translate("IRProcClass", "\346\270\251\347\252\227\350\260\203\346\225\264", 0));
         label_42->setText(QApplication::translate("IRProcClass", "0", 0));
         label_43->setText(QApplication::translate("IRProcClass", "50", 0));
         tmper_low->setText(QString());
