@@ -939,6 +939,8 @@ void IRProc::dataOut()
 	g_name = ui.tableWidget->item(row, 3)->text();
 	g_gender = ui.tableWidget->item(row, 4)->text();
 	g_regTime = ui.tableWidget->item(row, 7)->text();
+	g_ID = ui.tableWidget->item(row, 5)->text();
+
 
 	QString filePath = g_dataFolder + "\\" + g_scanID + ".TSM";
 	char*  path;
@@ -946,7 +948,7 @@ void IRProc::dataOut()
 	path = t.data();
 
 	ofstream fout(path);
-	fout << g_cardID.toStdString() << ' ' << g_scanID.toStdString() << ' ' << g_name.toStdString() << ' ' << g_gender.toStdString() << ' ' << g_age.toStdString() << ' ' ;
+	fout << g_cardID.toStdString() << ' ' << g_scanID.toStdString() << ' ' << g_name.toStdString() << ' ' << g_gender.toStdString() << ' ' << g_ID.toStdString() << ' ' << g_age.toStdString() << ' ' << g_regTime.toStdString()<<' ' << IMAGE_WIDTH << ' ' << IMAGE_HEIGHT << ' ';
 
 	conDataBase();
 
@@ -984,8 +986,10 @@ void IRProc::dataOut()
 	}
 	else
 	{
+		int pic_size = IMAGE_WIDTH*IMAGE_HEIGHT + 2;
 
-		unsigned short sPicData[PIC_SIZE]; // = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
+		//unsigned short sPicData[PIC_SIZE]; // = (unsigned short*)malloc(PIC_SIZE * sizeof(short));
+		unsigned short *sPicData = (unsigned short*)malloc(pic_size * sizeof(short));
 
 		pic_count = (int)vecPngIDResp.size();
 
@@ -994,7 +998,7 @@ void IRProc::dataOut()
 		fout << pic_count << endl;
 		for (int i = 0; i < pic_count; ++i)
 		{
-			if (!m_cli.get_png(g_scanID.toStdString(), vecPngIDResp[i], sPicData, PIC_SIZE))
+			if (!m_cli.get_png(g_scanID.toStdString(), vecPngIDResp[i], sPicData, pic_size))
 			{
 				m_msg.append(QString::fromLocal8Bit(" Í¼ÏñÎª¿Õ,µ¼³öÊ§°Ü\n"));
 				QMessageBox::information(NULL, "Title", m_msg);
@@ -1011,7 +1015,7 @@ void IRProc::dataOut()
 
 				g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
 				*(g_pData[i]) = sPicData[0];
-				for (int j = 1; j < PIC_SIZE; ++j)
+				for (int j = 1; j < pic_size; ++j)
 				{
 					//outfile << " " << sPicData[j];
 					fout << sPicData[j] << ' '; 
@@ -1071,8 +1075,9 @@ void IRProc::dataIn()
 	}
 
 	int pic_count;
-	string str1, str2, str3, str4, str5;
-	fin >> str1 >> str2 >> str3 >> str4 >> str5 >> pic_count;
+	int w, h;
+	string str1, str2, str3, str4, str5,str6,str7,str8;
+	fin >> str1 >> str2 >> str3 >> str4 >> str5 >>str6>>str7>>str8>> w>>h>>pic_count;
 	string name, gender;
 	name = UTF8ToGB(str3.c_str()).c_str();
 	gender = UTF8ToGB(str4.c_str()).c_str();
@@ -1082,8 +1087,12 @@ void IRProc::dataIn()
 	g_scanID = QString::fromStdString(str2);
 	g_name = QString::fromLocal8Bit(name.c_str());
 	g_gender = QString::fromLocal8Bit(gender.c_str());
-	g_age = QString::fromStdString(str5);
+	g_ID = QString::fromStdString(str5);
+	g_age = QString::fromStdString(str6);
+	g_regTime = QString::fromStdString(str7) + ' ' + QString::fromStdString(str8);
 
+	IMAGE_WIDTH = w;
+	IMAGE_HEIGHT = h;
 
 	int row = ui.tableWidget->rowCount();
 
@@ -1104,7 +1113,9 @@ void IRProc::dataIn()
 	ui.tableWidget->setItem(index, 2, new QTableWidgetItem(g_scanID));
 	ui.tableWidget->setItem(index, 3, new QTableWidgetItem(g_name));
 	ui.tableWidget->setItem(index, 4, new QTableWidgetItem(g_gender));
+	ui.tableWidget->setItem(index, 5, new QTableWidgetItem(g_ID));
 	ui.tableWidget->setItem(index, 6, new QTableWidgetItem(g_age));
+	ui.tableWidget->setItem(index, 7, new QTableWidgetItem(g_regTime));
 
 	QDateTime current_date_time = QDateTime::currentDateTime();
 	QString current_date = current_date_time.toString("yyyy-MM-dd hh:mm:ss");
@@ -1117,10 +1128,13 @@ void IRProc::dataIn()
 	for (int i = 0; i < pic_count; ++i)
 	{
 			g_pData[i] = new unsigned short[IMAGE_WIDTH*IMAGE_HEIGHT];
-			for (int j = 0; j < PIC_SIZE; ++j)
+			for (int j = 0; j < IMAGE_WIDTH*IMAGE_HEIGHT; ++j)
 			{
 				fin>>*(g_pData[i] + j);
 			}
+
+			g_win_width[i] = 16;
+			g_bot[i] = 22;
 
 	}
 
